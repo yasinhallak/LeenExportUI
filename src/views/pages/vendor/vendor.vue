@@ -3,7 +3,7 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="products">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="vendors">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -60,7 +60,7 @@
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ products.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : products.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ vendors.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : vendors.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -83,12 +83,13 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="categoryName">Name</vs-th>
-        <vs-th sort-key="seasonsTypes">Category</vs-th>
-        <vs-th sort-key="description">Description</vs-th>
-<!--        <vs-th sort-key="popularity">Popularity</vs-th>-->
-<!--        <vs-th sort-key="order_status">Order Status</vs-th>-->
-<!--        <vs-th sort-key="price">Price</vs-th>-->
+        <vs-th sort-key="name">Name</vs-th>
+        <vs-th sort-key="companyName">CompanyName</vs-th>
+        <vs-th sort-key="phone">Mobile</vs-th>
+        <vs-th sort-key="address">Address</vs-th>
+        <!--        <vs-th sort-key="popularity">Popularity</vs-th>-->
+        <!--        <vs-th sort-key="order_status">Order Status</vs-th>-->
+        <!--        <vs-th sort-key="price">Price</vs-th>-->
         <vs-th>Action</vs-th>
       </template>
 
@@ -97,13 +98,16 @@
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-category">{{ tr.seasonsTypes | title }}</p>
+            <p class="product-category">{{ tr.companyName | title }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.description }}</p>
+            <p class="product-name font-medium truncate">{{ tr.phone }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.address }}</p>
           </vs-td>
 
           <vs-td class="whitespace-no-wrap">
@@ -120,7 +124,7 @@
 
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
-import moduleCategory from '@/store/category/moduleCategory.js'
+import moduleDataList from '@/store/vendor/moduleVendor.js'
 
 export default {
   components: {
@@ -145,11 +149,11 @@ export default {
       }
       return 0
     },
-    products () {
-      return this.$store.state.category.products
+    vendors () {
+      return this.$store.state.vendor.vendors
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.vendors.length
     }
   },
   methods: {
@@ -161,7 +165,6 @@ export default {
       this.$store.dispatch('dataList/removeItem', id).catch(err => { console.error(err) })
     },
     editData (data) {
-
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
@@ -184,11 +187,11 @@ export default {
     }
   },
   created () {
-    if (!moduleCategory.isRegistered) {
-      this.$store.registerModule('category', moduleCategory)
-      moduleCategory.isRegistered = true
+    if (!moduleDataList.isRegistered) {
+      this.$store.registerModule('vendor', moduleDataList)
+      moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('category/fetchDataListItems')
+    this.$store.dispatch('vendor/fetchDataListItems')
   },
   mounted () {
     this.isMounted = true
@@ -315,3 +318,4 @@ export default {
   }
 }
 </style>
+

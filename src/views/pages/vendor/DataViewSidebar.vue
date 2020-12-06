@@ -19,18 +19,20 @@
     <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
 
       <div class="p-6">
-
         <!-- NAME -->
-        <vs-input label="Name" v-model="dataName" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+        <vs-input label="Name" v-model="name" class="mt-5 w-full" name="name" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
-        <!-- CATEGORY -->
-        <vs-select v-model.number="dataCategory" label="Category" class="mt-5 w-full" name="item-category" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
+        <!-- CompanyName -->
+        <vs-input label="CompanyName" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
 
-        <vs-textarea v-model="description" class="mt-5 w-full" label="description" width="300px" />
+        <!-- Phone -->
+        <vs-input label="Mobile" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric'"   />
+        <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
+        <!-- Address -->
+        <vs-textarea label="Address" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('address')">{{ errors.first('address') }}</span>
       </div>
     </component>
 
@@ -61,16 +63,10 @@ export default {
   data () {
     return {
       dataId: null,
-      dataName: '',
-      dataCategory: null,
-      description:null,
-      category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
-      ],
-
+      name: null,
+      companyName: null,
+      phone:null,
+      address:null,
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -84,12 +80,13 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const { seasonsTypes, id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
+        console.log("isSidebarActive",this.data)
+        const { id,name, companyName,phone ,address} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        this.dataCategory = seasonsTypes
-        this.dataName = categoryName
-        this.description=description
-
+        this.name = name
+        this.companyName = companyName
+        this.phone=phone
+        this.address=address
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -109,7 +106,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.dataName && this.dataCategory && this.description
+      return !this.errors.any() && this.name && this.companyName && this.phone && this.address
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },
@@ -117,9 +114,10 @@ export default {
     initValues () {
       if (this.data.id) return
       this.dataId = null
-      this.dataName = ''
-      this.dataCategory = null
-      this.description=null
+      this.name = null
+      this.companyName = null
+      this.phone=null
+      this.address=null
 
     },
     submitData () {
@@ -127,17 +125,18 @@ export default {
         if (result) {
           const obj = {
             id: this.dataId,
-            categoryName: this.dataName,
-            seasonsTypes: this.dataCategory,
-            description:this.description
+            name: this.name,
+            companyName: this.companyName,
+            phone:this.phone,
+            address:this.address
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
-            this.$store.dispatch('category/updateItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('vendor/updateItem', obj).catch(err => { console.error(err) })
           } else {
             delete obj.id
             // obj.popularity = 0
-            this.$store.dispatch('category/addItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('vendor/addItem', obj).catch(err => { console.error(err) })
           }
 
           this.$emit('closeSidebar')
@@ -185,3 +184,4 @@ export default {
   }
 }
 </style>
+

@@ -90,6 +90,7 @@ export default {
     UserSettings: 'User Settings',
     Category: 'Category',
     PrductType: 'PrductType',
+    Vendor: 'Vendor',
     Invoice: 'Invoice',
     FAQ: 'FAQ',
     Search: 'Search',

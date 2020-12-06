@@ -83,12 +83,15 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="categoryName">Name</vs-th>
-        <vs-th sort-key="seasonsTypes">Category</vs-th>
-        <vs-th sort-key="description">Description</vs-th>
-<!--        <vs-th sort-key="popularity">Popularity</vs-th>-->
-<!--        <vs-th sort-key="order_status">Order Status</vs-th>-->
-<!--        <vs-th sort-key="price">Price</vs-th>-->
+        <vs-th sort-key="title">نوعية الخامة</vs-th>
+        <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
+        <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
+        <vs-th sort-key="size">المقاسات المتاحة</vs-th>
+        <vs-th sort-key="count">عدد السيريه</vs-th>
+        <vs-th sort-key="price">سعر المبيع</vs-th>
+        <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
+        <vs-th sort-key="description">وصف المنتج</vs-th>
+
         <vs-th>Action</vs-th>
       </template>
 
@@ -97,14 +100,30 @@
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.title }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-category">{{ tr.seasonsTypes | title }}</p>
+            <p class="product-category font-medium truncate">{{ tr.productTypeName | title }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.vendorName }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.size }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.count }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-price font-medium truncate">${{ tr.price }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-price font-medium truncate">${{ tr.productCost }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
+
 
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
@@ -120,7 +139,7 @@
 
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
-import moduleCategory from '@/store/category/moduleCategory.js'
+import moduleDataList from '@/store/product/moduleProduct.js'
 
 export default {
   components: {
@@ -145,8 +164,8 @@ export default {
       }
       return 0
     },
-    products () {
-      return this.$store.state.category.products
+    products(){
+      return this.$store.state.product.products
     },
     queriedItems () {
       return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
@@ -161,7 +180,6 @@ export default {
       this.$store.dispatch('dataList/removeItem', id).catch(err => { console.error(err) })
     },
     editData (data) {
-
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
@@ -184,11 +202,11 @@ export default {
     }
   },
   created () {
-    if (!moduleCategory.isRegistered) {
-      this.$store.registerModule('category', moduleCategory)
-      moduleCategory.isRegistered = true
+    if (!moduleDataList.isRegistered) {
+      this.$store.registerModule('product', moduleDataList)
+      moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('category/fetchDataListItems')
+    this.$store.dispatch('product/fetchDataListItems')
   },
   mounted () {
     this.isMounted = true
@@ -315,3 +333,5 @@ export default {
   }
 }
 </style>
+
+

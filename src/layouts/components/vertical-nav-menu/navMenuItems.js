@@ -628,6 +628,20 @@ export default [
         i18n: 'ProductType'
       },
       {
+        url: '/pages/vendor',
+        slug: 'page-vendor',
+        name: 'Vendor',
+        icon: 'SettingsIcon',
+        i18n: 'Vendor'
+      },
+      {
+        url: '/pages/product',
+        slug: 'page-product',
+        name: 'product',
+        icon: 'SettingsIcon',
+        i18n: 'product'
+      },
+      {
         url: '/pages/user-settings',
         slug: 'page-user-settings',
         name: 'User Settings',

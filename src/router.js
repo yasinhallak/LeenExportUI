@@ -918,6 +918,34 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/vendor',
+          name: 'page-vendor',
+          component: () => import('@/views/pages/vendor/vendor.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'vendor', active: true }
+            ],
+            pageTitle: 'vendor',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/pages/product',
+          name: 'page-product',
+          component: () => import('@/views/pages/product/product.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'product', active: true }
+            ],
+            pageTitle: 'product',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/user-settings',
           name: 'page-user-settings',
           component: () => import('@/views/pages/user-settings/UserSettings.vue'),
