@@ -73,7 +73,11 @@
         <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
 
         <template>
-          <vs-upload multiple automatic  text="Upload Multiple" action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload" />
+          <vs-upload multiple automatic single-upload
+                     fileName="file"
+                     text="Upload Multiple"
+                     action="http://localhost:5000/api/v1/media/upload"
+                     @on-success="successUpload" />
         </template>
 
       </div>
@@ -114,6 +118,7 @@ export default {
       count:20,
       productTypeId:null,
       vendorId:null,
+      files:[],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -169,8 +174,13 @@ export default {
     }
   },
   methods: {
-    successUpload(){
-      this.$vs.notify({color:'success',title:'Upload Success',text:'Lorem ipsum dolor sit amet, consectetur'})
+
+    successUpload(event){
+     // this.$vs.notify({color:'success',title:'Upload Success',text:'Lorem ipsum dolor sit amet, consectetur'})
+      //get the filePaths from Laravel controller
+      let filePaths = event.currentTarget.response
+     this.files.push(JSON.parse(filePaths));
+      console.log("filePahths",this.files)
     },
     initValues () {
       if (this.data.id) return
@@ -183,6 +193,7 @@ export default {
       this.count=20
       this.productTypeId=null
       this.vendorId=null
+      this.files=[]
 
     },
     submitData () {
@@ -197,7 +208,8 @@ export default {
             productCost:this.productCost,
             count:this.count,
             productTypeId:this.productTypeId,
-            vendorId:this.vendorId
+            vendorId:this.vendorId,
+            photos:this.files
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
