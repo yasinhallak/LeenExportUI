@@ -3,7 +3,7 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="products">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="categories">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -60,7 +60,7 @@
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ products.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : products.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ categories.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : categories.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -83,12 +83,9 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="categoryName">Name</vs-th>
-        <vs-th sort-key="seasonsTypes">Category</vs-th>
-        <vs-th sort-key="description">Description</vs-th>
-<!--        <vs-th sort-key="popularity">Popularity</vs-th>-->
-<!--        <vs-th sort-key="order_status">Order Status</vs-th>-->
-<!--        <vs-th sort-key="price">Price</vs-th>-->
+        <vs-th sort-key="categoryName">اسم التصنيف</vs-th>
+        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
+        <vs-th sort-key="description">وصف التصنيف</vs-th>
         <vs-th>Action</vs-th>
       </template>
 
@@ -145,11 +142,11 @@ export default {
       }
       return 0
     },
-    products () {
-      return this.$store.state.category.products
+    categories () {
+      return this.$store.state.category.categories
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.categories.length
     }
   },
   methods: {
@@ -188,7 +185,10 @@ export default {
       this.$store.registerModule('category', moduleCategory)
       moduleCategory.isRegistered = true
     }
-    this.$store.dispatch('category/fetchDataListItems')
+    const  obj={
+      SeasonsTypes:null
+    }
+    this.$store.dispatch('category/fetchDataListItems',obj)
   },
   mounted () {
     this.isMounted = true

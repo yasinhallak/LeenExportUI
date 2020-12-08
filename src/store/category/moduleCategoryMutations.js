@@ -11,22 +11,22 @@
 export default {
   ADD_ITEM (state, item) {
     //console.log("item",item)
-    state.products.unshift(item)
+    state.categories.unshift(item)
   },
   SET_PRODUCTS (state, products) {
-    state.products = products
+    state.categories = products
   },
   // SET_LABELS(state, labels) {
   //   state.eventLabels = labels
   // },
   UPDATE_PRODUCT (state, product) {
     console.log("product",product)
-    console.log("state.products",state.products)
-    const productIndex = state.products.findIndex((p) => p.id === product.id)
-    Object.assign(state.products[productIndex], product)
+    console.log("state.products",state.categories)
+    const productIndex = state.categories.findIndex((p) => p.id === product.id)
+    Object.assign(state.categories[productIndex], product)
   },
   REMOVE_ITEM (state, itemId) {
-    const ItemIndex = state.products.findIndex((p) => p.id === itemId)
-    state.products.splice(ItemIndex, 1)
+    const ItemIndex = state.categories.findIndex((p) => p.id === itemId)
+    state.categories.splice(ItemIndex, 1)
   }
 }

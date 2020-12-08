@@ -21,14 +21,20 @@
       <div class="p-6">
 
         <!-- NAME -->
-        <vs-input label="Name" v-model="name" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+        <vs-input label="اسم المنتج" v-model="name" class="mt-5 w-full" name="name" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
+
+        <!-- seasonsTypes -->
+        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">
+          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
 
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryName" label="Category" class="mt-5 w-full" name="item-category" v-validate="'required'">
+        <vs-select v-model.number="categoryId" label="نوع التصنيف" class="mt-5 w-full" name="category" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
         </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
+        <span class="text-danger text-sm" v-show="errors.has('category')">{{ errors.first('category') }}</span>
 
       </div>
     </component>
@@ -42,6 +48,7 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import axios from "@/axios";
 
 export default {
   props: {
@@ -60,8 +67,10 @@ export default {
   data () {
     return {
       dataId: null,
-      name: '',
-      categoryName: null,
+      name: null,
+      seasonsTypes:null,
+      categoryId: null,
+      //categoryTypes:[],
       category_choices: [
         {text:'ربيع', value:'1'},
         {text:'صيف', value:'2'},
@@ -82,14 +91,21 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const {id, name, categoryName } = JSON.parse(JSON.stringify(this.data))
+        const {id, name,seasonsTypes, categoryId } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
-        this.categoryName = categoryName
+        this.seasonsTypes=seasonsTypes
+        this.categoryId = categoryId
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
-    }
+    },
+    // seasonsTypes:function (){
+    //   const obj = {
+    //     seasonsTypes: this.seasonsTypes,
+    //   }
+    //   this.$store.dispatch('productType/fetchCategoryItems',obj)
+    // }
   },
   computed: {
     isSidebarActiveLocal: {
@@ -105,7 +121,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.categoryName
+      return !this.errors.any() && this.name && this.categoryId && this.seasonsTypes
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -118,7 +134,7 @@ export default {
       if (this.data.id) return
       this.dataId = null
       this.name = null
-      this.categoryName = null
+      this.categoryId = null
 
     },
     submitData () {
@@ -127,7 +143,7 @@ export default {
           const obj = {
             id: this.dataId,
             name: this.name,
-            categoryId: this.categoryName,
+            categoryId: this.categoryId,
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
@@ -144,9 +160,28 @@ export default {
       })
     },
 
+    changeSeasonsTypes(){
+      const obj = {
+        seasonsTypes: this.seasonsTypes,
+      }
+      this.$store.dispatch('productType/fetchCategoryItems',obj)
+
+        // return new Promise((resolve, reject)=> {
+        //   axios.post('http://localhost:5000/api/v1/category/list', {...obj})
+        //     .then((response) => {
+        //       this.categoryTypes = response.data
+        //       resolve(response)
+        //     })
+        //     .catch((error) => {
+        //       reject(error)
+        //     })
+        // })
+
+    },
+
   },
   mounted () {
-    this.$store.dispatch('productType/fetchCategoryItems')
+
   }
 }
 </script>

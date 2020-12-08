@@ -19,14 +19,28 @@
     <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
 
       <div class="p-6">
+        <!-- seasonsTypes -->
+        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">
+          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
+        <!-- CATEGORY -->
+        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف" class="mt-5 w-full" name="categoryId" v-validate="'required'">
+          <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
+
+        <!-- productTypes -->
+        <vs-select label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 w-full" name="productTypeId" v-validate="'required'">
+          <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
+
         <!-- Title -->
         <vs-input label="نوعية الخامة" v-model="title" class="mt-5 w-full" name="title" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('title')">{{ errors.first('title') }}</span>
 
-        <!-- productTypes -->
-        <vs-select label="نوع المنتج"  v-model.number="productTypeId" class="mt-5 w-full" name="productTypeId" v-validate="'required'">
-          <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
-        </vs-select>
+
 
         <!-- CompanyName -->
         <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 w-full" name="vendorId" v-validate="'required'">
@@ -110,19 +124,27 @@ export default {
   data () {
     return {
       dataId: null,
+      seasonsTypes:null,
       title: null,
       size:null,
       description:null,
       price:null,
       productCost:null,
       count:20,
+      categoryId:null,
       productTypeId:null,
       vendorId:null,
       files:[],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
-      }
+      },
+      category_choices: [
+        {text:'ربيع', value:'1'},
+        {text:'صيف', value:'2'},
+        {text:'خريف', value:'3'},
+        {text:'شتاء', value:'4'}
+      ],
     }
   },
   watch: {
@@ -133,16 +155,18 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,title,size ,description,price,productCost,count,productTypeId,vendorId} = JSON.parse(JSON.stringify(this.data))
+        const { id,seasonsTypes,categoryId,productTypeId,title,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
+        this.seasonsTypes=seasonsTypes
+        this.categoryId=categoryId
+        this.productTypeId=productTypeId
         this.title = title
+        this.vendorId=vendorId
         this.size=size
-        this.description=description
+        this.count=count
         this.price=price
         this.productCost=productCost
-        this.count=count
-        this.productTypeId=productTypeId
-        this.vendorId=vendorId
+        this.description=description
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -162,9 +186,13 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title && this.size && this.description && this.price && this.productCost && this.count && this.productTypeId && this.vendorId
+      return !this.errors.any() && this.title && this.size && this.description && this.price && this.productCost && this.count && this.categoryId && this.productTypeId && this.vendorId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
+
+    categoryTypes () {
+      return this.$store.state.product.categoryTypes
+    },
 
     productTypes () {
       return this.$store.state.product.productTypes
@@ -190,7 +218,9 @@ export default {
       this.description=null
       this.price=null
       this.productCost=null
+      this.seasonsTypes=null
       this.count=20
+      this.categoryId=null
       this.productTypeId=null
       this.vendorId=null
       this.files=[]
@@ -201,14 +231,16 @@ export default {
         if (result) {
           const obj = {
             id: this.dataId,
+            seasonsTypes:this.seasonsTypes,
+            categoryId:this.categoryId,
+            productTypeId:this.productTypeId,
             title: this.title,
-            description: this.description,
+            vendorId:this.vendorId,
             size: this.size,
+            count:this.count,
             price:this.price,
             productCost:this.productCost,
-            count:this.count,
-            productTypeId:this.productTypeId,
-            vendorId:this.vendorId,
+            description: this.description,
             photos:this.files
           }
 
@@ -226,10 +258,35 @@ export default {
       })
     },
 
+    changeSeasonsTypes(){
+      const obj = {
+        seasonsTypes: this.seasonsTypes,
+      }
+      this.$store.dispatch('product/fetchCategoryItems',obj)
+
+      // return new Promise((resolve, reject)=> {
+      //   axios.post('http://localhost:5000/api/v1/category/list', {...obj})
+      //     .then((response) => {
+      //       this.categoryTypes = response.data
+      //       resolve(response)
+      //     })
+      //     .catch((error) => {
+      //       reject(error)
+      //     })
+      // })
+
+    },
+
+    changeCategoryTypes(){
+      const obj = {
+        categoryId: this.categoryId,
+      }
+      this.$store.dispatch('product/fetchProductTypeItems',obj)
+    }
+
   },
   mounted () {
-    this.$store.dispatch('product/fetchProductTypeItems')
-    this.$store.dispatch('product/fetchCompanyItems')
+     this.$store.dispatch('product/fetchCompanyItems')
   }
 }
 </script>

@@ -83,39 +83,24 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="Name">Name</vs-th>
-        <vs-th sort-key="categoryName">CategoryName</vs-th>
-
-        <!--        <vs-th sort-key="popularity">Popularity</vs-th>-->
-        <!--        <vs-th sort-key="order_status">Order Status</vs-th>-->
-        <!--        <vs-th sort-key="price">Price</vs-th>-->
+        <vs-th sort-key="Name">اسم المنتج</vs-th>
+        <vs-th sort-key="seasonsTypes">اسم الفصل</vs-th>
+        <vs-th sort-key="categoryName">اسم الصنف</vs-th>
         <vs-th>Action</vs-th>
       </template>
 
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
           <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.seasonsTypes }}</p>
+          </vs-td>
+          <vs-td>
             <p class="product-category">{{ tr.categoryName | title }}</p>
           </vs-td>
-
-
-          <!--          <vs-td>-->
-          <!--            <vs-progress :percent="Number(tr.popularity)" :color="getPopularityColor(Number(tr.popularity))" class="shadow-md" />-->
-          <!--          </vs-td>-->
-
-          <!--          <vs-td>-->
-          <!--            <vs-chip :color="getOrderStatusColor(tr.order_status)" class="product-order-status">{{ tr.order_status | title }}</vs-chip>-->
-          <!--          </vs-td>-->
-
-          <!--          <vs-td>-->
-          <!--            <p class="product-price">${{ tr.price }}</p>-->
-          <!--          </vs-td>-->
-
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
@@ -198,7 +183,10 @@ export default {
       this.$store.registerModule('productType', moduleProductType)
       moduleProductType.isRegistered = true
     }
-    this.$store.dispatch('productType/fetchDataListItems')
+    const obj = {
+      CategoryId: null,
+    }
+    this.$store.dispatch('productType/fetchDataListItems',obj)
   },
   mounted () {
     this.isMounted = true

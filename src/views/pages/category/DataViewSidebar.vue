@@ -21,16 +21,17 @@
       <div class="p-6">
 
         <!-- NAME -->
-        <vs-input label="Name" v-model="dataName" class="mt-5 w-full" name="item-name" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('item-name')">{{ errors.first('item-name') }}</span>
+        <vs-input label="أدخل اسم التصنيف" v-model="name" class="mt-5 w-full" name="name" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- CATEGORY -->
-        <vs-select v-model.number="dataCategory" label="Category" class="mt-5 w-full" name="item-category" v-validate="'required'">
+        <vs-select v-model.number="dataCategory" label="أختر الفصل" class="mt-5 w-full" name="item-category" v-validate="'required'">
           <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
 
-        <vs-textarea v-model="description" class="mt-5 w-full" label="description" width="300px" />
+        <vs-textarea v-model="description" class="mt-5 w-full" name="description" label="أدخل وصف " width="300px" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
       </div>
     </component>
 
@@ -61,7 +62,7 @@ export default {
   data () {
     return {
       dataId: null,
-      dataName: '',
+      name: null,
       dataCategory: null,
       description:null,
       category_choices: [
@@ -87,7 +88,7 @@ export default {
         const { seasonsTypes, id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.dataCategory = seasonsTypes
-        this.dataName = categoryName
+        this.name = categoryName
         this.description=description
 
         this.initValues()
@@ -109,7 +110,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.dataName && this.dataCategory && this.description
+      return !this.errors.any() && this.name && this.dataCategory && this.description
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },
@@ -117,7 +118,7 @@ export default {
     initValues () {
       if (this.data.id) return
       this.dataId = null
-      this.dataName = ''
+      this.name = ''
       this.dataCategory = null
       this.description=null
 
@@ -127,7 +128,7 @@ export default {
         if (result) {
           const obj = {
             id: this.dataId,
-            categoryName: this.dataName,
+            categoryName: this.name,
             seasonsTypes: this.dataCategory,
             description:this.description
           }
