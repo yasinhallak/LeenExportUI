@@ -83,8 +83,10 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="title">نوعية الخامة</vs-th>
+        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
+        <vs-th sort-key="categoryName">نوع الصنف</vs-th>
         <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
+        <vs-th sort-key="title">نوعية الخامة</vs-th>
         <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
         <vs-th sort-key="size">المقاسات المتاحة</vs-th>
         <vs-th sort-key="count">عدد السيريه</vs-th>
@@ -98,12 +100,17 @@
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.title }}</p>
+            <p class="product-name font-medium truncate">{{ tr.seasonsTypes }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-category font-medium truncate">{{ tr.productTypeName | title }}</p>
+            <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.productTypeName }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.title }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.vendorName }}</p>

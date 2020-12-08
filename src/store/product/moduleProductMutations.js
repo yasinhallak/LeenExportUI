@@ -25,6 +25,10 @@ export default {
     Object.assign(state.products[productIndex], product)
   },
 
+  Set_CategoryType(state,items){
+    state.categoryTypes=items;
+  },
+
   Set_ProductTypes(state,items){
     state.productTypes = items;
   },

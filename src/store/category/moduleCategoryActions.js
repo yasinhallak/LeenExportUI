@@ -22,9 +22,9 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
-  fetchDataListItems ({ commit }) {
+  fetchDataListItems ({ commit },item) {
     return new Promise((resolve, reject) => {
-      axios.get('http://localhost:5000/api/v1/category/list')
+      axios.post('http://localhost:5000/api/v1/category/list',{...item})
         .then((response) => {
           commit('SET_PRODUCTS', response.data)
           resolve(response)

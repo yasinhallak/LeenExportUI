@@ -33,9 +33,23 @@ export default {
     })
   },
 
-  fetchProductTypeItems({commit}){
+
+
+  fetchCategoryItems({commit},item){
+    return new Promise((resolve, reject)=>{
+      axios.post('http://localhost:5000/api/v1/category/list',{...item})
+        .then((response) => {
+          commit('Set_CategoryType', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+
+  fetchProductTypeItems({commit},item){
     return new Promise((resolve, reject) => {
-      axios.get('http://localhost:5000/api/v1/productType/list')
+      axios.post('http://localhost:5000/api/v1/productType/list',{...item})
         .then((response) => {
           commit('Set_ProductTypes', response.data)
           resolve(response)
