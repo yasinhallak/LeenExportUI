@@ -91,7 +91,8 @@
                      fileName="file"
                      text="Upload Multiple"
                      action="http://localhost:5000/api/v1/media/upload"
-                     @on-success="successUpload" />
+                     @on-success="successUpload"
+                     @on-delete="deleteImage"/>
         </template>
 
       </div>
@@ -209,6 +210,10 @@ export default {
       let filePaths = event.currentTarget.response
      this.files.push(JSON.parse(filePaths));
       console.log("filePahths",this.files)
+    },
+
+    deleteImage(event){
+      console.log("enent",event)
     },
     initValues () {
       if (this.data.id) return

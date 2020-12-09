@@ -69,333 +69,333 @@ const router = new Router({
         // =============================================================================
         // Application Routes
         // =============================================================================
-        {
-          path: '/apps/todo',
-          redirect: '/apps/todo/all',
-          name: 'todo'
-        },
-        {
-          path: '/apps/todo/:filter',
-          component: () => import('./views/apps/todo/Todo.vue'),
-          meta: {
-            rule: 'editor',
-            parent: 'todo',
-            no_scroll: true
-          }
-        },
-        {
-          path: '/apps/chat',
-          name: 'chat',
-          component: () => import('./views/apps/chat/Chat.vue'),
-          meta: {
-            rule: 'editor',
-            no_scroll: true
-          }
-        },
-        {
-          path: '/apps/email',
-          redirect: '/apps/email/inbox',
-          name: 'email'
-        },
-        {
-          path: '/apps/email/:filter',
-          component: () => import('./views/apps/email/Email.vue'),
-          meta: {
-            rule: 'editor',
-            parent: 'email',
-            no_scroll: true
-          }
-        },
-        {
-          path: '/apps/calendar/vue-simple-calendar',
-          name: 'calendar-simple-calendar',
-          component: () => import('./views/apps/calendar/SimpleCalendar.vue'),
-          meta: {
-            rule: 'editor',
-            no_scroll: true
-          }
-        },
-        {
-          path: '/apps/eCommerce/shop',
-          name: 'ecommerce-shop',
-          component: () => import('./views/apps/eCommerce/ECommerceShop.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'eCommerce'},
-              { title: 'Shop', active: true }
-            ],
-            pageTitle: 'Shop',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/apps/eCommerce/wish-list',
-          name: 'ecommerce-wish-list',
-          component: () => import('./views/apps/eCommerce/ECommerceWishList.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'eCommerce', url:'/apps/eCommerce/shop'},
-              { title: 'Wish List', active: true }
-            ],
-            pageTitle: 'Wish List',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/apps/eCommerce/checkout',
-          name: 'ecommerce-checkout',
-          component: () => import('./views/apps/eCommerce/ECommerceCheckout.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'eCommerce', url:'/apps/eCommerce/shop'},
-              { title: 'Checkout', active: true }
-            ],
-            pageTitle: 'Checkout',
-            rule: 'editor'
-          }
-        },
-        /*
-                  Below route is for demo purpose
-                  You can use this route in your app
-                    {
-                        path: '/apps/eCommerce/item/',
-                        name: 'ecommerce-item-detail-view',
-                        redirect: '/apps/eCommerce/shop',
-                    }
-                */
-        {
-          path: '/apps/eCommerce/item/',
-          redirect: '/apps/eCommerce/item/5546604'
-        },
-        {
-          path: '/apps/eCommerce/item/:item_id',
-          name: 'ecommerce-item-detail-view',
-          component: () => import('./views/apps/eCommerce/ECommerceItemDetailView.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'eCommerce'},
-              { title: 'Shop', url: {name: 'ecommerce-shop'} },
-              { title: 'Item Details', active: true }
-            ],
-            parent: 'ecommerce-item-detail-view',
-            pageTitle: 'Item Details',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/apps/user/user-list',
-          name: 'app-user-list',
-          component: () => import('@/views/apps/user/user-list/UserList.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'User' },
-              { title: 'List', active: true }
-            ],
-            pageTitle: 'User List',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/apps/user/user-view/:userId',
-          name: 'app-user-view',
-          component: () => import('@/views/apps/user/UserView.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'User' },
-              { title: 'View', active: true }
-            ],
-            pageTitle: 'User View',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/apps/user/user-edit/:userId',
-          name: 'app-user-edit',
-          component: () => import('@/views/apps/user/user-edit/UserEdit.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'User' },
-              { title: 'Edit', active: true }
-            ],
-            pageTitle: 'User Edit',
-            rule: 'editor'
-          }
-        },
+        // {
+        //   path: '/apps/todo',
+        //   redirect: '/apps/todo/all',
+        //   name: 'todo'
+        // },
+        // {
+        //   path: '/apps/todo/:filter',
+        //   component: () => import('./views/apps/todo/Todo.vue'),
+        //   meta: {
+        //     rule: 'editor',
+        //     parent: 'todo',
+        //     no_scroll: true
+        //   }
+        // },
+        // {
+        //   path: '/apps/chat',
+        //   name: 'chat',
+        //   component: () => import('./views/apps/chat/Chat.vue'),
+        //   meta: {
+        //     rule: 'editor',
+        //     no_scroll: true
+        //   }
+        // },
+        // {
+        //   path: '/apps/email',
+        //   redirect: '/apps/email/inbox',
+        //   name: 'email'
+        // },
+        // {
+        //   path: '/apps/email/:filter',
+        //   component: () => import('./views/apps/email/Email.vue'),
+        //   meta: {
+        //     rule: 'editor',
+        //     parent: 'email',
+        //     no_scroll: true
+        //   }
+        // },
+        // {
+        //   path: '/apps/calendar/vue-simple-calendar',
+        //   name: 'calendar-simple-calendar',
+        //   component: () => import('./views/apps/calendar/SimpleCalendar.vue'),
+        //   meta: {
+        //     rule: 'editor',
+        //     no_scroll: true
+        //   }
+        // },
+        // {
+        //   path: '/apps/eCommerce/shop',
+        //   name: 'ecommerce-shop',
+        //   component: () => import('./views/apps/eCommerce/ECommerceShop.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'eCommerce'},
+        //       { title: 'Shop', active: true }
+        //     ],
+        //     pageTitle: 'Shop',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/apps/eCommerce/wish-list',
+        //   name: 'ecommerce-wish-list',
+        //   component: () => import('./views/apps/eCommerce/ECommerceWishList.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'eCommerce', url:'/apps/eCommerce/shop'},
+        //       { title: 'Wish List', active: true }
+        //     ],
+        //     pageTitle: 'Wish List',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/apps/eCommerce/checkout',
+        //   name: 'ecommerce-checkout',
+        //   component: () => import('./views/apps/eCommerce/ECommerceCheckout.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'eCommerce', url:'/apps/eCommerce/shop'},
+        //       { title: 'Checkout', active: true }
+        //     ],
+        //     pageTitle: 'Checkout',
+        //     rule: 'editor'
+        //   }
+        // },
+        // /*
+        //           Below route is for demo purpose
+        //           You can use this route in your app
+        //             {
+        //                 path: '/apps/eCommerce/item/',
+        //                 name: 'ecommerce-item-detail-view',
+        //                 redirect: '/apps/eCommerce/shop',
+        //             }
+        //         */
+        // {
+        //   path: '/apps/eCommerce/item/',
+        //   redirect: '/apps/eCommerce/item/5546604'
+        // },
+        // {
+        //   path: '/apps/eCommerce/item/:item_id',
+        //   name: 'ecommerce-item-detail-view',
+        //   component: () => import('./views/apps/eCommerce/ECommerceItemDetailView.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'eCommerce'},
+        //       { title: 'Shop', url: {name: 'ecommerce-shop'} },
+        //       { title: 'Item Details', active: true }
+        //     ],
+        //     parent: 'ecommerce-item-detail-view',
+        //     pageTitle: 'Item Details',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/apps/user/user-list',
+        //   name: 'app-user-list',
+        //   component: () => import('@/views/apps/user/user-list/UserList.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'User' },
+        //       { title: 'List', active: true }
+        //     ],
+        //     pageTitle: 'User List',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/apps/user/user-view/:userId',
+        //   name: 'app-user-view',
+        //   component: () => import('@/views/apps/user/UserView.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'User' },
+        //       { title: 'View', active: true }
+        //     ],
+        //     pageTitle: 'User View',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/apps/user/user-edit/:userId',
+        //   name: 'app-user-edit',
+        //   component: () => import('@/views/apps/user/user-edit/UserEdit.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'User' },
+        //       { title: 'Edit', active: true }
+        //     ],
+        //     pageTitle: 'User Edit',
+        //     rule: 'editor'
+        //   }
+        // },
         // =============================================================================
         // UI ELEMENTS
         // =============================================================================
-        {
-          path: '/ui-elements/data-list/list-view',
-          name: 'data-list-list-view',
-          component: () => import('@/views/ui-elements/data-list/list-view/DataListListView.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Data List'},
-              { title: 'List View', active: true }
-            ],
-            pageTitle: 'List View',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/data-list/thumb-view',
-          name: 'data-list-thumb-view',
-          component: () => import('@/views/ui-elements/data-list/thumb-view/DataListThumbView.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Data List'},
-              { title: 'Thumb View', active: true }
-            ],
-            pageTitle: 'Thumb View',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/grid/vuesax',
-          name: 'grid-vuesax',
-          component: () => import('@/views/ui-elements/grid/vuesax/GridVuesax.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Grid'},
-              { title: 'Vuesax', active: true }
-            ],
-            pageTitle: 'Grid',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/grid/tailwind',
-          name: 'grid-tailwind',
-          component: () => import('@/views/ui-elements/grid/tailwind/GridTailwind.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Grid'},
-              { title: 'Tailwind', active: true }
-            ],
-            pageTitle: 'Tailwind Grid',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/colors',
-          name: 'colors',
-          component: () => import('./views/ui-elements/colors/Colors.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Colors', active: true }
-            ],
-            pageTitle: 'Colors',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/card/basic',
-          name: 'basic-cards',
-          component: () => import('./views/ui-elements/card/CardBasic.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Card' },
-              { title: 'Basic Cards', active: true }
-            ],
-            pageTitle: 'Basic Cards',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/card/statistics',
-          name: 'statistics-cards',
-          component: () => import('./views/ui-elements/card/CardStatistics.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Card' },
-              { title: 'Statistics Cards', active: true }
-            ],
-            pageTitle: 'Statistics Card',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/card/analytics',
-          name: 'analytics-cards',
-          component: () => import('./views/ui-elements/card/CardAnalytics.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Card' },
-              { title: 'Analytics Card', active: true }
-            ],
-            pageTitle: 'Analytics Card',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/card/card-actions',
-          name: 'card-actions',
-          component: () => import('./views/ui-elements/card/CardActions.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Card' },
-              { title: 'Card Actions', active: true }
-            ],
-            pageTitle: 'Card Actions',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/card/card-colors',
-          name: 'card-colors',
-          component: () => import('./views/ui-elements/card/CardColors.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Card' },
-              { title: 'Card Colors', active: true }
-            ],
-            pageTitle: 'Card Colors',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/table',
-          name: 'table',
-          component: () => import('./views/ui-elements/table/Table.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'Table', active: true }
-            ],
-            pageTitle: 'Table',
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/ui-elements/ag-grid-table',
-          name: 'ag-grid-table',
-          component: () => import('./views/ui-elements/ag-grid-table/AgGridTable.vue'),
-          meta: {
-            breadcrumb: [
-              { title: 'Home', url: '/' },
-              { title: 'agGrid Table', active: true }
-            ],
-            pageTitle: 'agGrid Table',
-            rule: 'editor'
-          }
-        },
+        // {
+        //   path: '/ui-elements/data-list/list-view',
+        //   name: 'data-list-list-view',
+        //   component: () => import('@/views/ui-elements/data-list/list-view/DataListListView.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Data List'},
+        //       { title: 'List View', active: true }
+        //     ],
+        //     pageTitle: 'List View',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/data-list/thumb-view',
+        //   name: 'data-list-thumb-view',
+        //   component: () => import('@/views/ui-elements/data-list/thumb-view/DataListThumbView.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Data List'},
+        //       { title: 'Thumb View', active: true }
+        //     ],
+        //     pageTitle: 'Thumb View',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/grid/vuesax',
+        //   name: 'grid-vuesax',
+        //   component: () => import('@/views/ui-elements/grid/vuesax/GridVuesax.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Grid'},
+        //       { title: 'Vuesax', active: true }
+        //     ],
+        //     pageTitle: 'Grid',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/grid/tailwind',
+        //   name: 'grid-tailwind',
+        //   component: () => import('@/views/ui-elements/grid/tailwind/GridTailwind.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Grid'},
+        //       { title: 'Tailwind', active: true }
+        //     ],
+        //     pageTitle: 'Tailwind Grid',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/colors',
+        //   name: 'colors',
+        //   component: () => import('./views/ui-elements/colors/Colors.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Colors', active: true }
+        //     ],
+        //     pageTitle: 'Colors',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/card/basic',
+        //   name: 'basic-cards',
+        //   component: () => import('./views/ui-elements/card/CardBasic.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Card' },
+        //       { title: 'Basic Cards', active: true }
+        //     ],
+        //     pageTitle: 'Basic Cards',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/card/statistics',
+        //   name: 'statistics-cards',
+        //   component: () => import('./views/ui-elements/card/CardStatistics.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Card' },
+        //       { title: 'Statistics Cards', active: true }
+        //     ],
+        //     pageTitle: 'Statistics Card',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/card/analytics',
+        //   name: 'analytics-cards',
+        //   component: () => import('./views/ui-elements/card/CardAnalytics.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Card' },
+        //       { title: 'Analytics Card', active: true }
+        //     ],
+        //     pageTitle: 'Analytics Card',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/card/card-actions',
+        //   name: 'card-actions',
+        //   component: () => import('./views/ui-elements/card/CardActions.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Card' },
+        //       { title: 'Card Actions', active: true }
+        //     ],
+        //     pageTitle: 'Card Actions',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/card/card-colors',
+        //   name: 'card-colors',
+        //   component: () => import('./views/ui-elements/card/CardColors.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Card' },
+        //       { title: 'Card Colors', active: true }
+        //     ],
+        //     pageTitle: 'Card Colors',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/table',
+        //   name: 'table',
+        //   component: () => import('./views/ui-elements/table/Table.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'Table', active: true }
+        //     ],
+        //     pageTitle: 'Table',
+        //     rule: 'editor'
+        //   }
+        // },
+        // {
+        //   path: '/ui-elements/ag-grid-table',
+        //   name: 'ag-grid-table',
+        //   component: () => import('./views/ui-elements/ag-grid-table/AgGridTable.vue'),
+        //   meta: {
+        //     breadcrumb: [
+        //       { title: 'Home', url: '/' },
+        //       { title: 'agGrid Table', active: true }
+        //     ],
+        //     pageTitle: 'agGrid Table',
+        //     rule: 'editor'
+        //   }
+        // },
 
         // =============================================================================
         // COMPONENT ROUTES
