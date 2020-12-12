@@ -109,7 +109,6 @@ const mutations = {
         userInfo[property] = payload[property]
       }
 
-
     }
     // Store data in localStorage
     localStorage.setItem('userInfo', JSON.stringify(userInfo))

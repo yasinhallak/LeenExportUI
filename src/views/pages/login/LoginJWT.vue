@@ -11,10 +11,11 @@
         v-model="email"
         class="w-full"/>
     <span class="text-danger text-sm">{{ errors.first('email') }}</span>
-
+    <!--      |min:6|max:10-->
     <vs-input
+
         data-vv-validate-on="blur"
-        v-validate="'required|min:6|max:10'"
+        v-validate="'required'"
         type="password"
         name="password"
         icon-no-border
@@ -78,11 +79,10 @@ export default {
       this.$vs.loading()
 
       const payload = {
-        checkbox_remember_me: this.checkbox_remember_me,
-        userDetails: {
-          email: this.email,
+        //checkbox_remember_me: this.checkbox_remember_me,
+          Email: this.email,
           password: this.password
-        }
+
       }
 
       this.$store.dispatch('auth/loginJWT', payload)

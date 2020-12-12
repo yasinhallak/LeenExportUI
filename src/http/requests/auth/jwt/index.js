@@ -44,11 +44,9 @@ export default {
       return Promise.reject(error)
     })
   },
-  login (email, pwd) {
-    return axios.post('/api/auth/login', {
-      email,
-      password: pwd
-    })
+
+  login (payload) {
+    return axios.post('http://localhost:5000/api/v1/identity/login', payload)
   },
   registerUser (name, email, pwd) {
     return axios.post('/api/auth/register', {
