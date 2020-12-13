@@ -9,47 +9,6 @@
 
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
 
-          <!-- ACTION - DROPDOWN -->
-          <vs-dropdown vs-trigger-click class="dd-actions cursor-pointer mr-4 mb-4">
-
-            <div class="p-4 shadow-drop rounded-lg d-theme-dark-bg cursor-pointer flex items-center justify-center text-lg font-medium w-32 w-full">
-              <span class="mr-2">Actions</span>
-              <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
-            </div>
-
-            <vs-dropdown-menu>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="TrashIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Delete</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="ArchiveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Archive</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="FileIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Print</span>
-                </span>
-              </vs-dropdown-item>
-
-              <vs-dropdown-item>
-                <span class="flex items-center">
-                  <feather-icon icon="SaveIcon" svgClasses="h-4 w-4" class="mr-2" />
-                  <span>Another Action</span>
-                </span>
-              </vs-dropdown-item>
-
-            </vs-dropdown-menu>
-          </vs-dropdown>
-
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
@@ -94,7 +53,7 @@
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
         <vs-th sort-key="description">وصف المنتج</vs-th>
 
-        <vs-th>Action</vs-th>
+        <vs-th>الأوامر</vs-th>
       </template>
 
       <template slot-scope="{data}">
@@ -139,7 +98,9 @@
       </template>
     </vs-table>
   </div>
+
 </template>
+
 
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
@@ -181,7 +142,23 @@ export default {
       this.toggleDataSidebar(true)
     },
     deleteData (id) {
-      this.$store.dispatch('dataList/removeItem', id).catch(err => { console.error(err) })
+      // console.log("this.$vbsdfsd",this.$bvModal)
+      // this.$bvModal.msgBoxConfirm("هل انت متأكد من الحذف.", {
+      //   title: "الرجاء التأكد من الحذف",
+      //   size: "sm",
+      //   buttonSize: "sm",
+      //   okVariant: "danger",
+      //   okTitle: "نعم",
+      //   cancelTitle: "لا",
+      //   footerClass: "p-2",
+      //   hideHeaderClose: false,
+      //   centered: true
+      // })
+      //   .then( (value) => {
+      //     if(value)this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
+      //   })
+      this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
+
     },
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))

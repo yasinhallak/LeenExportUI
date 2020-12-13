@@ -55,6 +55,7 @@ export default {
       dispatch('login', newPayload)
     }
   },
+
   login ({ commit, state, dispatch }, payload) {
 
     // If user is already logged in notify and exit
@@ -297,7 +298,6 @@ export default {
       })
     })
   },
-
 
   // JWT
   loginJWT ({ commit }, payload) {

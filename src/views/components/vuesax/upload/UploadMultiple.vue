@@ -14,8 +14,8 @@
         <p>You can upload multiple files by adding the <code>multiple</code> property within the component</p>
 
         <div class="mt-5">
-          {{files}}
-            <vs-upload multiple text="Upload Multiple" v-model="files" action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload" />
+
+            <vs-upload multiple text="Upload Multiple"  action="https://jsonplaceholder.typicode.com/posts/" @on-success="successUpload" />
         </div>
 
         <template slot="codeContainer">
@@ -42,7 +42,7 @@ export default {
   data () {
     return {
 
-      files:[],
+
 
     }
   },

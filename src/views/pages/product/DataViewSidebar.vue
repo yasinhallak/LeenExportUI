@@ -87,6 +87,7 @@
         <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
 
         <template>
+
           <vs-upload multiple automatic single-upload
                      fileName="file"
                      text="Upload Multiple"

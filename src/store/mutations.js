@@ -62,6 +62,7 @@ const mutations = {
     const starredPagesMore = state.starredPages.slice(10)
     state.starredPages     = list.concat(starredPagesMore)
   },
+
   ARRANGE_STARRED_PAGES_MORE (state, list) {
     let downToUp                   = false
     const lastItemInStarredLimited = state.starredPages[10]

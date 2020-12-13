@@ -26,15 +26,15 @@ export default {
   },
 
   Set_CategoryType(state,items){
-    state.categoryTypes=items;
+    state.categoryTypes=items
   },
 
   Set_ProductTypes(state,items){
-    state.productTypes = items;
+    state.productTypes = items
   },
 
   Set_Companies(state,items){
-    state.companies = items;
+    state.companies = items
   },
 
   REMOVE_ITEM (state, itemId) {

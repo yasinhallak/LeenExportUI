@@ -92,7 +92,7 @@ export default {
 
   removeItem ({ commit }, itemId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`/api/data-list/product/${itemId}`)
+      axios.delete(`http://localhost:5000/api/v1/product/${itemId}`)
         .then((response) => {
           commit('REMOVE_ITEM', itemId)
           resolve(response)
