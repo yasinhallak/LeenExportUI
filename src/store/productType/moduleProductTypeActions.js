@@ -38,6 +38,18 @@ export default {
       axios.post('http://localhost:5000/api/v1/category/list',{...item})
         .then((response) => {
           commit('Set_CategoryType', response.data)
+          let emptyArray=[]
+          commit('Set_SubCategoryType', emptyArray)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  fetchSubCategoryItems({commit},item){
+    return new Promise((resolve, reject)=>{
+      axios.post('http://localhost:5000/api/v1/subCategory/list',{...item})
+        .then((response) => {
+          commit('Set_SubCategoryType', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })

@@ -45,7 +45,8 @@
       <template slot="thead">
         <vs-th sort-key="Name">اسم المنتج</vs-th>
         <vs-th sort-key="seasonsTypes">اسم الفصل</vs-th>
-        <vs-th sort-key="categoryName">اسم الصنف</vs-th>
+        <vs-th sort-key="categoryName">اسم الصنف الرئيسي</vs-th>
+        <vs-th sort-key="sunCategoryName">اسم الصنف الفرعي</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -60,6 +61,9 @@
           </vs-td>
           <vs-td>
             <p class="product-category">{{ tr.categoryName | title }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-category">{{ tr.subCategoryName | title }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
@@ -116,7 +120,6 @@ export default {
       this.$store.dispatch('productType/removeItem', id).catch(err => { console.error(err) })
     },
     editData (data) {
-
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
@@ -143,10 +146,7 @@ export default {
       this.$store.registerModule('productType', moduleProductType)
       moduleProductType.isRegistered = true
     }
-    const obj = {
-      CategoryId: null,
-    }
-    this.$store.dispatch('productType/fetchDataListItems',obj)
+     this.$store.dispatch('productType/fetchDataListItems',{CategoryId: null})
   },
   mounted () {
     this.isMounted = true

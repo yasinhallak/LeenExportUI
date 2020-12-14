@@ -31,10 +31,16 @@
         <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
 
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryId" label="نوع التصنيف" class="mt-5 w-full" name="category" v-validate="'required'">
+        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="نوع التصنيف الرئيسي" class="mt-5 w-full" name="category" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('category')">{{ errors.first('category') }}</span>
+
+        <!-- CATEGORY -->
+        <vs-select v-model.number="subCategoryId" label="نوع التصنيف الفرعي" class="mt-5 w-full" name="subCategory" v-validate="'required'">
+          <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in subCategoryTypes" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('subCategory')">{{ errors.first('subCategory') }}</span>
 
       </div>
     </component>
@@ -70,6 +76,7 @@ export default {
       name: null,
       seasonsTypes:null,
       categoryId: null,
+      subCategoryId:null,
       //categoryTypes:[],
       category_choices: [
         {text:'ربيع', value:'1'},
@@ -91,11 +98,12 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const {id, name,seasonsTypes, categoryId } = JSON.parse(JSON.stringify(this.data))
+        const {id, name,seasonsTypes, categoryId,subCategoryId } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.seasonsTypes=seasonsTypes
         this.categoryId = categoryId
+        this.subCategoryId=subCategoryId
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -128,6 +136,10 @@ export default {
     categoryTypes () {
       return this.$store.state.productType.categoryTypes
     },
+
+    subCategoryTypes(){
+      return this.$store.state.productType.subCategoryTypes
+    }
   },
   methods: {
     initValues () {
@@ -135,6 +147,7 @@ export default {
       this.dataId = null
       this.name = null
       this.categoryId = null
+      this.subCategoryId=null
 
     },
     submitData () {
@@ -143,7 +156,7 @@ export default {
           const obj = {
             id: this.dataId,
             name: this.name,
-            categoryId: this.categoryId,
+            subCategoryId: this.subCategoryId,
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
@@ -161,23 +174,22 @@ export default {
     },
 
     changeSeasonsTypes(){
-      const obj = {
-        seasonsTypes: this.seasonsTypes,
+      if (Object.entries(this.data).length === 0){
+        this.categoryId=null
+        this.subCategoryId=null
       }
-      this.$store.dispatch('productType/fetchCategoryItems',obj)
 
-        // return new Promise((resolve, reject)=> {
-        //   axios.post('http://localhost:5000/api/v1/category/list', {...obj})
-        //     .then((response) => {
-        //       this.categoryTypes = response.data
-        //       resolve(response)
-        //     })
-        //     .catch((error) => {
-        //       reject(error)
-        //     })
-        // })
-
+      this.$store.dispatch('productType/fetchCategoryItems', { seasonsTypes: this.seasonsTypes})
     },
+    changeCategoryTypes(){
+      if (Object.entries(this.data).length === 0){
+        this.subCategoryId=null
+      }
+       if(this.categoryId){
+         this.$store.dispatch('productType/fetchSubCategoryItems', {categoryId: this.categoryId})
+       }
+
+    }
 
   },
   mounted () {

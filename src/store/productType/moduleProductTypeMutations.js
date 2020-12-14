@@ -27,6 +27,9 @@ export default {
   Set_CategoryType(state,items){
     state.categoryTypes=items;
   },
+  Set_SubCategoryType(state,items){
+    state.subCategoryTypes=items;
+  },
   REMOVE_ITEM (state, itemId) {
     const ItemIndex = state.productTypes.findIndex((p) => p.id === itemId)
     state.productTypes.splice(ItemIndex, 1)
