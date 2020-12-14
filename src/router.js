@@ -904,6 +904,20 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/SubCategory',
+          name: 'page-SubCategory',
+          component: () => import('@/views/pages/subCategory/subCategory.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'SubCategory', active: true }
+            ],
+            pageTitle: 'SubCategory',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/productType',
           name: 'page-productType',
           component: () => import('@/views/pages/productType/productType.vue'),

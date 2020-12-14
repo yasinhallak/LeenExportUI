@@ -8,6 +8,6 @@
 ==========================================================================================*/
 
 export default {
-  productTypes: [],
-  //categoryTypes:[]
+  subCategories: [],
+  categoryTypes:[]
 }

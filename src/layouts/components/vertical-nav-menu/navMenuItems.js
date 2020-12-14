@@ -621,6 +621,13 @@ export default [
         i18n: 'Category'
       },
       {
+        url: '/pages/subCategory',
+        slug: 'page-subCategory',
+        name: 'subCategory',
+        icon: 'SettingsIcon',
+        i18n: 'subCategory'
+      },
+      {
         url: '/pages/productType',
         slug: 'page-productType',
         name: 'ProductType',
