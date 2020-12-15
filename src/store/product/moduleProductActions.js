@@ -33,30 +33,31 @@ export default {
     })
   },
 
-
-
   fetchCategoryItems({commit},item){
     return new Promise((resolve, reject)=>{
       axios.post('http://localhost:5000/api/v1/category/list',{...item})
         .then((response) => {
           commit('Set_CategoryType', response.data)
+          commit('Set_SubCategoryType', [])
+          commit('Set_ProductTypes', [])
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-
 
   fetchSubCategoryItems({commit},item){
     return new Promise((resolve, reject) => {
       axios.post('http://localhost:5000/api/v1/subCategory/list',{...item})
         .then((response) => {
           commit('Set_SubCategoryType', response.data)
+          commit('Set_ProductTypes', [])
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
+
   fetchProductTypeItems({commit},item){
     return new Promise((resolve, reject) => {
       axios.post('http://localhost:5000/api/v1/productType/list',{...item})
@@ -109,7 +110,7 @@ export default {
         })
         .catch((error) => { reject(error) })
     })
-  }
+  },
   // eventDragged({ commit }, payload) {
   //   return new Promise((resolve, reject) => {
   //     axios.post(`/api/apps/calendar/event/dragged/${payload.event.id}`, {payload: payload})
@@ -126,4 +127,10 @@ export default {
   //       .catch((error) => { reject(error) })
   //   })
   // },
+
+
+  updateModalState({commit},payload){
+    commit('updateModalState',payload)
+  }
+
 }

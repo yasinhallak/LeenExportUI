@@ -30,6 +30,10 @@ export default {
   Set_SubCategoryType(state,items){
     state.subCategoryTypes=items;
   },
+
+  updateModalState(state,payload){
+    state.isUpdated=payload
+  },
   REMOVE_ITEM (state, itemId) {
     const ItemIndex = state.productTypes.findIndex((p) => p.id === itemId)
     state.productTypes.splice(ItemIndex, 1)

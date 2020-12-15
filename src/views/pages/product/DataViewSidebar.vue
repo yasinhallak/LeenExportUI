@@ -25,13 +25,13 @@
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف" class="mt-5 w-full" name="categoryId" v-validate="'required'">
+        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="  اختر التصنيف الرئيسي" class="mt-5 w-full" name="categoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
 
         <!-- productTypes -->
-        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الرئيسي"   class="mt-5 w-full" name="subCategoryId" v-validate="'required'">
+        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 w-full" name="subCategoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in subCategoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
@@ -178,7 +178,7 @@ export default {
         this.productCost=productCost
         this.description=description
         this.initValues()
-        this.$store.state.product.isUpdated=false
+
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
@@ -279,7 +279,7 @@ export default {
     },
 
     changeSeasonsTypes(){
-      if(!this.$store.state.productType.isUpdated){
+      if(!this.$store.state.product.isUpdated){
         this.categoryId=null
         this.subCategoryId=null
         this.productTypeId=null
@@ -288,7 +288,7 @@ export default {
     },
 
     changeCategoryTypes(){
-      if(!this.$store.state.productType.isUpdated){
+      if(!this.$store.state.product.isUpdated){
         this.subCategoryId=null
         this.productTypeId=null
       }
@@ -300,12 +300,14 @@ export default {
 
     changeSubCategoryTypes(){
 
-      if(!this.$store.state.productType.isUpdated){
+      if(!this.$store.state.product.isUpdated){
         this.productTypeId=null
       }
-      if(this.productTypeId){
+      if(this.subCategoryId){
         this.$store.dispatch('product/fetchProductTypeItems', {subCategoryId: this.subCategoryId})
       }
+
+      this.$store.dispatch('product/updateModalState',false);
 
     }
 

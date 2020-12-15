@@ -38,8 +38,7 @@ export default {
       axios.post('http://localhost:5000/api/v1/category/list',{...item})
         .then((response) => {
           commit('Set_CategoryType', response.data)
-          let emptyArray=[]
-          commit('Set_SubCategoryType', emptyArray)
+          commit('Set_SubCategoryType', [])
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -85,7 +84,7 @@ export default {
         })
         .catch((error) => { reject(error) })
     })
-  }
+  },
   // eventDragged({ commit }, payload) {
   //   return new Promise((resolve, reject) => {
   //     axios.post(`/api/apps/calendar/event/dragged/${payload.event.id}`, {payload: payload})
@@ -102,4 +101,8 @@ export default {
   //       .catch((error) => { reject(error) })
   //   })
   // },
+
+  updateModalState({commit},payload){
+    commit('updateModalState',payload)
+  }
 }

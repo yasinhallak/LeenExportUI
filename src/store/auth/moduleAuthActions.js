@@ -309,7 +309,7 @@ export default {
           // If there's user data in response
           if (response.data.token) {
             // Navigate User to homepage
-            router.push(router.currentRoute.query.to || '/')
+            router.push(router.currentRoute.query.to || '/dashboard')
 
             // Set accessToken
             localStorage.setItem('accessToken', response.data.token)

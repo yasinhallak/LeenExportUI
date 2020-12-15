@@ -32,6 +32,10 @@ export default {
     state.subCategoryTypes=items
   },
 
+  updateModalState(state,payload){
+    state.isUpdated=payload
+ },
+
   Set_ProductTypes(state,items){
     state.productTypes = items
   },

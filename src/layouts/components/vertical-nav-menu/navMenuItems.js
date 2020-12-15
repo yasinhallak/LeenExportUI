@@ -689,41 +689,41 @@ export default [
       //   icon: 'PieChartIcon',
       //   i18n: 'Authentication',
       //   submenu: [
-          // {
-          //   url: '/pages/login',
-          //   name: 'Login',
-          //   slug: 'pages-login',
-          //   i18n: 'Login',
-          //   target: '_blank'
-          // },
-          // {
-          //   url: '/pages/register',
-          //   name: 'Register',
-          //   slug: 'pages-register',
-          //   i18n: 'Register',
-          //   target: '_blank'
-          // },
-          // {
-          //   url: '/pages/forgot-password',
-          //   name: 'Forgot Password',
-          //   slug: 'pages-forgot-password',
-          //   i18n: 'ForgotPassword',
-          //   target: '_blank'
-          // },
-          // {
-          //   url: '/pages/reset-password',
-          //   name: 'Reset Password',
-          //   slug: 'pages-reset-password',
-          //   i18n: 'ResetPassword',
-          //   target: '_blank'
-          // },
-          // {
-          //   url: '/pages/lock-screen',
-          //   name: 'Lock Screen',
-          //   slug: 'pages-lock-screen',
-          //   i18n: 'LockScreen',
-          //   target: '_blank'
-          // }
+      //     {
+      //       url: '/pages/login',
+      //       name: 'Login',
+      //       slug: 'pages-login',
+      //       i18n: 'Login',
+      //       target: '_blank'
+      //     },
+      //     {
+      //       url: '/pages/register',
+      //       name: 'Register',
+      //       slug: 'pages-register',
+      //       i18n: 'Register',
+      //       target: '_blank'
+      //     },
+      //     {
+      //       url: '/pages/forgot-password',
+      //       name: 'Forgot Password',
+      //       slug: 'pages-forgot-password',
+      //       i18n: 'ForgotPassword',
+      //       target: '_blank'
+      //     },
+      //     {
+      //       url: '/pages/reset-password',
+      //       name: 'Reset Password',
+      //       slug: 'pages-reset-password',
+      //       i18n: 'ResetPassword',
+      //       target: '_blank'
+      //     },
+      //     {
+      //       url: '/pages/lock-screen',
+      //       name: 'Lock Screen',
+      //       slug: 'pages-lock-screen',
+      //       i18n: 'LockScreen',
+      //       target: '_blank'
+      //     }
       //   ]
       // },
       // {
