@@ -47,6 +47,16 @@ export default {
   },
 
 
+  fetchSubCategoryItems({commit},item){
+    return new Promise((resolve, reject) => {
+      axios.post('http://localhost:5000/api/v1/subCategory/list',{...item})
+        .then((response) => {
+          commit('Set_SubCategoryType', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   fetchProductTypeItems({commit},item){
     return new Promise((resolve, reject) => {
       axios.post('http://localhost:5000/api/v1/productType/list',{...item})

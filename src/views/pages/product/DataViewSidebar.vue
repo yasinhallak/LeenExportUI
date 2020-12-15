@@ -31,6 +31,12 @@
         <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
 
         <!-- productTypes -->
+        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الرئيسي"   class="mt-5 w-full" name="subCategoryId" v-validate="'required'">
+          <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in subCategoryTypes" />
+        </vs-select>
+        <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
+
+        <!-- productTypes -->
         <vs-select label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 w-full" name="productTypeId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
         </vs-select>
@@ -134,6 +140,7 @@ export default {
       productCost:null,
       count:20,
       categoryId:null,
+      subCategoryId:null,
       productTypeId:null,
       vendorId:null,
       files:[],
@@ -157,10 +164,11 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,seasonsTypes,categoryId,productTypeId,title,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
+        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.seasonsTypes=seasonsTypes
         this.categoryId=categoryId
+        this.subCategoryId=subCategoryId
         this.productTypeId=productTypeId
         this.title = title
         this.vendorId=vendorId
@@ -170,6 +178,7 @@ export default {
         this.productCost=productCost
         this.description=description
         this.initValues()
+        this.$store.state.product.isUpdated=false
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
@@ -188,12 +197,15 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title && this.size && this.description && this.price && this.productCost && this.count && this.categoryId && this.productTypeId && this.vendorId
+      return !this.errors.any() && this.title && this.size && this.description && this.price && this.productCost && this.count && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
     categoryTypes () {
       return this.$store.state.product.categoryTypes
+    },
+    subCategoryTypes () {
+      return this.$store.state.product.subCategoryTypes
     },
 
     productTypes () {
@@ -227,6 +239,7 @@ export default {
       this.seasonsTypes=null
       this.count=20
       this.categoryId=null
+      this.subCategoryId=null
       this.productTypeId=null
       this.vendorId=null
       this.files=[]
@@ -239,6 +252,7 @@ export default {
             id: this.dataId,
             seasonsTypes:this.seasonsTypes,
             categoryId:this.categoryId,
+            subCategoryId:this.subCategoryId,
             productTypeId:this.productTypeId,
             title: this.title,
             vendorId:this.vendorId,
@@ -265,29 +279,34 @@ export default {
     },
 
     changeSeasonsTypes(){
-      const obj = {
-        seasonsTypes: this.seasonsTypes,
+      if(!this.$store.state.productType.isUpdated){
+        this.categoryId=null
+        this.subCategoryId=null
+        this.productTypeId=null
       }
-      this.$store.dispatch('product/fetchCategoryItems',obj)
-
-      // return new Promise((resolve, reject)=> {
-      //   axios.post('http://localhost:5000/api/v1/category/list', {...obj})
-      //     .then((response) => {
-      //       this.categoryTypes = response.data
-      //       resolve(response)
-      //     })
-      //     .catch((error) => {
-      //       reject(error)
-      //     })
-      // })
-
+      this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: this.seasonsTypes})
     },
 
     changeCategoryTypes(){
-      const obj = {
-        categoryId: this.categoryId,
+      if(!this.$store.state.productType.isUpdated){
+        this.subCategoryId=null
+        this.productTypeId=null
       }
-      this.$store.dispatch('product/fetchProductTypeItems',obj)
+      if(this.categoryId){
+        this.$store.dispatch('product/fetchSubCategoryItems', {categoryId: this.categoryId})
+      }
+
+    },
+
+    changeSubCategoryTypes(){
+
+      if(!this.$store.state.productType.isUpdated){
+        this.productTypeId=null
+      }
+      if(this.productTypeId){
+        this.$store.dispatch('product/fetchProductTypeItems', {subCategoryId: this.subCategoryId})
+      }
+
     }
 
   },

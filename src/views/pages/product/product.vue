@@ -43,7 +43,8 @@
 
       <template slot="thead">
         <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
-        <vs-th sort-key="categoryName">نوع الصنف</vs-th>
+        <vs-th sort-key="categoryName">  اسم الصنف الرئيسي </vs-th>
+        <vs-th sort-key="subCategoryName">  اسم الصنف الفرعي </vs-th>
         <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
         <vs-th sort-key="title">نوعية الخامة</vs-th>
         <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
@@ -64,6 +65,9 @@
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.subCategoryName }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.productTypeName }}</p>
@@ -162,6 +166,7 @@ export default {
     },
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
+      this.$store.state.product.isUpdated=true
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },

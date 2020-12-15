@@ -105,6 +105,7 @@ export default {
         this.categoryId = categoryId
         this.subCategoryId=subCategoryId
         this.initValues()
+        this.$store.state.productType.isUpdated=false
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     },
@@ -174,7 +175,7 @@ export default {
     },
 
     changeSeasonsTypes(){
-      if (Object.entries(this.data).length === 0){
+      if(!this.$store.state.productType.isUpdated){
         this.categoryId=null
         this.subCategoryId=null
       }
@@ -182,7 +183,7 @@ export default {
       this.$store.dispatch('productType/fetchCategoryItems', { seasonsTypes: this.seasonsTypes})
     },
     changeCategoryTypes(){
-      if (Object.entries(this.data).length === 0){
+      if(!this.$store.state.productType.isUpdated){
         this.subCategoryId=null
       }
        if(this.categoryId){

@@ -28,6 +28,9 @@ export default {
   Set_CategoryType(state,items){
     state.categoryTypes=items
   },
+  Set_SubCategoryType(state,items){
+    state.subCategoryTypes=items
+  },
 
   Set_ProductTypes(state,items){
     state.productTypes = items

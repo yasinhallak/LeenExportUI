@@ -121,8 +121,10 @@ export default {
     },
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
+      this.$store.state.productType.isUpdated = true;
       this.sidebarData = data
       this.toggleDataSidebar(true)
+
     },
     getOrderStatusColor (status) {
       if (status === 'on_hold')   return 'warning'
