@@ -55,17 +55,32 @@
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
         <!-- size -->
-        <vs-input label="المقاسات المتاحة" v-model="size" class="mt-5 w-full" icon-pack="feather"  name="size"  v-validate="'required'"   />
-        <span class="text-danger text-sm" v-show="errors.has('size')">{{ errors.first('size') }}</span>
+<!--        <vs-input label="المقاسات المتاحة" v-model="size" class="mt-5 w-full" icon-pack="feather"  name="size"  v-validate="'required'"   />-->
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="S:" v-model="S" name="S"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="M  :" v-model="M" name="M"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="L  :" v-model="L" name="L"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XL :" v-model="XL" name="XL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL" name="XXL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
+        </div>
 
-        <!-- count -->
-<!--        <vs-input label="Count" v-model="count" class="mt-5 w-full" icon-pack="feather"  name="count"  v-validate="'required|numeric'"   />-->
-<!--        <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>-->
-
-
-            <vs-input-number  min="20" max="40" v-model="count" name="count"  v-validate="'required'" />
+        <div class="centerx">
+            <vs-input-number  min="20" max="40" label="عدد المنتجات ضمن السيريه:" v-model="count" name="count"  v-validate="'required'" />
             <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
-
+        </div>
         <!-- PRICE -->
         <vs-input
           icon-pack="feather"
@@ -135,10 +150,15 @@ export default {
       seasonsTypes:null,
       title: null,
       size:null,
+      S:0,
+      M:0,
+      L:0,
+      XL:0,
+      XXL:0,
       description:null,
       price:null,
       productCost:null,
-      count:20,
+      count:0,
       categoryId:null,
       subCategoryId:null,
       productTypeId:null,
@@ -197,7 +217,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title && this.size && this.description && this.price && this.productCost && this.count && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
+      return !this.errors.any() && this.title  && this.description && this.price && this.productCost && this.count && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -248,6 +268,24 @@ export default {
     submitData () {
       this.$validator.validateAll().then(result => {
         if (result) {
+          let productSizes=[]
+          if(this.S){
+            productSizes.push({"name":"S","Count":this.S})
+          }
+          if(this.M){
+            productSizes.push({"name":"M","Count":this.M})
+          }
+          if(this.L){
+            productSizes.push({"name":"L","Count":this.L})
+          }
+          if(this.XL){
+            productSizes.push({"name":"XL","Count":this.XL})
+          }
+          if(this.XXL){
+            productSizes.push({"name":"XXL","Count":this.XXL})
+          }
+
+
           const obj = {
             id: this.dataId,
             seasonsTypes:this.seasonsTypes,
@@ -261,7 +299,8 @@ export default {
             price:this.price,
             productCost:this.productCost,
             description: this.description,
-            photos:this.files
+            photos:this.files,
+            ProductSizes:productSizes
           }
 
           if (this.dataId !== null && this.dataId >= 0) {

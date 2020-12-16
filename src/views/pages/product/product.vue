@@ -146,21 +146,21 @@ export default {
       this.toggleDataSidebar(true)
     },
     deleteData (id) {
-      console.log("this.$vbsdfsd",this.$bvModal)
-      this.$bvModal.msgBoxConfirm("هل انت متأكد من الحذف.", {
-        title: "الرجاء التأكد من الحذف",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "danger",
-        okTitle: "نعم",
-        cancelTitle: "لا",
-        footerClass: "p-2",
-        hideHeaderClose: false,
-        centered: true
-      })
-        .then( (value) => {
-          if(value)this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
-        })
+      // console.log("this.$vbsdfsd",this.$bvModal)
+      // this.$bvModal.msgBoxConfirm("هل انت متأكد من الحذف.", {
+      //   title: "الرجاء التأكد من الحذف",
+      //   size: "sm",
+      //   buttonSize: "sm",
+      //   okVariant: "danger",
+      //   okTitle: "نعم",
+      //   cancelTitle: "لا",
+      //   footerClass: "p-2",
+      //   hideHeaderClose: false,
+      //   centered: true
+      // })
+      //   .then( (value) => {
+      //     if(value)this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
+      //   })
       this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
 
     },
