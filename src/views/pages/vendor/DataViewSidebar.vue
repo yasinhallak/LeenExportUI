@@ -20,25 +20,25 @@
 
       <div class="p-6">
         <!-- NAME -->
-        <vs-input label="Name" v-model="name" class="mt-5 w-full" name="name" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <vs-input label="اسم مالك الشركة" v-model="name" class="mt-5 w-full" name="name" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- CompanyName -->
-        <vs-input label="CompanyName" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName" v-validate="'required'" />
+        <vs-input label="اسم الشركة" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
 
         <!-- Phone -->
-        <vs-input label="Mobile" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric'"   />
+        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric'"   />
         <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
         <!-- Address -->
-        <vs-textarea label="Address" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
+        <vs-textarea label="عنوان مقر الشركة" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('address')">{{ errors.first('address') }}</span>
       </div>
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">حفظ</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">إلغاء</vs-button>
     </div>
   </vs-sidebar>
 </template>

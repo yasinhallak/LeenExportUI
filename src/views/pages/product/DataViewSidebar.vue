@@ -59,10 +59,11 @@
         <div class="centerx">
           <vs-input-number  min="0" max="10" label="S:" v-model="S" name="S"  v-validate="'required'" />
           <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
-        </div>
-        <div class="centerx">
           <vs-input-number  min="0" max="10" label="M  :" v-model="M" name="M"  v-validate="'required'" />
           <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
+        </div>
+        <div class="centerx">
+
         </div>
         <div class="centerx">
           <vs-input-number  min="0" max="10" label="L  :" v-model="L" name="L"  v-validate="'required'" />
@@ -121,8 +122,8 @@
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">حفظ</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">إلغاء</vs-button>
     </div>
   </vs-sidebar>
 </template>
@@ -257,7 +258,7 @@ export default {
       this.price=null
       this.productCost=null
       this.seasonsTypes=null
-      this.count=20
+      this.count=0
       this.categoryId=null
       this.subCategoryId=null
       this.productTypeId=null

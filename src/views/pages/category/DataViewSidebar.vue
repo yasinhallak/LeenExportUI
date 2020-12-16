@@ -36,8 +36,8 @@
     </component>
 
     <div class="flex flex-wrap items-center p-6" slot="footer">
-      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">Submit</vs-button>
-      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">Cancel</vs-button>
+      <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">حفظ</vs-button>
+      <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">إلغاء</vs-button>
     </div>
   </vs-sidebar>
 </template>
