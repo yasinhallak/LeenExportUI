@@ -13,7 +13,7 @@ export default {
   addItem ({ commit }, item) {
     console.log("item",item)
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/productType', {...item})
+      axios.post('/productType', {...item})
         .then((response) => {
           console.log("response",response)
           commit('ADD_ITEM',  response.data)
@@ -24,7 +24,7 @@ export default {
   },
   fetchDataListItems ({ commit },item) {
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/productType/list',{...item})
+      axios.post('/productType/list',{...item})
         .then((response) => {
           commit('SET_PRODUCTS', response.data)
           resolve(response)
@@ -35,7 +35,7 @@ export default {
 
   fetchCategoryItems({commit},item){
     return new Promise((resolve, reject)=>{
-      axios.post('http://localhost:5000/api/v1/category/list',{...item})
+      axios.post('/category/list',{...item})
         .then((response) => {
           commit('Set_CategoryType', response.data)
           commit('Set_SubCategoryType', [])
@@ -46,7 +46,7 @@ export default {
   },
   fetchSubCategoryItems({commit},item){
     return new Promise((resolve, reject)=>{
-      axios.post('http://localhost:5000/api/v1/subCategory/list',{...item})
+      axios.post('/subCategory/list',{...item})
         .then((response) => {
           commit('Set_SubCategoryType', response.data)
           resolve(response)
@@ -66,7 +66,7 @@ export default {
   // },
   updateItem ({ commit }, item) {
     return new Promise((resolve, reject) => {
-      axios.put(`http://localhost:5000/api/v1/productType/${item.id}`, {...item})
+      axios.put(`/productType/${item.id}`, {...item})
         .then((response) => {
           commit('UPDATE_PRODUCT', response.data)
           resolve(response)
@@ -77,7 +77,7 @@ export default {
 
   removeItem ({ commit }, itemId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`http://localhost:5000/api/v1/productType/${itemId}`)
+      axios.delete(`/productType/${itemId}`)
         .then((response) => {
           commit('REMOVE_ITEM', itemId)
           resolve(response)

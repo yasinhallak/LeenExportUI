@@ -77,9 +77,25 @@
           <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL" name="XXL"  v-validate="'required'" />
           <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
         </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL" name="XXXL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL" name="XXXXL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL" name="XXXXXL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
+        </div>
+        <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL" name="XXXXXXL"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
+        </div>
 
         <div class="centerx">
-            <vs-input-number  min="20" max="40" label="عدد المنتجات ضمن السيريه:" v-model="count" name="count"  v-validate="'required'" />
+            <vs-input-number  min="0" max="10" label="عدد المنتجات ضمن السيريه:" v-model="count" name="count"  v-validate="'required'" />
             <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
         </div>
         <!-- PRICE -->
@@ -156,6 +172,10 @@ export default {
       L:0,
       XL:0,
       XXL:0,
+      XXXL:0,
+      XXXXL:0,
+      XXXXXL:0,
+      XXXXXXL:0,
       description:null,
       price:null,
       productCost:null,

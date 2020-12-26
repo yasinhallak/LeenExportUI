@@ -10,13 +10,14 @@
 import axios from '@/axios.js'
 
 export default {
-  addItem ({ commit }, item) {
+  addItem ({ context }, item) {
     console.log("item",item)
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/product', {...item})
+      axios.post('/product', {...item})
         .then((response) => {
           console.log("response",response)
-          commit('ADD_ITEM',  response.data)
+          context.commit('ADD_ITEM',  response.data)
+          location.reload();
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -24,7 +25,7 @@ export default {
   },
   fetchDataListItems ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('http://localhost:5000/api/v1/product/list')
+      axios.get('/product/list')
         .then((response) => {
           commit('SET_PRODUCTS', response.data)
           resolve(response)
@@ -35,7 +36,7 @@ export default {
 
   fetchCategoryItems({commit},item){
     return new Promise((resolve, reject)=>{
-      axios.post('http://localhost:5000/api/v1/category/list',{...item})
+      axios.post('/category/list',{...item})
         .then((response) => {
           commit('Set_CategoryType', response.data)
           commit('Set_SubCategoryType', [])
@@ -48,10 +49,11 @@ export default {
 
   fetchSubCategoryItems({commit},item){
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/subCategory/list',{...item})
+      axios.post('/subCategory/list',{...item})
         .then((response) => {
           commit('Set_SubCategoryType', response.data)
           commit('Set_ProductTypes', [])
+
           resolve(response)
         })
         .catch((error) => { reject(error) })
@@ -60,7 +62,7 @@ export default {
 
   fetchProductTypeItems({commit},item){
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/productType/list',{...item})
+      axios.post('/productType/list',{...item})
         .then((response) => {
           commit('Set_ProductTypes', response.data)
           resolve(response)
@@ -71,7 +73,7 @@ export default {
 
   fetchCompanyItems({commit}){
     return new Promise((resolve, reject) => {
-      axios.get('http://localhost:5000/api/v1/vendor/list')
+      axios.get('/vendor/list')
         .then((response) => {
           commit('Set_Companies', response.data)
           resolve(response)
@@ -92,7 +94,7 @@ export default {
   // },
   updateItem ({ commit }, item) {
     return new Promise((resolve, reject) => {
-      axios.put(`http://localhost:5000/api/v1/product/${item.id}`, {...item})
+      axios.put(`/product/${item.id}`, {...item})
         .then((response) => {
           commit('UPDATE_PRODUCT', response.data)
           resolve(response)
@@ -103,7 +105,7 @@ export default {
 
   removeItem ({ commit }, itemId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`http://localhost:5000/api/v1/product/${itemId}`)
+      axios.delete(`/product/${itemId}`)
         .then((response) => {
           commit('REMOVE_ITEM', itemId)
           resolve(response)

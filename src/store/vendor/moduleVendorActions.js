@@ -13,7 +13,7 @@ export default {
   addItem ({ commit }, item) {
     console.log("item",item)
     return new Promise((resolve, reject) => {
-      axios.post('http://localhost:5000/api/v1/vendor', {...item})
+      axios.post('/vendor', {...item})
         .then((response) => {
           console.log("response",response)
           commit('ADD_ITEM',  response.data)
@@ -24,7 +24,7 @@ export default {
   },
   fetchDataListItems ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('http://localhost:5000/api/v1/vendor/list')
+      axios.get('/vendor/list')
         .then((response) => {
           commit('SET_PRODUCTS', response.data)
           resolve(response)
@@ -46,7 +46,7 @@ export default {
   // },
   updateItem ({ commit }, item) {
     return new Promise((resolve, reject) => {
-      axios.put(`http://localhost:5000/api/v1/vendor/${item.id}`, {...item})
+      axios.put(`/vendor/${item.id}`, {...item})
         .then((response) => {
           commit('UPDATE_PRODUCT', response.data)
           resolve(response)
@@ -57,7 +57,7 @@ export default {
 
   removeItem ({ commit }, itemId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`http://localhost:5000/api/v1/vendor/${itemId}`)
+      axios.delete(`/vendor/${itemId}`)
         .then((response) => {
           commit('REMOVE_ITEM', itemId)
           resolve(response)
