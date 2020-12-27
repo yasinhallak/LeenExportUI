@@ -46,7 +46,7 @@ export default {
   },
 
   login (payload) {
-    return axios.post('http://localhost:5000/api/v1/identity/login', payload)
+    return axios.post('/identity/login', payload)
   },
 
   registerUser (name, email, pwd) {

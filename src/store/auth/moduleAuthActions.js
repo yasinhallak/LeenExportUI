@@ -305,7 +305,6 @@ export default {
     return new Promise((resolve, reject) => {
       jwt.login(payload)
         .then(response => {
-          console.log("tses",response.data)
           // If there's user data in response
           if (response.data.token) {
             // Navigate User to homepage

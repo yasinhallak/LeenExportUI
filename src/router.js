@@ -950,6 +950,20 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/customer',
+          name: 'page-customer',
+          component: () => import('@/views/pages/customer/customer.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'customer', active: true }
+            ],
+            pageTitle: 'customer',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/product',
           name: 'page-product',
           component: () => import('@/views/pages/product/product.vue'),

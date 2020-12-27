@@ -648,6 +648,13 @@ export default [
         icon: 'SettingsIcon',
         i18n: 'Vendor'
       },
+      {
+        url: '/pages/customer',
+        slug: 'page-customer',
+        name: 'customer',
+        icon: 'SettingsIcon',
+        i18n: 'customer'
+      },
       // {
       //   url: '/pages/user-settings',
       //   slug: 'page-user-settings',

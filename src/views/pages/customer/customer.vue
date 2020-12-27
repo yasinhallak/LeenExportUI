@@ -3,11 +3,12 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="products">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="customers">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
+
 
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
@@ -19,7 +20,7 @@
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ products.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : products.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ customers.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : customers.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -42,18 +43,15 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
-        <vs-th sort-key="categoryName">  اسم الصنف الرئيسي </vs-th>
-        <vs-th sort-key="subCategoryName">  اسم الصنف الفرعي </vs-th>
-        <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
-        <vs-th sort-key="title">نوعية الخامة</vs-th>
-        <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
-<!--        <vs-th sort-key="size">المقاسات المتاحة</vs-th>-->
-        <vs-th sort-key="count">عدد السيريه</vs-th>
-        <vs-th sort-key="price">سعر المبيع</vs-th>
-        <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
-        <vs-th sort-key="description">وصف المنتج</vs-th>
-
+        <vs-th sort-key="name">اسم الزبون</vs-th>
+        <vs-th sort-key="companyName">اسم الشركة</vs-th>
+        <vs-th sort-key="phone">رقم الجوال</vs-th>
+        <vs-th sort-key="email">البريد الإلكتروني</vs-th>
+        <vs-th sort-key="specialization">الأختصاص</vs-th>
+        <vs-th sort-key="saleType">نوع البيع</vs-th>
+        <vs-th sort-key="status">الحالة</vs-th>
+        <vs-th sort-key="description">التقرير</vs-th>
+        <vs-th sort-key="address">العنوان</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -61,54 +59,49 @@
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.seasonsTypes }}</p>
+            <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+            <p class="product-category">{{ tr.companyName | title }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.subCategoryName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.phone }}</p>
+            <i class="fab fa-whatsapp"></i>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.productTypeName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.email }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.title }}</p>
+            <p class="product-name font-medium truncate" >{{ getSpecialLabel(tr.specialization) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.vendorName }}</p>
-          </vs-td>
-<!--          <vs-td>-->
-<!--            <p class="product-name font-medium truncate">{{  tr.size }}</p>-->
-<!--          </vs-td>-->
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.count }}</p>
+            <p class="product-name font-medium truncate">{{ getSaleLabel(tr.saleType ) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-price font-medium truncate">${{ tr.price }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-price font-medium truncate">${{ tr.productCost }}</p>
+            <p class="product-name font-medium truncate">{{ tr.status }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.address }}</p>
+          </vs-td>
+
           <vs-td class="whitespace-no-wrap">
-<!--            <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />-->
+            <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
           </vs-td>
+
         </vs-tr>
         </tbody>
       </template>
     </vs-table>
   </div>
-
 </template>
-
 
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
-import moduleDataList from '@/store/product/moduleProduct.js'
+import moduleDataList from '@/store/customer/moduleCustomer.js'
 
 export default {
   components: {
@@ -133,40 +126,49 @@ export default {
       }
       return 0
     },
-    products(){
-      return this.$store.state.product.products
+    customers () {
+      return this.$store.state.customer.customers
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.customers.length
     }
   },
   methods: {
+    getSpecialLabel(items){
+      let label='';
+       items.forEach((item,index)=>{
+         if(index!==0){
+           label=label + ' , ' + item.label
+         }
+         else {
+           label=label + item.label
+         }
+       })
+      return label;
+    },
+
+    getSaleLabel(items){
+      let label='';
+      items.forEach((item,index)=>{
+        if(index!==0){
+          label=label + ' , ' + item.label
+        }
+        else {
+          label=label + item.label
+        }
+      })
+      return label;
+    },
+
     addNewData () {
       this.sidebarData = {}
       this.toggleDataSidebar(true)
     },
     deleteData (id) {
-      // console.log("this.$vbsdfsd",this.$bvModal)
-      // this.$bvModal.msgBoxConfirm("هل انت متأكد من الحذف.", {
-      //   title: "الرجاء التأكد من الحذف",
-      //   size: "sm",
-      //   buttonSize: "sm",
-      //   okVariant: "danger",
-      //   okTitle: "نعم",
-      //   cancelTitle: "لا",
-      //   footerClass: "p-2",
-      //   hideHeaderClose: false,
-      //   centered: true
-      // })
-      //   .then( (value) => {
-      //     if(value)this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
-      //   })
-      this.$store.dispatch('product/removeItem', id).catch(err => { console.error(err) })
-
+      this.$store.dispatch('customer/removeItem', id).catch(err => { console.error(err) })
     },
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
-      this.$store.dispatch('product/updateModalState',true);
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
@@ -189,10 +191,10 @@ export default {
   },
   created () {
     if (!moduleDataList.isRegistered) {
-      this.$store.registerModule('product', moduleDataList)
+      this.$store.registerModule('customer', moduleDataList)
       moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('product/fetchDataListItems')
+    this.$store.dispatch('customer/fetchDataListItems')
   },
   mounted () {
     this.isMounted = true
@@ -319,5 +321,4 @@ export default {
   }
 }
 </style>
-
 
