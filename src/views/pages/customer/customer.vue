@@ -78,7 +78,7 @@
             <p class="product-name font-medium truncate">{{ getSaleLabel(tr.saleType ) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.status }}</p>
+            <p class="product-name font-medium truncate">{{$t('statusOptions.' + tr.status) }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>

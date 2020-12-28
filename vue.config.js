@@ -20,7 +20,15 @@ module.exports = {
         chunks: 'all'
       }
     }
-  }
+  },
+  pluginOptions: {
+    i18n: {
+      locale: "ar",
+      fallbackLocale: "ar",
+      localeDir: "locales",
+      enableInSFC: false
+    }
+  },
   // devServer: {
   //   overlay: {
   //     warnings: true,

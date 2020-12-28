@@ -56,7 +56,7 @@
             <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.seasonsTypes }}</p>
+            <p class="product-category">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>
           </vs-td>
           <vs-td>
             <p class="product-category">{{ tr.categoryName | title }}</p>

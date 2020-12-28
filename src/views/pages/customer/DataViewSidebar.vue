@@ -108,8 +108,10 @@ export default {
         {id: 4, label: 'مفرق'},
       ],
       statusOptions:[
-        {id:1,label:'زبون محتمل'} ,
-        {id:2,label:'زبون ثابت'}
+        {id:1,label:'زبون أساسي'} ,
+        {id:2,label:'زبون محتمل'},
+        {id:3,label:'مهمة جديدة'},
+        {id:4,label:"تم التحويل إلي الوكيل"}
         ],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,

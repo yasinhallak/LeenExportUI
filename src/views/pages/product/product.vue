@@ -61,7 +61,7 @@
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.seasonsTypes }}</p>
+            <p class="product-name font-medium truncate">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
