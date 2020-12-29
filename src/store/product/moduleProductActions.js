@@ -10,14 +10,13 @@
 import axios from '@/axios.js'
 
 export default {
-  addItem ({ context }, item) {
+  addItem ({ commit }, item) {
     console.log("item",item)
     return new Promise((resolve, reject) => {
       axios.post('/product', {...item})
         .then((response) => {
           console.log("response",response)
-          context.commit('ADD_ITEM',  response.data)
-          location.reload();
+          commit('ADD_ITEM',  response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
