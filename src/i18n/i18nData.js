@@ -1,6 +1,12 @@
 // en, de, fr, pt
 export default {
   en: {
+    Category: 'التصنيفات الرئيسية',
+    subCategory:'التصنيفات الفرعية',
+    ProductType:'المنتجات الرئيسية',
+    product:'المنتجات',
+    Vendor:'الشركات',
+    customer:'الزبائن',
     Dashboard: 'Dashboard',
     eCommerce: 'eCommerce',
     Apps: 'Apps',
@@ -88,9 +94,6 @@ export default {
     View: 'View',
     Edit: 'Edit',
     UserSettings: 'User Settings',
-    Category: 'Category',
-    PrductType: 'PrductType',
-    Vendor: 'Vendor',
     Invoice: 'Invoice',
     FAQ: 'FAQ',
     Search: 'Search',

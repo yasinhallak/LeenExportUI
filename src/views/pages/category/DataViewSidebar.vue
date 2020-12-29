@@ -11,7 +11,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-      <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} ITEM</h4>
+      <h4>{{ Object.entries(this.data).length === 0 ? "إضافة" : "تعديل" }} تصنيف رئيسي</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -21,13 +21,17 @@
       <div class="p-6">
 
         <!-- NAME -->
-        <vs-input label="أدخل اسم التصنيف" v-model="name" class="mt-5 w-full" name="name" v-validate="'required'" />
+        <vs-input label="أدخل اسم التصنيف الرئيسي" v-model="name" class="mt-5 w-full" name="name" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- CATEGORY -->
-        <vs-select v-model.number="dataCategory" label="أختر الفصل" class="mt-5 w-full" name="item-category" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
+        <label >الحالة</label>
+        <v-select  v-model.number="dataCategory" class="mt-5 w-full" :options="category_choices" name="dataCategory" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('dataCategory')">{{ errors.first('dataCategory') }}</span>
+
+<!--        <vs-select v-model.number="dataCategory" label="أختر الفصل" class="mt-5 w-full" name="item-category" v-validate="'required'">-->
+<!--          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />-->
+<!--        </vs-select>-->
         <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
 
         <vs-textarea v-model="description" class="mt-5 w-full" name="description" label="أدخل وصف " width="300px" v-validate="'required'" />
@@ -44,7 +48,7 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-
+import vSelect from 'vue-select'
 export default {
   props: {
     isSidebarActive: {
@@ -57,7 +61,8 @@ export default {
     }
   },
   components: {
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
+    'v-select': vSelect,
   },
   data () {
     return {
@@ -65,11 +70,18 @@ export default {
       name: null,
       dataCategory: null,
       description:null,
+      // category_choices: [
+      //   {text:'ربيع', value:'1'},
+      //   {text:'صيف', value:'2'},
+      //   {text:'خريف', value:'3'},
+      //   {text:'شتاء', value:'4'}
+      // ],
       category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
+        {id: 1, label: 'ربيع'},
+        {id: 2, label: 'صيف'},
+        {id: 3, label: 'خريف'},
+        {id: 4, label: 'شتاء'},
+
       ],
 
       settings: { // perfectscrollbar settings
@@ -87,7 +99,7 @@ export default {
       } else {
         const { seasonsTypes, id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        this.dataCategory = seasonsTypes
+        this.dataCategory = {id: seasonsTypes, label:this.$t("seasonsTypes." + seasonsTypes)}
         this.name = categoryName
         this.description=description
 

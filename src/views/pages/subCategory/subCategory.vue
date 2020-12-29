@@ -13,7 +13,7 @@
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">Add New</span>
+            <span class="ml-2 text-base text-primary">إضافة تصنيف فرعي</span>
           </div>
         </div>
 
@@ -45,10 +45,9 @@
       <template slot="thead">
         <vs-th sort-key="Name">اسم التصنيف الفرعي</vs-th>
         <vs-th sort-key="seasonsTypes">اسم الفصل</vs-th>
-        <vs-th sort-key="categoryName">اسم الصنف</vs-th>
+        <vs-th sort-key="categoryName">اسم التصنيف الرئيسي</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
-
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
@@ -65,7 +64,6 @@
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
           </vs-td>
-
         </vs-tr>
         </tbody>
       </template>

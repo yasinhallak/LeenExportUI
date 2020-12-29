@@ -12,7 +12,7 @@
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">Add New</span>
+            <span class="ml-2 text-base text-primary">إضافة منتج</span>
           </div>
         </div>
 
@@ -43,12 +43,13 @@
 
       <template slot="thead">
         <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
-        <vs-th sort-key="categoryName">  اسم الصنف الرئيسي </vs-th>
-        <vs-th sort-key="subCategoryName">  اسم الصنف الفرعي </vs-th>
+        <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
+        <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
         <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
-        <vs-th sort-key="title">نوعية الخامة</vs-th>
+        <vs-th sort-key="title">عنوان المنتج</vs-th>
+        <vs-th sort-key="material">نوعية الخامة</vs-th>
         <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
-<!--        <vs-th sort-key="size">المقاسات المتاحة</vs-th>-->
+        <vs-th sort-key="productSize">المقاسات المتاحة</vs-th>
         <vs-th sort-key="count">عدد السيريه</vs-th>
         <vs-th sort-key="price">سعر المبيع</vs-th>
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
@@ -76,11 +77,14 @@
             <p class="product-name font-medium truncate">{{ tr.title }}</p>
           </vs-td>
           <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.material }}</p>
+          </vs-td>
+          <vs-td>
             <p class="product-name font-medium truncate">{{ tr.vendorName }}</p>
           </vs-td>
-<!--          <vs-td>-->
-<!--            <p class="product-name font-medium truncate">{{  tr.size }}</p>-->
-<!--          </vs-td>-->
+          <vs-td>
+            <p class="product-name font-medium truncate"> {{ getSizeLabel(tr.productSize) }}</p>
+          </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.count }}</p>
           </vs-td>
@@ -127,6 +131,9 @@ export default {
     }
   },
   computed: {
+
+
+
     currentPage () {
       if (this.isMounted) {
         return this.$refs.table.currentx
@@ -141,6 +148,20 @@ export default {
     }
   },
   methods: {
+
+    getSizeLabel(items){
+      let label='';
+      items.forEach((item,index)=>{
+        if(index!==0){
+          label=label + ' , ' + item.name
+        }
+        else {
+          label=label + item.name
+        }
+      })
+      return label;
+    },
+
     addNewData () {
       this.sidebarData = {}
       this.toggleDataSidebar(true)

@@ -11,7 +11,7 @@
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
-      <h4>{{ Object.entries(this.data).length === 0 ? "ADD NEW" : "UPDATE" }} ITEM</h4>
+      <h4>{{ Object.entries(this.data).length === 0 ? "إضافة" : "تعديل" }} منتج</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
@@ -43,10 +43,12 @@
         <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
 
         <!-- Title -->
-        <vs-input label="نوعية الخامة" v-model="title" class="mt-5 w-full" name="title" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <vs-input label="عنوان المنتج" v-model="title" class="mt-5 w-full" name="title" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('title')">{{ errors.first('title') }}</span>
 
-
+        <!-- Title -->
+        <vs-input label="نوعية الخامة" v-model="material" class="mt-5 w-full" name="material" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('material')">{{ errors.first('material') }}</span>
 
         <!-- CompanyName -->
         <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 w-full" name="vendorId" v-validate="'required'">
@@ -93,9 +95,8 @@
           <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL" name="XXXXXXL"  v-validate="'required'" />
           <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
         </div>
-
         <div class="centerx">
-            <vs-input-number  min="0" max="10" label="عدد المنتجات ضمن السيريه:" v-model="count" name="count"  v-validate="'required'" />
+            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount" name="count"  v-validate="'required'" />
             <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
         </div>
         <!-- PRICE -->
@@ -129,7 +130,7 @@
           <vs-upload multiple automatic single-upload
                      fileName="file"
                      text="Upload Multiple"
-                     action="http://localhost:5000/api/v1/media/upload"
+                     action="https://leenexport.com/api/v1/media/upload"
                      @on-success="successUpload"
                      @on-delete="deleteImage"/>
         </template>
@@ -166,6 +167,7 @@ export default {
       dataId: null,
       seasonsTypes:null,
       title: null,
+      material:null,
       size:null,
       S:0,
       M:0,
@@ -179,7 +181,6 @@ export default {
       description:null,
       price:null,
       productCost:null,
-      count:0,
       categoryId:null,
       subCategoryId:null,
       productTypeId:null,
@@ -205,13 +206,14 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
+        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,material,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.seasonsTypes=seasonsTypes
         this.categoryId=categoryId
         this.subCategoryId=subCategoryId
         this.productTypeId=productTypeId
-        this.title = title
+        this.title = title,
+        this.material=material,
         this.vendorId=vendorId
         this.size=size
         this.count=count
@@ -225,6 +227,10 @@ export default {
     }
   },
   computed: {
+    sumCount(){
+        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL ;
+    },
+
     isSidebarActiveLocal: {
       get () {
         return this.isSidebarActive
@@ -238,7 +244,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title  && this.description && this.price && this.productCost && this.count && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
+      return !this.errors.any() && this.title  && this.description && this.price && this.productCost && this.sumCount && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -273,12 +279,21 @@ export default {
       if (this.data.id) return
       this.dataId = null
       this.title = null
-      this.size = null
+      this.material=null
+      this.S = 0
+      this.M = 0
+      this.L = 0
+      this.XL = 0
+      this.XXL = 0
+      this.XXXL = 0
+      this.XXXXL = 0
+      this.XXXXXL = 0
+      this.XXXXXXL = 0
       this.description=null
       this.price=null
       this.productCost=null
       this.seasonsTypes=null
-      this.count=0
+      this.sumCount=0
       this.categoryId=null
       this.subCategoryId=null
       this.productTypeId=null
@@ -305,6 +320,18 @@ export default {
           if(this.XXL){
             productSizes.push({"name":"XXL","Count":this.XXL})
           }
+          if(this.XXXL){
+            productSizes.push({"name":"XXXL","Count":this.XXXL})
+          }
+          if(this.XXXXL){
+            productSizes.push({"name":"XXXXL","Count":this.XXXXL})
+          }
+          if(this.XXXXXL){
+            productSizes.push({"name":"XXXXXL","Count":this.XXXXXL})
+          }
+          if(this.XXXXXXL){
+            productSizes.push({"name":"XXXXXXL","Count":this.XXXXXXL})
+          }
 
 
           const obj = {
@@ -314,9 +341,9 @@ export default {
             subCategoryId:this.subCategoryId,
             productTypeId:this.productTypeId,
             title: this.title,
+            material:this.material,
             vendorId:this.vendorId,
-            size: this.size,
-            count:this.count,
+            count:this.sumCount,
             price:this.price,
             productCost:this.productCost,
             description: this.description,
