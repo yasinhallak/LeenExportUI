@@ -1,0 +1,120 @@
+<section class="upload-img">
+    <div class="upload-box" :class="files.length? '': 'w-100'">
+        <label :for="name" class="photo_label">
+            <div class="image-drop-box">
+                <div class="icon"><i class="fas fa-images"></i></div>
+                <h4>أفلت الملفات في أي مكان لتحميلها<br/>أو
+                </h4>
+                <span class="btn btn-secondary">اختر صورة</span>
+            </div>
+        </label>
+
+        <file-upload
+                :input-id="name"
+                :add-index="addIndex"
+                :data="data"
+                :directory="directory"
+                :drop="drop"
+                :headers="headers"
+                :maximum="120"
+                :multiple="multiple"
+                :post-action="postAction"
+                :size="1024 * 1024 * 10"
+                :thread="100"
+                @input-file="inputFile"
+                @input-filter="inputFilter"
+                :accept="photosAccept"
+                :extensions="photosExtensions"
+                ref="upload"
+                v-model="files">
+        </file-upload>
+    </div>
+
+    <draggable class="default" :class="{'hasMainPhoto':hasMain }" @start="drag=true" tag="ul" v-bind="dragOptions" v-model="files" @sort="setMain(0)">
+                <li :class="{'notValid' :isPanoramic && !file.isValid}" :key="file.id" class="upload-box-group-item"
+                     v-for="(file,index) in files">
+                    <div class="photo-box">
+                        <div class="problem" title="الصورة ليست بانورامية" v-if="!file.isValid && isPanoramic">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="image-box">
+
+                            <div class="setMain" v-if="showSetButton(index)">
+                                <button @click.prevent="setMain(index)"> تعيين كرئيسية </button>
+                            </div>
+
+                            <div class="remove">
+                                <a @click.prevent="onDeleteFile(file)" href="#">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+
+                            <div class="header" v-show="hasMain && index === 0">
+                                <i class="fas fa-crown"></i>
+                                <span> الصورة الرئيسية </span>
+                            </div>
+
+                            <div class="loading" v-if="file.active">
+                                <b-spinner label="Loading..."></b-spinner>
+                            </div>
+                            <img :src="file.thumb" v-if="file.thumb && !file.path"/>
+                            <img :src="$vRoute.imageUrl(file.path)" v-if="file.thumb && file.path && !isPanoramic"/>
+                            <img :src="$vRoute.imageUrl(file.path)" v-if="file.thumb && file.path && isPanoramic"/>
+                            <span v-else>No Image</span>
+                            <div class="footer" v-if="!isPanoramic">
+                                <a @click.prevent="file.active || file.error === 'compressing' ? false :  onEditFileShow(file)"
+                                   href="#">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    تعديل </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+        </draggable>
+    <b-modal v-model="editFile.show" title="تعديل الصورة" hide-footer >
+        <form @submit.prevent="onEditorFile" @mouseenter="clear" @click="clear">
+            <div class="modal-body">
+                <div class="form-group"
+                     >
+                    <div class="edit-image" style="height: 400px; width: 100%">
+                        <img ref="editImage" :src="editFile.blob" v-if="editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'">
+                        <img :src="$vRoute.imageUrl(editFile.path)"
+                             ref="editImage"
+
+                             v-else-if="editFile.path &&editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"
+                        />
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-start">
+                <div >
+                    <div class="edit-image-tool">
+                        <div class="btn-group" role="group">
+                            <template >
+                                <button @click="rotateImage(-90)" class="btn btn-info"
+                                        type="button"><i
+                                        aria-hidden="true" class="fas fa-undo"></i></button>
+                                <button @click="rotateImage(90)" class="btn btn-info"
+                                        type="button"><i
+                                        aria-hidden="true" class="fas fa-redo"></i></button>
+                            </template>
+<!--                            <button @click.prevent="editFile.cropper.reset()">إعادة تعيين</button>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="ml-auto">
+                    <button @click.prevent="editFile.show = false" class="btn btn-danger mr-2" >اغلاق</button>
+                    <button class="btn btn-success"
+                            type="submit">حقظ
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </b-modal>
+
+</section>
+
