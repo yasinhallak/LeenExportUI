@@ -32,7 +32,9 @@ const mutations = {
   UPDATE_VERTICAL_NAV_MENU_WIDTH (state, width) {
     state.verticalNavMenuWidth = width
   },
-
+  loading(state, payload) {
+    state.isLoading = payload;
+  },
 
   // VxAutoSuggest
 

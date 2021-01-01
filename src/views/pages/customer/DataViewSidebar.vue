@@ -28,7 +28,7 @@
         <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
 
         <!-- Phone -->
-        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric'"   />
+        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric|min:11|max:11'"   />
         <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
         <!-- Email -->
         <vs-input label="البريد الإلكتروني" v-model="email" class="mt-5 w-full" icon-pack="feather" icon="icon-user" icon-no-border name="email"  v-validate="'required|email'"   />

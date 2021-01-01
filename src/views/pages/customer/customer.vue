@@ -64,8 +64,7 @@
             <p class="product-category">{{ tr.companyName | title }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.phone }}</p>
-            <i class="fab fa-whatsapp"></i>
+            <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.phone)" >{{ tr.phone }}</a>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.email }}</p>
@@ -119,6 +118,8 @@ export default {
     }
   },
   computed: {
+
+
     currentPage () {
       if (this.isMounted) {
         return this.$refs.table.currentx
@@ -133,6 +134,11 @@ export default {
     }
   },
   methods: {
+    PhoneWhatsapp(phone){
+      //return  `https://api.whatsapp.com/send?phone=${phone}`
+      return  `https://wa.me/9${phone}`
+    },
+
     getSpecialLabel(items){
       let label='';
        items.forEach((item,index)=>{

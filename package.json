@@ -18,8 +18,11 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "chart.js": "^2.8.0",
+    "compressorjs": "^1.0.7",
     "core-js": "2.6.5",
+    "cropperjs": "^1.5.9",
     "echarts": "^4.2.1",
+    "exifr": "^6.0.0",
     "file-saver": "2.0.1",
     "firebase": "^7.13.2",
     "instantsearch.css": "^7.3.1",
@@ -43,6 +46,7 @@
     "vue-form-wizard": "^0.8.4",
     "vue-fullcalendar": "^1.0.9",
     "vue-i18n": "^8.11.2",
+    "vue-infinite-loading": "^2.4.5",
     "vue-instantsearch": "^2.2.1",
     "vue-perfect-scrollbar": "^0.1.0",
     "vue-prism-component": "^1.1.1",
@@ -76,6 +80,7 @@
     "sass-loader": "^7.1.0",
     "script-loader": "0.7.2",
     "tailwindcss": "^1.0.1",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vue-upload-component": "^2.8.22"
   }
 }

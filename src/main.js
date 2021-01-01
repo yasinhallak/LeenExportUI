@@ -18,6 +18,44 @@ import 'vuesax/dist/vuesax.css' // Vuesax
 Vue.use(Vuesax)
 
 
+const base = process.env.VUE_APP_BASE_URL
+const baseApi = process.env.VUE_APP_BASE_API
+const baseImage = process.env.VUE_APP_BASE_IMAGE;
+
+Vue.prototype.$vRoute = new class vRoute {
+  constructor() {
+    this.base = base;
+    this.apiBase = baseApi;
+  }
+
+  imageUrl(path, type= null) {
+    if (!path)
+      return `${baseImage}/Images/default_ppt.jpg`;
+    // TODO : Return sd back
+    if (type) return `${baseImage}${path}-${type}.jpg`;
+    return `${baseImage}${path}.jpg`;
+  }
+
+  logoUrl(path) {
+    if (!path)
+      return `/_nuxt/assets/images/default-user-placeholder.png`
+    return `${baseImage}${path}.jpg`;
+  }
+
+  videoLink(path) {
+    return `${base}/${path}`;
+  }
+
+
+  GetOfferLink(offerType, offerId) {
+    offerType = "realestate";
+    return `${base}/offer/${offerType}/${offerId}`;
+  }
+
+
+}
+
+
 // axios
 import axios from './axios.js'
 Vue.prototype.$http = axios

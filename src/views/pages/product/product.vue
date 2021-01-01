@@ -42,6 +42,7 @@
       </div>
 
       <template slot="thead">
+        <vs-th sort-key="id">رقم المنتج</vs-th>
         <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
         <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
         <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
@@ -61,6 +62,9 @@
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td>
+            <p class="product-name font-medium truncate">{{tr.id}}</p>
+          </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>
           </vs-td>
@@ -131,9 +135,6 @@ export default {
     }
   },
   computed: {
-
-
-
     currentPage () {
       if (this.isMounted) {
         return this.$refs.table.currentx

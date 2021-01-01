@@ -125,15 +125,29 @@
         <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
 
-        <template>
+<!--        <template>-->
 
-          <vs-upload multiple automatic single-upload
-                     fileName="file"
-                     text="Upload Multiple"
-                     action="https://leenexport.com/api/v1/media/upload"
-                     @on-success="successUpload"
-                     @on-delete="deleteImage"/>
-        </template>
+
+<!--          <vs-upload multiple automatic-->
+<!--                     fileName="file"-->
+<!--                     text="Upload Multiple"-->
+<!--                     action="https://leenexport.com/api/v1/media/upload"-->
+<!--                     @on-success="successUpload"-->
+<!--                     @on-delete="deleteImage"/>-->
+<!--        </template>-->
+
+
+        <div class="Photos">
+
+          <div class="progress-bar-box">
+
+            <upload-img :hasMain="true"
+                        v-model="photos"
+                        :name="'PhotosUploadName'" :photosAccept="photosAccept"
+                        :photosExtensions="photosExtensions"
+                        ref="uploadPhotos"/>
+          </div>
+        </div>
 
       </div>
     </component>
@@ -148,6 +162,9 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
+// uploadImg map component
+import uploadImg from "../../shared/uploadImg";
+
 export default {
   props: {
     isSidebarActive: {
@@ -160,10 +177,12 @@ export default {
     }
   },
   components: {
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
+    uploadImg
   },
   data () {
     return {
+
       dataId: null,
       seasonsTypes:null,
       title: null,
@@ -185,6 +204,9 @@ export default {
       subCategoryId:null,
       productTypeId:null,
       vendorId:null,
+      photosAccept: "image/png,image/gif,image/jpeg,image/webp",
+      photosExtensions: "gif,jpg,jpeg,png,webp",
+      photos:[],
       files:[],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -227,8 +249,15 @@ export default {
     }
   },
   computed: {
-    sumCount(){
+    sumCount:{
+      get: function () {
         return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL ;
+      },
+      // setter
+      set: function (newValue) {
+
+      }
+
     },
 
     isSidebarActiveLocal: {
@@ -332,7 +361,6 @@ export default {
           if(this.XXXXXXL){
             productSizes.push({"name":"XXXXXXL","Count":this.XXXXXXL})
           }
-
 
           const obj = {
             id: this.dataId,

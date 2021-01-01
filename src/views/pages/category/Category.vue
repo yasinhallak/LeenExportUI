@@ -24,7 +24,6 @@
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
           <vs-dropdown-menu>
-
             <vs-dropdown-item @click="itemsPerPage=4">
               <span>4</span>
             </vs-dropdown-item>

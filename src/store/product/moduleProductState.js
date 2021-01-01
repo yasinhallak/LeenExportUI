@@ -13,5 +13,6 @@ export default {
   companies:[],
   categoryTypes:[],
   subCategoryTypes:[],
-  isUpdated:false
+
+  isLoading: false,
 }
