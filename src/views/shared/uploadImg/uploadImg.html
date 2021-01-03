@@ -45,7 +45,9 @@
 
                             <div class="remove">
                                 <a @click.prevent="onDeleteFile(file)" href="#">
-                                    <i class="far fa-trash-alt"></i>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 20" stroke="#999696">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                  </svg>
                                 </a>
                             </div>
 
@@ -61,7 +63,7 @@
                             <img :src="$vRoute.imageUrl(file.path)" v-if="file.thumb && file.path && !isPanoramic"/>
                             <img :src="$vRoute.imageUrl(file.path)" v-if="file.thumb && file.path && isPanoramic"/>
                             <span v-else>No Image</span>
-                            <div class="footer" v-if="!isPanoramic">
+                            <div class="footer pt-1" v-if="!isPanoramic">
                                 <a @click.prevent="file.active || file.error === 'compressing' ? false :  onEditFileShow(file)"
                                    href="#">
                                     <i class="fas fa-pencil-alt"></i>
@@ -91,24 +93,26 @@
             <div class="modal-footer justify-content-start">
                 <div >
                     <div class="edit-image-tool">
-                        <div class="btn-group" role="group">
+                        <div class="btn-group flex justify-around" role="group">
                             <template >
-                                <button @click="rotateImage(-90)" class="btn btn-info"
-                                        type="button"><i
-                                        aria-hidden="true" class="fas fa-undo"></i></button>
-                                <button @click="rotateImage(90)" class="btn btn-info"
-                                        type="button"><i
-                                        aria-hidden="true" class="fas fa-redo"></i></button>
+                                <button @click="rotateImage(-90)" class="rotate-button" type="button">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="transform">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
+                                <button @click="rotateImage(90)" class="rotate-button" type="button">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="transform">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                                  </svg>
+                                </button>
                             </template>
 <!--                            <button @click.prevent="editFile.cropper.reset()">إعادة تعيين</button>-->
                         </div>
                     </div>
                 </div>
-                <div class="ml-auto">
-                    <button @click.prevent="editFile.show = false" class="btn btn-danger mr-2" >اغلاق</button>
-                    <button class="btn btn-success"
-                            type="submit">حقظ
-                    </button>
+                <div class="ml-auto save-close  flex justify-around">
+                    <button @click.prevent="editFile.show = false" class="btn btn-danger" >إغلاق</button>
+                    <button class="btn btn-success" type="submit">حفظ</button>
                 </div>
             </div>
 
@@ -117,4 +121,8 @@
     </b-modal>
 
 </section>
+
+
+
+
 

@@ -9,7 +9,7 @@
 
 
 <template>
-  <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding" spacer v-model="isSidebarActiveLocal">
+  <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding own-side" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
       <h4>{{ Object.entries(this.data).length === 0 ? "إضافة" : "تعديل" }} منتج</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
@@ -20,84 +20,170 @@
 
       <div class="p-6">
         <!-- seasonsTypes -->
-        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">
+        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 catslab" name="seasonsTypes" v-validate="'required'">
           <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="  اختر التصنيف الرئيسي" class="mt-5 w-full" name="categoryId" v-validate="'required'">
+        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف " class="mt-5 catslab" name="categoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
 
         <!-- productTypes -->
-        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 w-full" name="subCategoryId" v-validate="'required'">
+        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 catslab" name="subCategoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in subCategoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
 
         <!-- productTypes -->
-        <vs-select label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 w-full" name="productTypeId" v-validate="'required'">
+        <vs-select label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 catslab" name="productTypeId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
 
         <!-- Title -->
-        <vs-input label="عنوان المنتج" v-model="title" class="mt-5 w-full" name="title" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <vs-input label="عنوان المنتج" v-model="title" class="mt-5 catslab" name="title" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('title')">{{ errors.first('title') }}</span>
 
         <!-- Title -->
-        <vs-input label="نوعية الخامة" v-model="material" class="mt-5 w-full" name="material" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
+        <vs-input label="نوعية الخامة" v-model="material" class="mt-5 catslab" name="material" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('material')">{{ errors.first('material') }}</span>
 
         <!-- CompanyName -->
-        <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 w-full" name="vendorId" v-validate="'required'">
+        <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 catslab" name="vendorId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.companyName" v-for="item in companies" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
+        <div></div>
         <!-- size -->
 <!--        <vs-input label="المقاسات المتاحة" v-model="size" class="mt-5 w-full" icon-pack="feather"  name="size"  v-validate="'required'"   />-->
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="S:" v-model="S" name="S"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
-          <vs-input-number  min="0" max="10" label="M  :" v-model="M" name="M"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
+        <div class="all-centerx">
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="S:" v-model="S1" name="S1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('S1')">{{ errors.first('S1') }}</span>
         </div>
-        <div class="centerx">
-
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="M  :" v-model="M1" name="M1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('M1')">{{ errors.first('M1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="L  :" v-model="L" name="L"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="L  :" v-model="L1" name="L1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('L1')">{{ errors.first('L1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XL :" v-model="XL" name="XL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XL :" v-model="XL1" name="XL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XL1')">{{ errors.first('XL1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL" name="XXL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL1" name="XXL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXL1')">{{ errors.first('XXL1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL" name="XXXL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL1" name="XXXL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXL1')">{{ errors.first('XXXL1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL" name="XXXXL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL1" name="XXXXL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXL1')">{{ errors.first('XXXXL1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL" name="XXXXXL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL1" name="XXXXXL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXXL1')">{{ errors.first('XXXXXL1') }}</span>
         </div>
-        <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL" name="XXXXXXL"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL1" name="XXXXXXL1"  v-validate="'required'" />
+          <span class="text-danger text-sm" v-show="errors.has('XXXXXXL1')">{{ errors.first('XXXXXXL1') }}</span>
         </div>
-        <div class="centerx">
-            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount" name="count"  v-validate="'required'" />
+          <div class="centerx">
+            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount1" name="count"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('count1')">{{ errors.first('count1') }}</span>
+        </div>
+        </div>
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="S:" v-model="S2" name="S"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="M  :" v-model="M2" name="M"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="L  :" v-model="L2" name="L"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XL :" v-model="XL2" name="XL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL2" name="XXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL2" name="XXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL2" name="XXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL2" name="XXXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL2" name="XXXXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount2" name="count"  v-validate="'required'" />
             <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
+          </div>
+        </div>
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="S:" v-model="S3" name="S"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="M  :" v-model="M3" name="M"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="L  :" v-model="L3" name="L"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XL :" v-model="XL3" name="XL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL3" name="XXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL3" name="XXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL3" name="XXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL3" name="XXXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL3" name="XXXXXXL"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount3" name="count"  v-validate="'required'" />
+            <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
+          </div>
         </div>
         <!-- PRICE -->
         <vs-input
@@ -105,7 +191,7 @@
           icon="icon-dollar-sign"
           label="سعر المبيع"
           v-model.number="price"
-          class="mt-5 w-full"
+          class="mt-5  custom catslab"
           v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
           name="price" />
         <span class="text-danger text-sm" v-show="errors.has('price')">{{ errors.first('price') }}</span>
@@ -116,7 +202,7 @@
           icon="icon-dollar-sign"
           label="سعر الرأسمال"
           v-model.number="productCost"
-          class="mt-5 w-full"
+          class="mt-5 custom catslab"
           v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
           name="productCost" />
         <span class="text-danger text-sm" v-show="errors.has('productCost')">{{ errors.first('productCost') }}</span>
@@ -152,7 +238,7 @@
       </div>
     </component>
 
-    <div class="flex flex-wrap items-center p-6" slot="footer">
+    <div class="flex flex-wrap items-center p-6  justify-between" slot="footer">
       <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">حفظ</vs-button>
       <vs-button type="border" color="danger" @click="isSidebarActiveLocal = false">إلغاء</vs-button>
     </div>
@@ -249,9 +335,29 @@ export default {
     }
   },
   computed: {
-    sumCount:{
+    sumCount1:{
       get: function () {
-        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL ;
+        return this.S1 + this.M1 + this.L1 + this.XL1 + this.XXL1 + this.XXXL1 + this.XXXXL1 + this.XXXXXL1 + this.XXXXXXL1 ;
+      },
+      // setter
+      set: function (newValue) {
+
+      }
+
+    },
+    sumCount2:{
+      get: function () {
+        return this.S2 + this.M2 + this.L2 + this.XL2 + this.XXL2 + this.XXXL2 + this.XXXXL2 + this.XXXXXL2 + this.XXXXXXL2 ;
+      },
+      // setter
+      set: function (newValue) {
+
+      }
+
+    },
+    sumCount3:{
+      get: function () {
+        return this.S3 + this.M3 + this.L3 + this.XL3 + this.XXL3 + this.XXXL3 + this.XXXXL3 + this.XXXXXL3 + this.XXXXXXL3 ;
       },
       // setter
       set: function (newValue) {
@@ -433,7 +539,40 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.own-side{
+  max-width: 100%;
+  width: 80%;
+  .vs-sidebar{
+    max-width: 100%;
+    width: 80%;
+    z-index: 100000;
+    direction: rtl;
+    .all-centerx{
+      direction: ltr;
+      width: 33.333%;
+      display: inline-block;
+    }
+  }
+  .catslab{
+    width: 33.333%;
+    padding:0 5px;
+    display: inline-block;
+    label{
+      color: #1f74ff;
+      font-size: 12px;
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      margin-bottom: 8px;
+    }
+  }
+  .catslab.custom{
+    width: 50%;
+  }
+}
+
+
 .add-new-data-sidebar {
   ::v-deep .vs-sidebar--background {
     z-index: 52010;
@@ -441,8 +580,6 @@ export default {
 
   ::v-deep .vs-sidebar {
     z-index: 52010;
-    width: 400px;
-    max-width: 90vw;
 
     .img-upload {
       margin-top: 2rem;
@@ -468,4 +605,9 @@ export default {
   }
 }
 </style>
+
+
+
+
+
 

@@ -164,14 +164,16 @@
         a {
           color: #333;
         }
-
+        svg{
+          width: 25px;
+          height: 30px;
+        }
 
       }
     }
   }
   .notValid {
     border: 3px solid red !important;
-
     .problem {
       right: 50px;
       position: absolute;
@@ -199,5 +201,54 @@
     width: 100%;
   }
 }
+
+.btn-group{
+  margin-top: 7px;
+  .rotate-button{
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    border: 1.5px solid blue;
+    background: white;
+    color: blue;
+    border-radius: 5px;
+    padding: 0 !important;
+    cursor: pointer;
+    &:first-of-type{
+      svg{
+        --transform-rotate: 216deg !important;
+      }
+    }
+    &:last-of-type{
+      svg{
+        --transform-rotate: 120deg !important;
+      }
+    }
+  }
+}
+
+.save-close{
+  margin-top: 15px;
+  button{
+    width: 85px;
+    margin-right: 20px;
+    border: 1.5px solid blue;
+    background: #ffffff;
+    color: blue;
+    border-radius: 5px;
+    padding: 2.5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  button:first-of-type{
+    border: 1.5px solid #ea5455;
+    color: #ea5455;
+  }
+  button:last-of-type{
+    border: 1.5px solid blue;
+    color: blue;
+  }
+}
+
 
 

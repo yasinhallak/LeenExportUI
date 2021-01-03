@@ -42,7 +42,7 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="id">رقم المنتج</vs-th>
+        <vs-th sort-key="id">رقم المنتج      dsfsafsdf</vs-th>
         <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
         <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
         <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
