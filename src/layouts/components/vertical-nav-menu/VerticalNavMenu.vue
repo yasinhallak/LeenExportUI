@@ -30,7 +30,7 @@
         <div class="header-sidebar flex items-end justify-between" slot="header">
 
           <!-- Logo -->
-          <a href="#" tag="div" class="vx-logo cursor-pointer flex items-center" >
+          <a href="" tag="div" class="vx-logo cursor-pointer flex items-center" to="/">
             <logo class="w-10 mr-4 fill-current text-primary" />
             <span class="vx-logo-text text-primary" v-show="isMouseEnter || !reduce" v-if="title">{{ title }}</span>
           </a>
@@ -74,7 +74,7 @@
 
               <!-- Nav-Item -->
               <v-nav-menu-item
-                v-if="!item.submenu"
+                v-if="!item.submenu && activeUserInfo.userName=='admin'"
                 :key="`item-${index}`"
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
@@ -84,6 +84,19 @@
                 :slug="item.slug">
                   <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
+              </v-nav-menu-item>
+
+              <v-nav-menu-item
+                v-else-if="!item.submenu && item.emp"
+                :key="`item-${index}`"
+                :index="index"
+                :to="item.slug !== 'external' ? item.url : null"
+                :href="item.slug === 'external' ? item.url : null"
+                :icon="item.icon" :target="item.target"
+                :isDisabled="item.isDisabled"
+                :slug="item.slug">
+                <span v-show="!verticalNavMenuItemsMin" class="truncate">{{  item.emp }}</span>
+                <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
@@ -149,6 +162,10 @@ export default {
     showShadowBottom    : false
   }),
   computed: {
+    activeUserInfo () {
+      return this.$store.state.AppActiveUser
+    },
+
     isGroupActive () {
       return (item) => {
         const path        = this.$route.fullPath

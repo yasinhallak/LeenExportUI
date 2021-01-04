@@ -25,7 +25,7 @@
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف " class="mt-5 catslab" name="categoryId" v-validate="'required'">
+        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف الرئيسي" class="mt-5 catslab" name="categoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
@@ -56,142 +56,13 @@
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
-        <div></div>
-        <!-- size -->
-<!--        <vs-input label="المقاسات المتاحة" v-model="size" class="mt-5 w-full" icon-pack="feather"  name="size"  v-validate="'required'"   />-->
-        <div class="all-centerx">
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="S:" v-model="S1" name="S1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('S1')">{{ errors.first('S1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="M  :" v-model="M1" name="M1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('M1')">{{ errors.first('M1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="L  :" v-model="L1" name="L1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('L1')">{{ errors.first('L1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XL :" v-model="XL1" name="XL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XL1')">{{ errors.first('XL1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL1" name="XXL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXL1')">{{ errors.first('XXL1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL1" name="XXXL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXL1')">{{ errors.first('XXXL1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL1" name="XXXXL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXL1')">{{ errors.first('XXXXL1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL1" name="XXXXXL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXXL1')">{{ errors.first('XXXXXL1') }}</span>
-        </div>
-          <div class="centerx">
-          <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL1" name="XXXXXXL1"  v-validate="'required'" />
-          <span class="text-danger text-sm" v-show="errors.has('XXXXXXL1')">{{ errors.first('XXXXXXL1') }}</span>
-        </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount1" name="count"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('count1')">{{ errors.first('count1') }}</span>
-        </div>
-        </div>
-        <div class="all-centerx">
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="S:" v-model="S2" name="S"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="M  :" v-model="M2" name="M"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="L  :" v-model="L2" name="L"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XL :" v-model="XL2" name="XL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL2" name="XXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL2" name="XXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL2" name="XXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL2" name="XXXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL2" name="XXXXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount2" name="count"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
-          </div>
-        </div>
-        <div class="all-centerx">
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="S:" v-model="S3" name="S"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('S')">{{ errors.first('S') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="M  :" v-model="M3" name="M"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('M')">{{ errors.first('M') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="L  :" v-model="L3" name="L"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('L')">{{ errors.first('L') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XL :" v-model="XL3" name="XL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XL')">{{ errors.first('XL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXL:" v-model="XXL3" name="XXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXL')">{{ errors.first('XXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXL:" v-model="XXXL3" name="XXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXL')">{{ errors.first('XXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXL:" v-model="XXXXL3" name="XXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXL')">{{ errors.first('XXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXXL:" v-model="XXXXXL3" name="XXXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXXL')">{{ errors.first('XXXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="XXXXXXL:" v-model="XXXXXXL3" name="XXXXXXL"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('XXXXXXL')">{{ errors.first('XXXXXXL') }}</span>
-          </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="100" label="عدد المنتجات ضمن السيريه:" v-model="sumCount3" name="count"  v-validate="'required'" />
-            <span class="text-danger text-sm" v-show="errors.has('count')">{{ errors.first('count') }}</span>
-          </div>
-        </div>
         <!-- PRICE -->
         <vs-input
           icon-pack="feather"
           icon="icon-dollar-sign"
           label="سعر المبيع"
           v-model.number="price"
-          class="mt-5  custom catslab"
+          class="mt-5   catslab"
           v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
           name="price" />
         <span class="text-danger text-sm" v-show="errors.has('price')">{{ errors.first('price') }}</span>
@@ -202,31 +73,173 @@
           icon="icon-dollar-sign"
           label="سعر الرأسمال"
           v-model.number="productCost"
-          class="mt-5 custom catslab"
+          class="mt-5  catslab"
           v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
           name="productCost" />
         <span class="text-danger text-sm" v-show="errors.has('productCost')">{{ errors.first('productCost') }}</span>
 
         <!-- Description -->
-        <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"  v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
+        <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
 
-<!--        <template>-->
+        <div></div>
 
+        <div class="all-centerx">
+          <div class="centerx" >
+            <vs-input-number  min="0" max="10" label="S:" v-model="S"/>
+          </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="M  :" v-model="M" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="L  :" v-model="L" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="XL :" v-model="XL" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="2XL:" v-model="XXL" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="3XL:" v-model="XXXL" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="4XL:" v-model="XXXXL"/>
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="5XL:" v-model="XXXXXL" />
+        </div>
+          <div class="centerx">
+          <vs-input-number  min="0" max="10" label="6XL:" v-model="XXXXXXL" />
+         </div>
 
-<!--          <vs-upload multiple automatic-->
-<!--                     fileName="file"-->
-<!--                     text="Upload Multiple"-->
-<!--                     action="https://leenexport.com/api/v1/media/upload"-->
-<!--                     @on-success="successUpload"-->
-<!--                     @on-delete="deleteImage"/>-->
-<!--        </template>-->
+        </div>
 
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="29:" v-model="shose29"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="30:" v-model="shose30"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="31:" v-model="shose31"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="32:" v-model="shose32"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="33:" v-model="shose33"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="34:" v-model="shose34"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="35:" v-model="shose35"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="36:" v-model="shose36"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="37:" v-model="shose37"/>
+          </div>
+       </div>
+
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="38:" v-model="shose38"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="39:" v-model="shose39"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="40:" v-model="shose40"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="41:" v-model="shose41"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="42:" v-model="shose42"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="43:" v-model="shose43"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="44:" v-model="shose44"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="45:" v-model="shose45"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="46:" v-model="shose46"/>
+          </div>
+        </div>
+
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="47:" v-model="shose47"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="48:" v-model="shose48"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="49:" v-model="shose49"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="50:" v-model="shose50"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="51:" v-model="shose51"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="52:" v-model="shose52"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="53:" v-model="shose53"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="54:" v-model="shose54"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="55:" v-model="shose55"/>
+          </div>
+        </div>
+
+        <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 1:" v-model="year1"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 2:" v-model="year2"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 3:" v-model="year3"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 4:" v-model="year4"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 5:" v-model="year5"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 6:" v-model="year6"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 7:" v-model="year7"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 8:" v-model="year8"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 9:" v-model="year9"/>
+          </div>
+        </div>
+
+        <div class="centerx">
+          <vs-input-number  min="0" max="100" label=" المجموع:" v-model="sumCount" class="mt-5"   />
+        </div>
 
         <div class="Photos">
-
           <div class="progress-bar-box">
-
             <upload-img :hasMain="true"
                         v-model="photos"
                         :name="'PhotosUploadName'" :photosAccept="photosAccept"
@@ -250,6 +263,7 @@ import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
 // uploadImg map component
 import uploadImg from "../../shared/uploadImg";
+import staticJson from "../../../../static/json/static.json";
 
 export default {
   props: {
@@ -273,7 +287,7 @@ export default {
       seasonsTypes:null,
       title: null,
       material:null,
-      size:null,
+      size:staticJson.size,
       S:0,
       M:0,
       L:0,
@@ -283,6 +297,43 @@ export default {
       XXXXL:0,
       XXXXXL:0,
       XXXXXXL:0,
+      shose29:0,
+      shose30:0,
+      shose31:0,
+      shose32:0,
+      shose33:0,
+      shose34:0,
+      shose35:0,
+      shose36:0,
+      shose37:0,
+      shose38:0,
+      shose39:0,
+      shose40:0,
+      shose41:0,
+      shose42:0,
+      shose43:0,
+      shose44:0,
+      shose45:0,
+      shose46:0,
+      shose47:0,
+      shose48:0,
+      shose49:0,
+      shose50:0,
+      shose51:0,
+      shose52:0,
+      shose53:0,
+      shose54:0,
+      shose55:0,
+      shose56:0,
+      year1:0,
+      year2:0,
+      year3:0,
+      year4:0,
+      year5:0,
+      year6:0,
+      year7:0,
+      year8:0,
+      year9:0,
       description:null,
       price:null,
       productCost:null,
@@ -293,7 +344,6 @@ export default {
       photosAccept: "image/png,image/gif,image/jpeg,image/webp",
       photosExtensions: "gif,jpg,jpeg,png,webp",
       photos:[],
-      files:[],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -314,20 +364,70 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,material,vendorId,size ,count,price,productCost,description} = JSON.parse(JSON.stringify(this.data))
+        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.seasonsTypes=seasonsTypes
         this.categoryId=categoryId
         this.subCategoryId=subCategoryId
         this.productTypeId=productTypeId
-        this.title = title,
-        this.material=material,
+        this.title = title
+        this.material=material
         this.vendorId=vendorId
-        this.size=size
         this.count=count
         this.price=price
         this.productCost=productCost
         this.description=description
+        this.photos=images
+        productSize.forEach(x=>{
+          if(x.name=="S")this.S=x.count
+          if(x.name=="M") this.M=x.count
+          if(x.name=="L")this.L=x.count
+          if(x.name=="X")this.X=x.count
+          if(x.name=="XL")this.XL=x.count
+          if(x.name=="2XL")this.XXL=x.count
+          if(x.name=="3XL")this.XXXL=x.count
+          if(x.name=="4XL")this.XXXXL=x.count
+          if(x.name=="5XL")this.XXXXXL=x.count
+          if(x.name=="6XL")this.XXXXXXL=x.count
+          if(x.name=="29")this.shose29=x.count
+          if(x.name=="30")this.shose30=x.count
+          if(x.name=="31")this.shose31=x.count
+          if(x.name=="32")this.shose32=x.count
+          if(x.name=="33")this.shose33=x.count
+          if(x.name=="34")this.shose34=x.count
+          if(x.name=="35")this.shose35=x.count
+          if(x.name=="36")this.shose36=x.count
+          if(x.name=="37")this.shose37=x.count
+          if(x.name=="38")this.shose38=x.count
+          if(x.name=="39")this.shose39=x.count
+          if(x.name=="40")this.shose40=x.count
+          if(x.name=="41")this.shose41=x.count
+          if(x.name=="42")this.shose42=x.count
+          if(x.name=="43")this.shose43=x.count
+          if(x.name=="44")this.shose44=x.count
+          if(x.name=="45")this.shose45=x.count
+          if(x.name=="46")this.shose46=x.count
+          if(x.name=="47")this.shose47=x.count
+          if(x.name=="48")this.shose48=x.count
+          if(x.name=="49")this.shose49=x.count
+          if(x.name=="50")this.shose50=x.count
+          if(x.name=="51")this.shose51=x.count
+          if(x.name=="52")this.shose52=x.count
+          if(x.name=="53")this.shose53=x.count
+          if(x.name=="54")this.shose54=x.count
+          if(x.name=="55")this.shose55=x.count
+          if(x.name=="56")this.shose56=x.count
+          if(x.name=="year1")this.year1=x.count
+          if(x.name=="year2")this.year2=x.count
+          if(x.name=="year3")this.year3=x.count
+          if(x.name=="year4")this.year4=x.count
+          if(x.name=="year5")this.year5=x.count
+          if(x.name=="year6")this.year6=x.count
+          if(x.name=="year7")this.year7=x.count
+          if(x.name=="year8")this.year8=x.count
+          if(x.name=="year9")this.year9=x.count
+
+        })
         this.initValues()
 
       }
@@ -335,9 +435,14 @@ export default {
     }
   },
   computed: {
-    sumCount1:{
+    sumCount:{
       get: function () {
-        return this.S1 + this.M1 + this.L1 + this.XL1 + this.XXL1 + this.XXXL1 + this.XXXXL1 + this.XXXXXL1 + this.XXXXXXL1 ;
+        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL+
+               this.shose29 + this.shose30 +this.shose31 +this.shose32 +this.shose33 +this.shose34 +this.shose35 +
+               this.shose36 +this.shose37 +this.shose38 +this.shose39 +this.shose40 +this.shose41 +this.shose42 +
+               this.shose43 +this.shose44 +this.shose45 +this.shose46 +this.shose47 +this.shose48 +this.shose49 +
+               this.shose50 +this.shose51 +this.shose52 +this.shose53 +this.shose54 +this.shose55 +this.shose56 +
+               this.year1 +this.year2 +this.year3 +this.year4 +this.year5 +this.year6 +this.year7 +this.year8 + this.year9 ;
       },
       // setter
       set: function (newValue) {
@@ -345,27 +450,6 @@ export default {
       }
 
     },
-    sumCount2:{
-      get: function () {
-        return this.S2 + this.M2 + this.L2 + this.XL2 + this.XXL2 + this.XXXL2 + this.XXXXL2 + this.XXXXXL2 + this.XXXXXXL2 ;
-      },
-      // setter
-      set: function (newValue) {
-
-      }
-
-    },
-    sumCount3:{
-      get: function () {
-        return this.S3 + this.M3 + this.L3 + this.XL3 + this.XXL3 + this.XXXL3 + this.XXXXL3 + this.XXXXXL3 + this.XXXXXXL3 ;
-      },
-      // setter
-      set: function (newValue) {
-
-      }
-
-    },
-
     isSidebarActiveLocal: {
       get () {
         return this.isSidebarActive
@@ -379,7 +463,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title  && this.description && this.price && this.productCost && this.sumCount && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId
+      return !this.errors.any() && this.title  && this.price && this.productCost && this.sumCount && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId && this.photos.length !=0
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -407,9 +491,6 @@ export default {
       console.log("filePahths",this.files)
     },
 
-    deleteImage(event){
-      console.log("enent",event)
-    },
     initValues () {
       if (this.data.id) return
       this.dataId = null
@@ -424,6 +505,43 @@ export default {
       this.XXXXL = 0
       this.XXXXXL = 0
       this.XXXXXXL = 0
+      this.shose29 = 0
+      this.shose30 = 0
+      this.shose31 = 0
+      this.shose32 = 0
+      this.shose33 = 0
+      this.shose34 = 0
+      this.shose35 = 0
+      this.shose36 = 0
+      this.shose37= 0
+      this.shose38 = 0
+      this.shose39 = 0
+      this.shose40 = 0
+      this.shose41 = 0
+      this.shose42 = 0
+      this.shose43 = 0
+      this.shose44 = 0
+      this.shose45 = 0
+      this.shose46 = 0
+      this.shose47 = 0
+      this.shose48 = 0
+      this.shose49 = 0
+      this.shose50 = 0
+      this.shose51 = 0
+      this.shose52 = 0
+      this.shose53 = 0
+      this.shose54 = 0
+      this.shose55 = 0
+      this.shose56 = 0
+      this.year1 = 0
+      this.year2 = 0
+      this.year3 = 0
+      this.year4 = 0
+      this.year5 = 0
+      this.year6 = 0
+      this.year7 = 0
+      this.year8 = 0
+      this.year9 = 0
       this.description=null
       this.price=null
       this.productCost=null
@@ -433,40 +551,60 @@ export default {
       this.subCategoryId=null
       this.productTypeId=null
       this.vendorId=null
-      this.files=[]
+      this.photos=[]
 
     },
+
     submitData () {
       this.$validator.validateAll().then(result => {
         if (result) {
           let productSizes=[]
-          if(this.S){
-            productSizes.push({"name":"S","Count":this.S})
-          }
-          if(this.M){
-            productSizes.push({"name":"M","Count":this.M})
-          }
-          if(this.L){
-            productSizes.push({"name":"L","Count":this.L})
-          }
-          if(this.XL){
-            productSizes.push({"name":"XL","Count":this.XL})
-          }
-          if(this.XXL){
-            productSizes.push({"name":"XXL","Count":this.XXL})
-          }
-          if(this.XXXL){
-            productSizes.push({"name":"XXXL","Count":this.XXXL})
-          }
-          if(this.XXXXL){
-            productSizes.push({"name":"XXXXL","Count":this.XXXXL})
-          }
-          if(this.XXXXXL){
-            productSizes.push({"name":"XXXXXL","Count":this.XXXXXL})
-          }
-          if(this.XXXXXXL){
-            productSizes.push({"name":"XXXXXXL","Count":this.XXXXXXL})
-          }
+          if(this.S) productSizes.push({"name":"S","Count":this.S})
+          if(this.M) productSizes.push({"name":"M","Count":this.M})
+          if(this.L) productSizes.push({"name":"L","Count":this.L})
+          if(this.XL)productSizes.push({"name":"XL","Count":this.XL})
+          if(this.XXL)productSizes.push({"name":"2XL","Count":this.XXL})
+          if(this.XXXL)productSizes.push({"name":"3XL","Count":this.XXXL})
+          if(this.XXXXL) productSizes.push({"name":"4XL","Count":this.XXXXL})
+          if(this.XXXXXL)productSizes.push({"name":"5XL","Count":this.XXXXXL})
+          if(this.XXXXXXL)productSizes.push({"name":"6XL","Count":this.XXXXXXL})
+          if(this.shose29)productSizes.push({"name":"29","Count":this.shose29})
+          if(this.shose30)productSizes.push({"name":"30","Count":this.shose30})
+          if(this.shose31)productSizes.push({"name":"31","Count":this.shose31})
+          if(this.shose32)productSizes.push({"name":"32","Count":this.shose32})
+          if(this.shose33)productSizes.push({"name":"33","Count":this.shose33})
+          if(this.shose34)productSizes.push({"name":"34","Count":this.shose34})
+          if(this.shose35)productSizes.push({"name":"35","Count":this.shose35})
+          if(this.shose36)productSizes.push({"name":"36","Count":this.shose36})
+          if(this.shose37)productSizes.push({"name":"37","Count":this.shose37})
+          if(this.shose38)productSizes.push({"name":"38","Count":this.shose38})
+          if(this.shose39)productSizes.push({"name":"39","Count":this.shose39})
+          if(this.shose40)productSizes.push({"name":"40","Count":this.shose40})
+          if(this.shose41)productSizes.push({"name":"41","Count":this.shose41})
+          if(this.shose42)productSizes.push({"name":"42","Count":this.shose42})
+          if(this.shose43)productSizes.push({"name":"43","Count":this.shose43})
+          if(this.shose44)productSizes.push({"name":"44","Count":this.shose44})
+          if(this.shose45)productSizes.push({"name":"45","Count":this.shose45})
+          if(this.shose46)productSizes.push({"name":"46","Count":this.shose46})
+          if(this.shose47)productSizes.push({"name":"47","Count":this.shose47})
+          if(this.shose48)productSizes.push({"name":"48","Count":this.shose48})
+          if(this.shose49)productSizes.push({"name":"49","Count":this.shose49})
+          if(this.shose50)productSizes.push({"name":"50","Count":this.shose50})
+          if(this.shose51)productSizes.push({"name":"51","Count":this.shose51})
+          if(this.shose52)productSizes.push({"name":"52","Count":this.shose52})
+          if(this.shose53)productSizes.push({"name":"53","Count":this.shose53})
+          if(this.shose54)productSizes.push({"name":"54","Count":this.shose54})
+          if(this.shose55)productSizes.push({"name":"55","Count":this.shose55})
+          if(this.shose56)productSizes.push({"name":"56","Count":this.shose56})
+          if(this.year1)productSizes.push({"name":"year1","Count":this.year1})
+          if(this.year2)productSizes.push({"name":"year2","Count":this.year2})
+          if(this.year3)productSizes.push({"name":"year3","Count":this.year3})
+          if(this.year4)productSizes.push({"name":"year4","Count":this.year4})
+          if(this.year5)productSizes.push({"name":"year5","Count":this.year5})
+          if(this.year6)productSizes.push({"name":"year6","Count":this.year6})
+          if(this.year7)productSizes.push({"name":"year7","Count":this.year7})
+          if(this.year8)productSizes.push({"name":"year8","Count":this.year8})
+          if(this.year9)productSizes.push({"name":"year9","Count":this.year9})
 
           const obj = {
             id: this.dataId,
@@ -481,7 +619,7 @@ export default {
             price:this.price,
             productCost:this.productCost,
             description: this.description,
-            photos:this.files,
+            photos:this.photos.map(photo => String(photo.response  ? photo.response : photo.id)),
             ProductSizes:productSizes
           }
 
@@ -550,7 +688,7 @@ export default {
     direction: rtl;
     .all-centerx{
       direction: ltr;
-      width: 33.333%;
+      width: 20%;
       display: inline-block;
     }
   }

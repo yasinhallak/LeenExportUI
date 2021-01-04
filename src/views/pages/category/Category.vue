@@ -82,7 +82,7 @@ export default {
     return {
       selected: [],
       // products: [],
-      itemsPerPage: 4,
+      itemsPerPage: 10,
       isMounted: false,
 
       // Data Sidebar

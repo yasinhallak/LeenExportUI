@@ -28,11 +28,21 @@
         <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
 
         <!-- Phone -->
-        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric|min:11|max:11'"   />
+        <vs-input label="رقم جوال الشركة" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric|min:11|max:11'"   />
         <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
+
+        <!-- Phone -->
+        <vs-input label="رقم جوال الموظف" v-model="employeePhone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="employeePhone"  v-validate="'numeric|min:11|max:11'"   />
+        <span class="text-danger text-sm" v-show="errors.has('employeePhone')">{{ errors.first('employeePhone') }}</span>
+
+
         <!-- Address -->
         <vs-textarea label="عنوان مقر الشركة" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('address')">{{ errors.first('address') }}</span>
+
+        <!-- Address -->
+        <vs-textarea label="وصف عمل الشركة" v-model="description" class="mt-5 w-full"  width="300px" name="description"  v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
       </div>
     </component>
 
@@ -66,7 +76,9 @@ export default {
       name: null,
       companyName: null,
       phone:null,
+      employeePhone:null,
       address:null,
+      description:null,
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -81,12 +93,14 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,employeePhone,address,description} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
         this.phone=phone
+        this.employeePhone=employeePhone
         this.address=address
+        this.description=description
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -106,7 +120,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.companyName && this.phone && this.address
+      return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.description
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },
@@ -117,7 +131,9 @@ export default {
       this.name = null
       this.companyName = null
       this.phone=null
+      this.employeePhone=null
       this.address=null
+      this.description=null
 
     },
     submitData () {
@@ -128,7 +144,9 @@ export default {
             name: this.name,
             companyName: this.companyName,
             phone:this.phone,
-            address:this.address
+            employeePhone:this.employeePhone,
+            address:this.address,
+            description:this.description
           }
 
           if (this.dataId !== null && this.dataId >= 0) {

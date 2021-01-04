@@ -638,6 +638,7 @@ export default [
         url: '/pages/product',
         slug: 'page-product',
         name: 'product',
+        emp:'product',
         icon: 'SettingsIcon',
         i18n: 'product'
       },
@@ -645,6 +646,7 @@ export default [
         url: '/pages/vendor',
         slug: 'page-vendor',
         name: 'Vendor',
+        emp:'Vendor',
         icon: 'SettingsIcon',
         i18n: 'Vendor'
       },
@@ -652,6 +654,7 @@ export default [
         url: '/pages/customer',
         slug: 'page-customer',
         name: 'customer',
+        emp:'customer',
         icon: 'SettingsIcon',
         i18n: 'customer'
       },

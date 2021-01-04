@@ -44,13 +44,13 @@
           <div class="px-6">
 
             <!-- Layout Type -->
-            <div class="mt-4">
-              <h5 class="mb-2">Layout Type</h5>
-              <div>
-                <vs-radio v-model="layoutType" vs-value="vertical" class="mr-4" vs-name="layout-type-vertical">Vertical</vs-radio>
-                <vs-radio v-model="layoutType" vs-value="horizontal" class="mr-4" vs-name="layout-type-horizontal">Horizontal</vs-radio>
-              </div>
-            </div>
+<!--            <div class="mt-4">-->
+<!--              <h5 class="mb-2">Layout Type</h5>-->
+<!--              <div>-->
+<!--                <vs-radio v-model="layoutType" vs-value="vertical" class="mr-4" vs-name="layout-type-vertical">Vertical</vs-radio>-->
+<!--                <vs-radio v-model="layoutType" vs-value="horizontal" class="mr-4" vs-name="layout-type-horizontal">Horizontal</vs-radio>-->
+<!--              </div>-->
+<!--            </div>-->
 
             <vs-divider />
 

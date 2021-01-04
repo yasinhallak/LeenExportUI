@@ -45,8 +45,10 @@
       <template slot="thead">
         <vs-th sort-key="name">اسم مالك الشركة</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
-        <vs-th sort-key="phone">رقم الجوال</vs-th>
+        <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
+        <vs-th sort-key="employeePhone">رقم جوال الموظف</vs-th>
         <vs-th sort-key="address">عنوان الشركة</vs-th>
+        <vs-th sort-key="description">وصف عمل الشركة</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -64,7 +66,14 @@
             <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.phone)">{{ tr.phone }}</a>
           </vs-td>
           <vs-td>
+            <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.employeePhone)">{{ tr.employeePhone }}</a>
+          </vs-td>
+          <vs-td>
             <p class="product-name font-medium truncate">{{ tr.address }}</p>
+          </vs-td>
+
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
 
           <vs-td class="whitespace-no-wrap">
@@ -91,7 +100,7 @@ export default {
     return {
       selected: [],
       // products: [],
-      itemsPerPage: 4,
+      itemsPerPage: 10,
       isMounted: false,
 
       // Data Sidebar

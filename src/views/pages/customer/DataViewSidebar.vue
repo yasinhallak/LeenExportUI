@@ -24,19 +24,19 @@
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- CompanyName -->
-        <vs-input label="اسم الشركة" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
+        <vs-input label="اسم الشركة" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName"  />
+<!--        <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>-->
 
         <!-- Phone -->
-        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric|min:11|max:11'"   />
+        <vs-input label="رقم الجوال" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric'"   />
         <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
         <!-- Email -->
-        <vs-input label="البريد الإلكتروني" v-model="email" class="mt-5 w-full" icon-pack="feather" icon="icon-user" icon-no-border name="email"  v-validate="'required|email'"   />
-        <span class="text-danger text-sm" v-show="errors.has('email')">{{ errors.first('email') }}</span>
+        <vs-input label="البريد الإلكتروني" v-model="email" class="mt-5 w-full" icon-pack="feather" icon="icon-user" icon-no-border name="email" />
+<!--        <span class="text-danger text-sm" v-show="errors.has('email')">{{ errors.first('email') }}</span>-->
         <!-- specialization -->
         <label >الاختصاص</label>
-        <v-select multiple  v-model="selectedSpecial" class="mt-5 w-full" :options="specialOptions" name="specialization" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('specialization')">{{ errors.first('specialization') }}</span>
+        <v-select multiple  v-model="selectedSpecial" class="mt-5 w-full" :options="specialOptions" name="specialization" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+<!--        <span class="text-danger text-sm" v-show="errors.has('specialization')">{{ errors.first('specialization') }}</span>-->
 
         <!-- saleType -->
         <label >نوع البيع</label>
@@ -53,8 +53,8 @@
 <!--        <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>-->
 
         <!-- description -->
-        <vs-textarea label="التقرير" v-model="description" class="mt-5 w-full"  width="300px" name="description"  v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
+        <vs-textarea label="التقرير" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
+<!--        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>-->
         <!-- Address -->
         <vs-textarea label="عنوان مقر الشركة" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('address')">{{ errors.first('address') }}</span>
@@ -157,7 +157,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.companyName && this.phone && this.email && this.selectedSpecial && this.selectedType && this.selectedStatus && this.description  && this.address
+      return !this.errors.any() && this.name && this.phone && this.address
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },

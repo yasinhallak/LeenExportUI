@@ -21,6 +21,7 @@ Vue.use(Vuesax)
 const base = process.env.VUE_APP_BASE_URL
 const baseApi = process.env.VUE_APP_BASE_API
 const baseImage = process.env.VUE_APP_BASE_IMAGE;
+const baseImageTest='https://test.leenexport.com/'
 
 Vue.prototype.$vRoute = new class vRoute {
   constructor() {
@@ -29,29 +30,13 @@ Vue.prototype.$vRoute = new class vRoute {
   }
 
   imageUrl(path, type= null) {
+    console.log("path",path)
     if (!path)
       return `${baseImage}/Images/default_ppt.jpg`;
     // TODO : Return sd back
     if (type) return `${baseImage}${path}-${type}.jpg`;
-    return `${baseImage}${path}.jpg`;
+    return `${baseImageTest}${path}.jpg`;
   }
-
-  logoUrl(path) {
-    if (!path)
-      return `/_nuxt/assets/images/default-user-placeholder.png`
-    return `${baseImage}${path}.jpg`;
-  }
-
-  videoLink(path) {
-    return `${base}/${path}`;
-  }
-
-
-  GetOfferLink(offerType, offerId) {
-    offerType = "realestate";
-    return `${base}/offer/${offerType}/${offerId}`;
-  }
-
 
 }
 

@@ -42,7 +42,7 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="id">رقم المنتج      dsfsafsdf</vs-th>
+        <vs-th sort-key="id">رقم المنتج   </vs-th>
         <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
         <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
         <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
@@ -102,7 +102,7 @@
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
-<!--            <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />-->
+            <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
           </vs-td>
         </vs-tr>
@@ -126,7 +126,7 @@ export default {
     return {
       selected: [],
       // products: [],
-      itemsPerPage: 4,
+      itemsPerPage: 40,
       isMounted: false,
 
       // Data Sidebar

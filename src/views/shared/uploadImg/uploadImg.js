@@ -80,6 +80,10 @@ export default {
 
   },
   watch: {
+    value:function (newValue){
+      this.files = newValue;
+    },
+
     files: function (newVal) {
       this.onInputChange(newVal);
       let active = this.files.filter(x => x.active == true).length > 0;
@@ -157,7 +161,7 @@ export default {
           isValid: true,
           error: "",
           success: true,
-          postAction: `${this.$BaseAPI}/media/upload`,
+          postAction: `https://test.leenexport.com/api/v1/media/upload`,
           timeout: 0,
           file: {},
           response: {
