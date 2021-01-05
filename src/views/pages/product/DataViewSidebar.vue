@@ -32,7 +32,7 @@
 
         <!-- productTypes -->
         <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 catslab" name="subCategoryId" v-validate="'required'">
-          <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in subCategoryTypes" />
+          <vs-select-item :key="item.id" :value="item.id" :text="item.name" class="mt-5 catslab" v-for="item in subCategoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
 
@@ -206,6 +206,9 @@
 
         <div class="all-centerx">
           <div class="centerx">
+            <div class="centerx">
+              <vs-input-number  min="0" max="10" label="56  :" v-model="shose56"/>
+            </div>
             <vs-input-number  min="0" max="10" label="Year 1:" v-model="year1"/>
           </div>
           <div class="centerx">
@@ -229,9 +232,34 @@
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="Year 8:" v-model="year8"/>
           </div>
+
+        </div>
+        <div class="all-centerx">
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="Year 9:" v-model="year9"/>
           </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 10:" v-model="year10"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 11:" v-model="year11"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 12:" v-model="year12"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 13:" v-model="year13"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 14:" v-model="year14"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 15:" v-model="year15"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 16:" v-model="year16"/>
+          </div>
+
         </div>
 
         <div class="centerx">
@@ -334,6 +362,13 @@ export default {
       year7:0,
       year8:0,
       year9:0,
+      year10:0,
+      year11:0,
+      year12:0,
+      year13:0,
+      year14:0,
+      year15:0,
+      year16:0,
       description:null,
       price:null,
       productCost:null,
@@ -363,18 +398,18 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        console.log("isSidebarActive",this.data)
+        this.initValueSize()
         const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.seasonsTypes=seasonsTypes
-        this.categoryId=categoryId
-        this.subCategoryId=subCategoryId
-        this.productTypeId=productTypeId
+        setTimeout( ()=>{this.categoryId=categoryId},500)
+        setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
+        setTimeout( ()=>{this.productTypeId=productTypeId},1500)
         this.title = title
         this.material=material
-        this.vendorId=vendorId
         this.count=count
         this.price=price
+        this.vendorId=vendorId
         this.productCost=productCost
         this.description=description
         this.photos=images
@@ -426,9 +461,15 @@ export default {
           if(x.name=="year7")this.year7=x.count
           if(x.name=="year8")this.year8=x.count
           if(x.name=="year9")this.year9=x.count
+          if(x.name=="year10")this.year10=x.count
+          if(x.name=="year11")this.year11=x.count
+          if(x.name=="year12")this.year12=x.count
+          if(x.name=="year13")this.year13=x.count
+          if(x.name=="year14")this.year14=x.count
+          if(x.name=="year15")this.year15=x.count
+          if(x.name=="year16")this.year16=x.count
 
         })
-        this.initValues()
 
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -441,8 +482,9 @@ export default {
                this.shose29 + this.shose30 +this.shose31 +this.shose32 +this.shose33 +this.shose34 +this.shose35 +
                this.shose36 +this.shose37 +this.shose38 +this.shose39 +this.shose40 +this.shose41 +this.shose42 +
                this.shose43 +this.shose44 +this.shose45 +this.shose46 +this.shose47 +this.shose48 +this.shose49 +
-               this.shose50 +this.shose51 +this.shose52 +this.shose53 +this.shose54 +this.shose55 +this.shose56 +
-               this.year1 +this.year2 +this.year3 +this.year4 +this.year5 +this.year6 +this.year7 +this.year8 + this.year9 ;
+               this.shose50 +this.shose51 +this.shose52 +this.shose53 +this.shose54 +this.shose55  +this.shose56 +
+               this.year1 +this.year2 +this.year3 +this.year4 +this.year5 +this.year6 +this.year7 +this.year8 + this.year9+
+               this.year10 +this.year11 +this.year12 +this.year13 +this.year14 +this.year15 +this.year16 ;
       },
       // setter
       set: function (newValue) {
@@ -483,19 +525,24 @@ export default {
   },
   methods: {
 
-    successUpload(event){
-     // this.$vs.notify({color:'success',title:'Upload Success',text:'Lorem ipsum dolor sit amet, consectetur'})
-      //get the filePaths from Laravel controller
-      let filePaths = event.currentTarget.response
-     this.files.push(JSON.parse(filePaths));
-      console.log("filePahths",this.files)
-    },
-
     initValues () {
-      if (this.data.id) return
+     if (this.data.id) return
       this.dataId = null
       this.title = null
       this.material=null
+      this.description=null
+      this.price=null
+      this.productCost=null
+      this.seasonsTypes=null
+      this.categoryId=null
+      this.subCategoryId=null
+      this.productTypeId=null
+      this.vendorId=null
+      this.photos=[]
+      this.initValueSize()
+    },
+
+    initValueSize(){
       this.S = 0
       this.M = 0
       this.L = 0
@@ -542,17 +589,14 @@ export default {
       this.year7 = 0
       this.year8 = 0
       this.year9 = 0
-      this.description=null
-      this.price=null
-      this.productCost=null
-      this.seasonsTypes=null
+      this.year10 = 0
+      this.year11 = 0
+      this.year12 = 0
+      this.year13 = 0
+      this.year14 = 0
+      this.year15 = 0
+      this.year16 = 0
       this.sumCount=0
-      this.categoryId=null
-      this.subCategoryId=null
-      this.productTypeId=null
-      this.vendorId=null
-      this.photos=[]
-
     },
 
     submitData () {
@@ -605,6 +649,13 @@ export default {
           if(this.year7)productSizes.push({"name":"year7","Count":this.year7})
           if(this.year8)productSizes.push({"name":"year8","Count":this.year8})
           if(this.year9)productSizes.push({"name":"year9","Count":this.year9})
+          if(this.year10)productSizes.push({"name":"year10","Count":this.year10})
+          if(this.year11)productSizes.push({"name":"year11","Count":this.year11})
+          if(this.year12)productSizes.push({"name":"year12","Count":this.year12})
+          if(this.year13)productSizes.push({"name":"year13","Count":this.year13})
+          if(this.year14)productSizes.push({"name":"year14","Count":this.year14})
+          if(this.year15)productSizes.push({"name":"year15","Count":this.year15})
+          if(this.year16)productSizes.push({"name":"year16","Count":this.year16})
 
           const obj = {
             id: this.dataId,
@@ -688,7 +739,7 @@ export default {
     direction: rtl;
     .all-centerx{
       direction: ltr;
-      width: 20%;
+      width: 16.15%;
       display: inline-block;
     }
   }

@@ -126,7 +126,7 @@ export default {
     return {
       selected: [],
       // products: [],
-      itemsPerPage: 40,
+      itemsPerPage: 10,
       isMounted: false,
 
       // Data Sidebar
@@ -154,10 +154,20 @@ export default {
       let label='';
       items.forEach((item,index)=>{
         if(index!==0){
-          label=label + ' , ' + item.name
+          for (let i = 1; i <= item.count; i++) {
+            label=label + ' , ' + item.name
+          }
         }
         else {
-          label=label + item.name
+          for (let i = 1; i <= item.count; i++) {
+            if(i==item.count){
+              label=label + item.name
+            }
+            else{
+                label=label + ' , ' + item.name
+             }
+          }
+
         }
       })
       return label;
@@ -188,7 +198,7 @@ export default {
     },
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
-      this.$store.dispatch('product/updateModalState',true);
+     // this.$store.dispatch('product/updateModalState',true);
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },

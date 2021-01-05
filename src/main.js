@@ -35,7 +35,7 @@ Vue.prototype.$vRoute = new class vRoute {
       return `${baseImage}/Images/default_ppt.jpg`;
     // TODO : Return sd back
     if (type) return `${baseImage}${path}-${type}.jpg`;
-    return `${baseImageTest}${path}.jpg`;
+    return `${baseImage}${path}.jpg`;
   }
 
 }
