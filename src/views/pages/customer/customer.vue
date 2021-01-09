@@ -136,7 +136,7 @@ export default {
   methods: {
     PhoneWhatsapp(phone){
       //return  `https://api.whatsapp.com/send?phone=${phone}`
-      return  `https://wa.me/9${phone}`
+      return  `https://wa.me/${phone}`
     },
 
     getSpecialLabel(items){

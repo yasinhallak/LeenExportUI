@@ -20,10 +20,10 @@
 
       <div class="p-6">
         <!-- seasonsTypes -->
-        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 catslab" name="seasonsTypes" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
+<!--        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 catslab" name="seasonsTypes" v-validate="'required'">-->
+<!--          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />-->
+<!--        </vs-select>-->
+<!--        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>-->
         <!-- CATEGORY -->
         <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف الرئيسي" class="mt-5 catslab" name="categoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
@@ -310,7 +310,6 @@ export default {
   },
   data () {
     return {
-
       dataId: null,
       seasonsTypes:null,
       title: null,
@@ -399,9 +398,8 @@ export default {
         this.$validator.reset()
       } else {
         this.initValueSize()
-        const { id,seasonsTypes,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize} = JSON.parse(JSON.stringify(this.data))
+        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        this.seasonsTypes=seasonsTypes
         setTimeout( ()=>{this.categoryId=categoryId},500)
         setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
         setTimeout( ()=>{this.productTypeId=productTypeId},1500)
@@ -505,7 +503,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title  && this.price && this.productCost && this.sumCount && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId && this.photos.length !=0
+      return !this.errors.any() && this.title  && this.price && this.productCost  && this.categoryId  && this.subCategoryId && this.productTypeId && this.vendorId && this.photos.length !=0
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -533,7 +531,6 @@ export default {
       this.description=null
       this.price=null
       this.productCost=null
-      this.seasonsTypes=null
       this.categoryId=null
       this.subCategoryId=null
       this.productTypeId=null
@@ -659,7 +656,6 @@ export default {
 
           const obj = {
             id: this.dataId,
-            seasonsTypes:this.seasonsTypes,
             categoryId:this.categoryId,
             subCategoryId:this.subCategoryId,
             productTypeId:this.productTypeId,
@@ -688,14 +684,14 @@ export default {
       })
     },
 
-    changeSeasonsTypes(){
-      if(!this.$store.state.product.isUpdated){
-        this.categoryId=null
-        this.subCategoryId=null
-        this.productTypeId=null
-      }
-      this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: this.seasonsTypes})
-    },
+    // changeSeasonsTypes(){
+    //   if(!this.$store.state.product.isUpdated){
+    //     this.categoryId=null
+    //     this.subCategoryId=null
+    //     this.productTypeId=null
+    //   }
+    //   this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: this.seasonsTypes})
+    // },
 
     changeCategoryTypes(){
       if(!this.$store.state.product.isUpdated){
@@ -724,6 +720,7 @@ export default {
   },
   mounted () {
      this.$store.dispatch('product/fetchCompanyItems')
+     this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: null})
   }
 }
 </script>

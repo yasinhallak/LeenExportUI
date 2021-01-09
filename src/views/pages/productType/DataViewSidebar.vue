@@ -25,10 +25,10 @@
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- seasonsTypes -->
-        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
+<!--        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">-->
+<!--          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />-->
+<!--        </vs-select>-->
+<!--        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>-->
 
         <!-- CATEGORY -->
         <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="نوع التصنيف الرئيسي" class="mt-5 w-full" name="category" v-validate="'required'">
@@ -98,10 +98,9 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const {id, name,seasonsTypes, categoryId,subCategoryId } = JSON.parse(JSON.stringify(this.data))
+        const {id, name, categoryId,subCategoryId } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
-        this.seasonsTypes=seasonsTypes
         this.categoryId = categoryId
         this.subCategoryId=subCategoryId
         this.initValues()
@@ -175,15 +174,15 @@ export default {
       })
     },
 
-    changeSeasonsTypes(){
-      if(!this.$store.state.productType.isUpdated){
-       //console.log("changeSeasonsTypes")
-        this.categoryId=null
-        this.subCategoryId=null
-      }
-
-      this.$store.dispatch('productType/fetchCategoryItems', { seasonsTypes: this.seasonsTypes})
-    },
+    // changeSeasonsTypes(){
+    //   if(!this.$store.state.productType.isUpdated){
+    //    //console.log("changeSeasonsTypes")
+    //     this.categoryId=null
+    //     this.subCategoryId=null
+    //   }
+    //
+    //   this.$store.dispatch('productType/fetchCategoryItems', { seasonsTypes: this.seasonsTypes})
+    // },
     changeCategoryTypes(){
       if(!this.$store.state.productType.isUpdated){
        // console.log("changeCategoryTypes")
@@ -199,7 +198,7 @@ export default {
 
   },
   mounted () {
-
+    this.$store.dispatch('productType/fetchCategoryItems', { seasonsTypes: null})
   }
 }
 </script>

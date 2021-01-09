@@ -43,6 +43,7 @@
       </div>
 
       <template slot="thead">
+        <vs-th sort-key="id">رقم الشركة</vs-th>
         <vs-th sort-key="name">اسم مالك الشركة</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
         <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
@@ -56,6 +57,9 @@
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
 
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.id }}</p>
+          </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
@@ -80,7 +84,6 @@
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
           </vs-td>
-
         </vs-tr>
         </tbody>
       </template>

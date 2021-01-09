@@ -24,10 +24,10 @@
         <vs-input label="أدخل اسم التصنيف الرئيسي" v-model="name" class="mt-5 w-full" name="name" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
-        <vs-select v-model.number="dataCategory" label="أختر الفصل" class="mt-5 w-full" name="item-category" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>
+<!--        <vs-select v-model.number="dataCategory" label="أختر الفصل" class="mt-5 w-full" name="item-category" v-validate="'required'">-->
+<!--          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />-->
+<!--        </vs-select>-->
+<!--        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>-->
 
         <vs-textarea v-model="description" class="mt-5 w-full" name="description" label="أدخل وصف " width="300px" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
@@ -71,13 +71,7 @@ export default {
         {text:'خريف', value:'3'},
         {text:'شتاء', value:'4'}
       ],
-      // category_choices: [
-      //   {id: 1, label: 'ربيع'},
-      //   {id: 2, label: 'صيف'},
-      //   {id: 3, label: 'خريف'},
-      //   {id: 4, label: 'شتاء'},
-      //
-      // ],
+
 
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -92,9 +86,8 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const { seasonsTypes, id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
+        const {  id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        this.dataCategory = seasonsTypes
         this.name = categoryName
         this.description=description
 
@@ -117,7 +110,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.dataCategory && this.description
+      return !this.errors.any() && this.name  && this.description
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },

@@ -25,10 +25,10 @@
         <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
 
         <!-- seasonsTypes -->
-        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">
-          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />
-        </vs-select>
-        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>
+<!--        <vs-select v-model.number="seasonsTypes" @change="changeSeasonsTypes" label="اختر الفصل" class="mt-5 w-full" name="seasonsTypes" v-validate="'required'">-->
+<!--          <vs-select-item :key="item.value" :value="item.value" :text="item.text" v-for="item in category_choices" />-->
+<!--        </vs-select>-->
+<!--        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>-->
 
         <!-- CATEGORY -->
         <vs-select v-model.number="categoryId" label="نوع التصنيف الرئيسي" class="mt-5 w-full" name="category" v-validate="'required'">
@@ -91,10 +91,9 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const {id, name,seasonsTypes, categoryId } = JSON.parse(JSON.stringify(this.data))
+        const {id, name, categoryId } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
-        this.seasonsTypes=seasonsTypes
         this.categoryId = categoryId
         this.initValues()
       }
@@ -121,7 +120,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.categoryId && this.seasonsTypes
+      return !this.errors.any() && this.name && this.categoryId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -181,7 +180,7 @@ export default {
 
   },
   mounted () {
-
+    this.$store.dispatch('subCategory/fetchCategoryItems',{seasonsTypes: null})
   }
 }
 </script>

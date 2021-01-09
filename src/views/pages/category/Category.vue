@@ -42,7 +42,7 @@
 
       <template slot="thead">
         <vs-th sort-key="categoryName">اسم التصنيف الرئيسي</vs-th>
-        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>
+<!--        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>-->
         <vs-th sort-key="description">وصف التصنيف</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
@@ -53,9 +53,9 @@
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
           </vs-td>
-          <vs-td>
-            <p class="product-category">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>
-          </vs-td>
+<!--          <vs-td>-->
+<!--            <p class="product-category">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>-->
+<!--          </vs-td>-->
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
