@@ -84,7 +84,7 @@ export default {
       // products: [],
       itemsPerPage: 10,
       isMounted: false,
-
+      removeItem:null,
       // Data Sidebar
       addNewDataSidebar: false,
       sidebarData: {}
@@ -109,15 +109,39 @@ export default {
       this.sidebarData = {}
       this.toggleDataSidebar(true)
     },
-    deleteData (id) {
-      this.$store.dispatch('category/removeItem', id).catch(err => { console.error(err) })
-    },
+
     editData (data) {
 
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
+
+    deleteData (id) {
+      this.removeItem=id;
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: 'تأكيد الحذف',
+        text: `هل أنت متأكد من حذف هذا العنصر`,
+        accept: this.deleteRecord,
+        acceptText: 'حذف'
+      })
+    },
+    deleteRecord(){
+      /* Below two lines are just for demo purpose */
+      this.$store.dispatch('category/removeItem', this.removeItem)
+        .then(()=>{this.showDeleteSuccess()})
+        .catch(err => { console.error(err)})
+    },
+    showDeleteSuccess () {
+      this.$vs.notify({
+        color: 'success',
+        title: 'حذف العنصر',
+        text: 'تم حذف العنصر بنجاح'
+      })
+    },
+
     getOrderStatusColor (status) {
       if (status === 'on_hold')   return 'warning'
       if (status === 'delivered') return 'success'

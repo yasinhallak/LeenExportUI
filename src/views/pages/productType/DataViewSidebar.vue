@@ -78,12 +78,6 @@ export default {
       categoryId: null,
       subCategoryId:null,
       //categoryTypes:[],
-      category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
-      ],
 
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -130,7 +124,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.categoryId && this.seasonsTypes
+      return !this.errors.any() && this.name && this.categoryId && this.subCategoryId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
