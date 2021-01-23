@@ -76,7 +76,8 @@
             <p class="product-name font-medium truncate">{{ getSaleLabel(tr.saleType ) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{$t('statusOptions.' + tr.status) }}</p>
+            <vs-chip :color="getOrderStatusColor(tr.status)" class="product-order-status">{{$t('statusOptions.' + tr.status) }}</vs-chip>
+<!--            <p class="product-name font-medium truncate">{{$t('statusOptions.' + tr.status) }}</p>-->
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
@@ -165,6 +166,14 @@ export default {
       return label;
     },
 
+    getOrderStatusColor(status) {
+      if (status === 1)   return 'success'
+      if (status === 2) return 'danger'
+      if (status === 3)  return 'warning'
+      if (status === 4)  return 'primary'
+      return 'primary'
+    },
+
     addNewData () {
       this.sidebarData = {}
       this.toggleDataSidebar(true)
@@ -199,12 +208,7 @@ export default {
         text: 'تم حذف العنصر بنجاح'
       })
     },
-    getOrderStatusColor (status) {
-      if (status === 'on_hold')   return 'warning'
-      if (status === 'delivered') return 'success'
-      if (status === 'canceled')  return 'danger'
-      return 'primary'
-    },
+
     getPopularityColor (num) {
       if (num > 90)  return 'success'
       if (num > 70)  return 'primary'

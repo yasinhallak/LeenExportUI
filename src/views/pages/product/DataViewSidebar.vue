@@ -25,19 +25,19 @@
 <!--        </vs-select>-->
 <!--        <span class="text-danger text-sm" v-show="errors.has('seasonsTypes')">{{ errors.first('seasonsTypes') }}</span>-->
         <!-- CATEGORY -->
-        <vs-select v-model.number="categoryId" @change="changeCategoryTypes" label="اختر التصنيف الرئيسي" class="mt-5 catslab" name="categoryId" v-validate="'required'">
-          <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
+        <vs-select v-model="categoryId" @change="changeCategoryTypes" label="اختر التصنيف الرئيسي" class="mt-5 catslab" name="categoryId" v-validate="'required'">
+          <vs-select-item :key="index" :value="item.id" :text="item.categoryName" v-for="(item,index) in categoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
 
         <!-- productTypes -->
-        <vs-select v-model.number="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 catslab" name="subCategoryId" v-validate="'required'">
+        <vs-select v-model="subCategoryId"  @change="changeSubCategoryTypes"  label="اختر التصنيف الفرعي"   class="mt-5 catslab" name="subCategoryId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" class="mt-5 catslab" v-for="item in subCategoryTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
 
         <!-- productTypes -->
-        <vs-select label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 catslab" name="productTypeId" v-validate="'required'">
+        <vs-select label="اختر المنتج"  v-model="productTypeId" class="mt-5 catslab" name="productTypeId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
@@ -51,8 +51,9 @@
         <span class="text-danger text-sm" v-show="errors.has('material')">{{ errors.first('material') }}</span>
 
         <!-- CompanyName -->
-        <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 catslab" name="vendorId" v-validate="'required'">
-          <vs-select-item :key="item.id" :value="item.id" :text="item.companyName" v-for="item in companies" />
+
+        <vs-select  autocomplete label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 catslab" name="vendorId" v-validate="'required'">
+          <vs-select-item :key="index" :value="item.id" :text="item.companyName" v-for="(item,index) in companies" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
@@ -116,6 +117,12 @@
 
         <div class="all-centerx">
           <div class="centerx">
+            <vs-input-number  min="0" max="10" label="27:" v-model="shose27"/>
+          </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="28:" v-model="shose28"/>
+          </div>
+          <div class="centerx">
             <vs-input-number  min="0" max="10" label="29:" v-model="shose29"/>
           </div>
           <div class="centerx">
@@ -139,12 +146,13 @@
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="36:" v-model="shose36"/>
           </div>
-          <div class="centerx">
-            <vs-input-number  min="0" max="10" label="37:" v-model="shose37"/>
-          </div>
+
        </div>
 
         <div class="all-centerx">
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="37:" v-model="shose37"/>
+          </div>
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="38:" v-model="shose38"/>
           </div>
@@ -259,6 +267,9 @@
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="Year 16:" v-model="year16"/>
           </div>
+          <div class="centerx">
+            <vs-input-number  min="0" max="10" label="Year 18:" v-model="year18"/>
+          </div>
 
         </div>
 
@@ -324,6 +335,8 @@ export default {
       XXXXL:0,
       XXXXXL:0,
       XXXXXXL:0,
+      shose27:0,
+      shose28:0,
       shose29:0,
       shose30:0,
       shose31:0,
@@ -368,6 +381,7 @@ export default {
       year14:0,
       year15:0,
       year16:0,
+      year18:0,
       description:null,
       price:null,
       productCost:null,
@@ -422,6 +436,8 @@ export default {
           if(x.name=="4XL")this.XXXXL=x.count
           if(x.name=="5XL")this.XXXXXL=x.count
           if(x.name=="6XL")this.XXXXXXL=x.count
+          if(x.name=="27")this.shose27=x.count
+          if(x.name=="28")this.shose28=x.count
           if(x.name=="29")this.shose29=x.count
           if(x.name=="30")this.shose30=x.count
           if(x.name=="31")this.shose31=x.count
@@ -466,6 +482,7 @@ export default {
           if(x.name=="year14")this.year14=x.count
           if(x.name=="year15")this.year15=x.count
           if(x.name=="year16")this.year16=x.count
+          if(x.name=="year18")this.year18=x.count
 
         })
 
@@ -476,13 +493,13 @@ export default {
   computed: {
     sumCount:{
       get: function () {
-        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL+
+        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL+this.shose27 + this.shose28 +
                this.shose29 + this.shose30 +this.shose31 +this.shose32 +this.shose33 +this.shose34 +this.shose35 +
                this.shose36 +this.shose37 +this.shose38 +this.shose39 +this.shose40 +this.shose41 +this.shose42 +
                this.shose43 +this.shose44 +this.shose45 +this.shose46 +this.shose47 +this.shose48 +this.shose49 +
                this.shose50 +this.shose51 +this.shose52 +this.shose53 +this.shose54 +this.shose55  +this.shose56 +
                this.year1 +this.year2 +this.year3 +this.year4 +this.year5 +this.year6 +this.year7 +this.year8 + this.year9+
-               this.year10 +this.year11 +this.year12 +this.year13 +this.year14 +this.year15 +this.year16 ;
+               this.year10 +this.year11 +this.year12 +this.year13 +this.year14 +this.year15 +this.year16 +this.year18;
       },
       // setter
       set: function (newValue) {
@@ -549,6 +566,8 @@ export default {
       this.XXXXL = 0
       this.XXXXXL = 0
       this.XXXXXXL = 0
+      this.shose27 = 0
+      this.shose28 = 0
       this.shose29 = 0
       this.shose30 = 0
       this.shose31 = 0
@@ -593,6 +612,7 @@ export default {
       this.year14 = 0
       this.year15 = 0
       this.year16 = 0
+      this.year18 = 0
       this.sumCount=0
     },
 
@@ -609,6 +629,8 @@ export default {
           if(this.XXXXL) productSizes.push({"name":"4XL","Count":this.XXXXL})
           if(this.XXXXXL)productSizes.push({"name":"5XL","Count":this.XXXXXL})
           if(this.XXXXXXL)productSizes.push({"name":"6XL","Count":this.XXXXXXL})
+          if(this.shose27)productSizes.push({"name":"27","Count":this.shose27})
+          if(this.shose28)productSizes.push({"name":"28","Count":this.shose28})
           if(this.shose29)productSizes.push({"name":"29","Count":this.shose29})
           if(this.shose30)productSizes.push({"name":"30","Count":this.shose30})
           if(this.shose31)productSizes.push({"name":"31","Count":this.shose31})
@@ -653,6 +675,7 @@ export default {
           if(this.year14)productSizes.push({"name":"year14","Count":this.year14})
           if(this.year15)productSizes.push({"name":"year15","Count":this.year15})
           if(this.year16)productSizes.push({"name":"year16","Count":this.year16})
+          if(this.year18)productSizes.push({"name":"year18","Count":this.year18})
 
           const obj = {
             id: this.dataId,
@@ -744,6 +767,7 @@ export default {
     width: 33.333%;
     padding:0 5px;
     display: inline-block;
+
     label{
       color: #1f74ff;
       font-size: 12px;

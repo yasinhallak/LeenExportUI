@@ -79,6 +79,7 @@ export default {
       employeePhone:null,
       address:null,
       description:null,
+      dataError:null,
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -151,15 +152,36 @@ export default {
 
           if (this.dataId !== null && this.dataId >= 0) {
             this.$store.dispatch('vendor/updateItem', obj).catch(err => { console.error(err) })
+             this.$emit('closeSidebar')
+             this.initValues()
           } else {
             delete obj.id
             // obj.popularity = 0
-            this.$store.dispatch('vendor/addItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('vendor/addItem', obj)
+              .then(()=>{
+                 this.$emit('closeSidebar')
+                 this.initValues()
+              })
+              .catch(err => {
+                let errors = err.response.data.errors;
+                console.error(err.response.data.errors)
+               Object.keys(errors).forEach(item => {
+                  console.log("item:", item);
+                  this.dataError = this.$t(`errorMessage.${item}`);
+                });
+                this.showDeleteSuccess()
+              })
           }
 
-          this.$emit('closeSidebar')
-          this.initValues()
+
         }
+      })
+    },
+    showDeleteSuccess () {
+      this.$vs.notify({
+        color: 'danger',
+        title: 'حذف العنصر',
+        text: this.dataError
       })
     },
 

@@ -102,6 +102,7 @@ export default {
       specialOptions: [
         {id: 1, label: 'رجالي'},
         {id: 2, label: 'نسائي'},
+        {id: 3, label: 'ولادي'},
       ],
       saleOptions: [
         {id: 3, label: 'جملة'},

@@ -1,8 +1,8 @@
 // axios
 import axios from 'axios'
 
-const baseURL = 'https://leenexport.com/api/v1'
-//const baseURL = 'https://test.leenexport.com/api/v1'
+//onst baseURL = 'https://testapi.leenexport.com/api/v1'
+const baseURL = process.env.VUE_APP_BASE_API_Url
 
 export default axios.create({
   baseURL

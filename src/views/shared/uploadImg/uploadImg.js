@@ -50,7 +50,7 @@ export default {
       drop: true,
       addIndex: false,
       thread: 1,
-      postAction: `https://leenexport.com/api/v1/media/upload`,
+      postAction: `${this.$BaseAPIUrl}/media/upload`,
       headers: {
         "X-Csrf-Token": "xxxx"
       },
@@ -161,7 +161,7 @@ export default {
           isValid: true,
           error: "",
           success: true,
-          postAction: `https://leenexport.com/api/v1/media/upload`,
+          postAction: `${this.$BaseAPIUrl}/media/upload`,
           timeout: 0,
           file: {},
           response: {
