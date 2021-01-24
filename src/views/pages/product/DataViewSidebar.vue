@@ -689,7 +689,7 @@ export default {
             price:this.price,
             productCost:this.productCost,
             description: this.description,
-            photos:this.photos.map(photo => String(photo.response  ? photo.response : photo.id)),
+            photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
             ProductSizes:productSizes
           }
 

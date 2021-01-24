@@ -5,7 +5,7 @@ import FileUpload from "vue-upload-component";
 import draggable from "vuedraggable";
 import exifr from "exifr";
 import {mapState} from "vuex";
-import bSpinner from "../../../components/OverLayLoading.vue";
+import axios from "@/axios.js";
 
 export default {
   name: "uploadImg",
@@ -30,12 +30,15 @@ export default {
     name: {
       default: "file",
       type: String
+    },
+    mediaType: {
+      default: 1,
+      type: Number
     }
   },
   components: {
     FileUpload,
-    draggable,
-    bSpinner
+    draggable
   },
   data() {
     return {
@@ -83,7 +86,6 @@ export default {
     value:function (newValue){
       this.files = newValue;
     },
-
     files: function (newVal) {
       this.onInputChange(newVal);
       let active = this.files.filter(x => x.active == true).length > 0;
@@ -147,12 +149,13 @@ export default {
       this.$emit('input', newVal);
     },
     async fillPhotos(photos) {
+      console.log("photos",photos)
       this.$refs.upload.clear();
       for (let photo of photos) {
         this.$refs.upload.add({
           id: photo.id,
           path: photo.path,
-         // order: photo.order,
+          order: photo.order,
           fileObject: true,
           size: 57055,
           name: "api",
@@ -185,8 +188,7 @@ export default {
       for (let photo of photos) {
 
         let oo = this.$refs.upload.get(photo.id);
-       // await fetch(this.$vRoute.imageUrl(photo.path, 'sd'))
-        await fetch(this.$vRoute.imageUrl(photo.path))
+        await fetch(this.$vRoute.imageUrl(photo.path, 'sd'))
           .then(res => res.blob())
           .then(i => {
             oo.blob = URL.createObjectURL(i);
@@ -327,12 +329,25 @@ export default {
         }
       }
     },
+
     onEditFileShow(file) {
       this.editFile = {...file, show: true};
       this.$refs.upload.update(file, {error: "edit"});
     },
     onDeleteFile(file) {
-      this.$refs.upload.remove(file);
+       console.log("onDeleteFile",file)
+      axios.post(`/media/remove`,
+        {
+          Guid:file.response==undefined ? file.id:file.response.id,
+        })
+        .then(res=>{
+          console.log("response",res.data)
+          this.$refs.upload.remove(file);
+        }).catch(error=>{
+        console.log(error)
+      })
+
+
     },
     // on edit file (Crop)
     onEditorFile() {
@@ -372,10 +387,12 @@ export default {
 
       this.editFile.show = false;
     },
+
     setMain(index) {
       this.files.splice(0, 0, this.files.splice(index, 1)[0]);
       this.$emit('set-main')
     },
+
     rotateImage(deg) {
       this.editFile.cropper.clear();
       let containerData = this.editFile.cropper.getContainerData();
