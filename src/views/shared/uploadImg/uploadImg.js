@@ -133,6 +133,16 @@ export default {
     },
   },
   methods: {
+    showModificationButtons(){
+      document.getElementById("modification-buttons").classList.remove("hidden");
+      document.getElementById("save-close-buttons").classList.remove("hidden");
+    },
+    hideModificationButtons(){
+      document.getElementById("modification-buttons").classList.add("hidden");
+      document.getElementById("save-close-buttons").classList.add("hidden");
+      document.getElementById("save-close-buttons").classList.add("hidden");
+      document.getElementsByClassName("cropper-container")[0].classList.toggle("hidden");
+    },  
     showSetButton(index) {
       if (this.hasMain && index === 0) return false
       return this.hasSetButton
@@ -424,3 +434,5 @@ export default {
     // });
   }
 };
+
+/* document.getElementsByClassName("cropper-container")[0].classList.add("hidden"); */
