@@ -6,6 +6,8 @@ import draggable from "vuedraggable";
 import exifr from "exifr";
 import {mapState} from "vuex";
 import axios from "@/axios.js";
+import bSpinner from "../../../components/OverLayLoading.vue";
+
 
 export default {
   name: "uploadImg",
@@ -38,7 +40,8 @@ export default {
   },
   components: {
     FileUpload,
-    draggable
+    draggable,
+    bSpinner
   },
   data() {
     return {
@@ -198,7 +201,7 @@ export default {
       for (let photo of photos) {
 
         let oo = this.$refs.upload.get(photo.id);
-        await fetch(this.$vRoute.imageUrl(photo.path, 'sd'))
+        await fetch(this.$vRoute.imageUrl(photo.path))
           .then(res => res.blob())
           .then(i => {
             oo.blob = URL.createObjectURL(i);
