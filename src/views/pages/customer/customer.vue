@@ -44,8 +44,11 @@
       <template slot="thead">
         <vs-th sort-key="name">اسم الزبون</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
+        <vs-th sort-key="shippingName">شركة الشحن </vs-th>
+        <vs-th sort-key="shippingCode">الكود</vs-th>
         <vs-th sort-key="phone">رقم الجوال</vs-th>
         <vs-th sort-key="email">البريد الإلكتروني</vs-th>
+
         <vs-th sort-key="specialization">الأختصاص</vs-th>
         <vs-th sort-key="saleType">نوع البيع</vs-th>
         <vs-th sort-key="status">الحالة</vs-th>
@@ -62,6 +65,12 @@
           </vs-td>
           <vs-td>
             <p class="product-category">{{ tr.companyName | title }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-category">{{ tr.shippingName | title }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-category">{{ tr.shippingCode | title }}</p>
           </vs-td>
           <vs-td>
             <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.phone)" >{{ tr.phone }}</a>
