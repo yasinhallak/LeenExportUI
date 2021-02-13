@@ -33,6 +33,13 @@
         <!-- Email -->
         <vs-input label="البريد الإلكتروني" v-model="email" class="mt-5 w-full" icon-pack="feather" icon="icon-user" icon-no-border name="email" />
 <!--        <span class="text-danger text-sm" v-show="errors.has('email')">{{ errors.first('email') }}</span>-->
+
+        <!-- ShippingName -->
+        <vs-input label="شركة الشحن" v-model="shippingName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="shippingName" />
+
+        <!-- ShippingCode -->
+        <vs-input label="الكود" v-model="shippingCode" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="shippingCode"  />
+
         <!-- specialization -->
         <label >الاختصاص</label>
         <v-select multiple  v-model="selectedSpecial" class="mt-5 w-full" :options="specialOptions" name="specialization" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
@@ -92,6 +99,8 @@ export default {
       dataId: null,
       name: null,
       companyName: null,
+      shippingName:null,
+      shippingCode:null,
       phone:null,
       email:null,
       description:null,
@@ -128,10 +137,12 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,email,specialization,saleType,status,description,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,email,shippingName,shippingCode,specialization,saleType,status,description,address} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
+        this.shippingName=shippingName
+        this.shippingCode=shippingCode
         this.phone=phone
         this.email=email
         this.selectedSpecial=specialization
@@ -170,6 +181,8 @@ export default {
       this.companyName = null
       this.phone=null
       this.email=null
+      this.shippingName=null
+      this.shippingCode=null
       this.selectedSpecial=null
       this.selectedType=null
       this.selectedStatus=null
@@ -183,6 +196,8 @@ export default {
             id: this.dataId,
             name: this.name,
             companyName: this.companyName,
+            shippingName:this.shippingName,
+            shippingCode:this.shippingCode,
             phone:this.phone,
             email:this.email,
             description:this.description,
