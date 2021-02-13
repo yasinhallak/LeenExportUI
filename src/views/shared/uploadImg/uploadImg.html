@@ -80,9 +80,7 @@
           </div>
 
           <div class="loading" v-if="file.active">
-              <span>
-                loading
-              </span>
+            <b-spinner label="Loading..."></b-spinner>
           </div>
           <img :src="file.thumb" v-if="file.thumb && !file.path" />
           <img :src="$vRoute.imageUrl(file.path)" v-if="file.path" />
@@ -101,88 +99,88 @@
     </li>
   </draggable>
 
-  <b-modal v-model="editFile.show" title="تعديل الصورة" hide-footer>
-    <form @submit.prevent="onEditorFile" @mouseenter="clear" @click="clear">
-      <div class="modal-body">
-        <div class="form-group">
-          <div class="edit-image" style="height: 400px; width: 100%">
-            <img
-              ref="editImage"
-              :src="editFile.blob"
-              v-if="editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"
-            />
-            <img
-              :src="$vRoute.imageUrl(editFile.path)"
-              ref="editImage"
-              v-else-if="editFile.path &&editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="modal-footer justify-content-start hidden"
-        id="modification-buttons"
-      >
-        <div>
-          <div class="edit-image-tool">
-            <div class="btn-group flex justify-around" role="group">
-              <template>
-                <button
-                  @click="rotateImage(-90)"
-                  class="rotate-button"
-                  type="button"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="transform"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-                <button
-                  @click="rotateImage(90)"
-                  class="rotate-button"
-                  type="button"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="transform"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </template>
-              <!--                            <button @click.prevent="editFile.cropper.reset()">إعادة تعيين</button>-->
-            </div>
-          </div>
-        </div>
-        <div
-          class="ml-auto save-close  flex justify-around hidden"
-          id="save-close-buttons"
-        >
-          <button
-            @click.prevent="editFile.show = false ;  hideModificationButtons()"
-            class="btn btn-danger"
-          >
-            إغلاق
-          </button>
-          <button class="btn btn-success" type="submit">حفظ</button>
-        </div>
-      </div>
-    </form>
-  </b-modal>
+<!--  <b-modal v-model="editFile.show" title="تعديل الصورة" hide-footer>-->
+<!--    <form @submit.prevent="onEditorFile" @mouseenter="clear" @click="clear">-->
+<!--      <div class="modal-body">-->
+<!--        <div class="form-group">-->
+<!--          <div class="edit-image" style="height: 400px; width: 100%">-->
+<!--            <img-->
+<!--              ref="editImage"-->
+<!--              :src="editFile.blob"-->
+<!--              v-if="editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"-->
+<!--            />-->
+<!--            <img-->
+<!--              :src="$vRoute.imageUrl(editFile.path)"-->
+<!--              ref="editImage"-->
+<!--              v-else-if="editFile.path &&editFile.show && editFile.blob && editFile.type && editFile.type.substr(0, 6) === 'image/'"-->
+<!--            />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div-->
+<!--        class="modal-footer justify-content-start hidden"-->
+<!--        id="modification-buttons"-->
+<!--      >-->
+<!--        <div>-->
+<!--          <div class="edit-image-tool">-->
+<!--            <div class="btn-group flex justify-around" role="group">-->
+<!--              <template>-->
+<!--                <button-->
+<!--                  @click="rotateImage(-90)"-->
+<!--                  class="rotate-button"-->
+<!--                  type="button"-->
+<!--                >-->
+<!--                  <svg-->
+<!--                    xmlns="http://www.w3.org/2000/svg"-->
+<!--                    viewBox="0 0 20 20"-->
+<!--                    fill="currentColor"-->
+<!--                    class="transform"-->
+<!--                  >-->
+<!--                    <path-->
+<!--                      fill-rule="evenodd"-->
+<!--                      d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"-->
+<!--                      clip-rule="evenodd"-->
+<!--                    />-->
+<!--                  </svg>-->
+<!--                </button>-->
+<!--                <button-->
+<!--                  @click="rotateImage(90)"-->
+<!--                  class="rotate-button"-->
+<!--                  type="button"-->
+<!--                >-->
+<!--                  <svg-->
+<!--                    xmlns="http://www.w3.org/2000/svg"-->
+<!--                    viewBox="0 0 20 20"-->
+<!--                    fill="currentColor"-->
+<!--                    class="transform"-->
+<!--                  >-->
+<!--                    <path-->
+<!--                      fill-rule="evenodd"-->
+<!--                      d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"-->
+<!--                      clip-rule="evenodd"-->
+<!--                    />-->
+<!--                  </svg>-->
+<!--                </button>-->
+<!--              </template>-->
+<!--              &lt;!&ndash;                            <button @click.prevent="editFile.cropper.reset()">إعادة تعيين</button>&ndash;&gt;-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div-->
+<!--          class="ml-auto save-close  flex justify-around hidden"-->
+<!--          id="save-close-buttons"-->
+<!--        >-->
+<!--          <button-->
+<!--            @click.prevent="editFile.show = false ;  hideModificationButtons()"-->
+<!--            class="btn btn-danger"-->
+<!--          >-->
+<!--            إغلاق-->
+<!--          </button>-->
+<!--          <button class="btn btn-success" type="submit">حفظ</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </b-modal>-->
 </section>
 
 

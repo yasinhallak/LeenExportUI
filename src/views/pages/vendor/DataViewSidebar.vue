@@ -27,6 +27,14 @@
         <vs-input label="اسم الشركة" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('companyName')">{{ errors.first('companyName') }}</span>
 
+        <!-- ShippingName -->
+        <vs-input label="شركة الشحن" v-model="shippingName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="shippingName" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('shippingName')">{{ errors.first('shippingName') }}</span>
+
+        <!-- ShippingCode -->
+        <vs-input label="الكود" v-model="shippingCode" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="shippingCode" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('shippingCode')">{{ errors.first('shippingCode') }}</span>
+
         <!-- Phone -->
         <vs-input label="رقم جوال الشركة" v-model="phone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="phone"  v-validate="'required|numeric|min:11|max:11'"   />
         <span class="text-danger text-sm" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
@@ -75,6 +83,8 @@ export default {
       dataId: null,
       name: null,
       companyName: null,
+      shippingName:null,
+      shippingCode:null,
       phone:null,
       employeePhone:null,
       address:null,
@@ -94,10 +104,12 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,employeePhone,address,description} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,shippingName,shippingCode,phone ,employeePhone,address,description} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
+        this.shippingName=shippingName
+        this.shippingCode=shippingCode
         this.phone=phone
         this.employeePhone=employeePhone
         this.address=address
@@ -131,6 +143,8 @@ export default {
       this.dataId = null
       this.name = null
       this.companyName = null
+      this.shippingName=null
+      this.shippingCode=null
       this.phone=null
       this.employeePhone=null
       this.address=null
@@ -144,6 +158,8 @@ export default {
             id: this.dataId,
             name: this.name,
             companyName: this.companyName,
+            shippingName:this.shippingName,
+            shippingCode:this.shippingCode,
             phone:this.phone,
             employeePhone:this.employeePhone,
             address:this.address,

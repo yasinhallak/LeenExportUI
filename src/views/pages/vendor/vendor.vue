@@ -46,6 +46,8 @@
         <vs-th sort-key="id">رقم الشركة</vs-th>
         <vs-th sort-key="name">اسم مالك الشركة</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
+        <vs-th sort-key="shippingName">شركة الشحن </vs-th>
+        <vs-th sort-key="shippingCode">الكود</vs-th>
         <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
         <vs-th sort-key="employeePhone">رقم جوال الموظف</vs-th>
         <vs-th sort-key="address">عنوان الشركة</vs-th>
@@ -67,6 +69,12 @@
             <p class="product-category">{{ tr.companyName | title }}</p>
           </vs-td>
           <vs-td>
+            <p class="product-category">{{ tr.shippingName | title }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-category">{{ tr.shippingCode | title }}</p>
+          </vs-td>
+          <vs-td>
             <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.phone)">{{ tr.phone }}</a>
           </vs-td>
           <vs-td>
@@ -79,7 +87,6 @@
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
-
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
