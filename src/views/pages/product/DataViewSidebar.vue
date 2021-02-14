@@ -51,7 +51,7 @@
         <span class="text-danger text-sm" v-show="errors.has('material')">{{ errors.first('material') }}</span>
 
         <!-- CompanyName -->
-        <vs-select label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 catslab" name="vendorId" v-validate="'required'">
+        <vs-select  autocomplete label="اسم الشركة المنتجة" v-model.number="vendorId"  class="mt-5 catslab" name="vendorId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.companyName" v-for="item in companies" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
@@ -761,9 +761,11 @@ export default {
       }
 
     }
-          .sum .vs-input-number button.vs-input-number--button-plus, .vs-input-number button.vs-input-number--button-less{
-        display: none !important;
-      }
+          .sum{
+            .vs-input-number button.vs-input-number--button-plus, .vs-input-number button.vs-input-number--button-less{
+              display: none !important;
+            }
+          }
   }
 
   .catslab{
