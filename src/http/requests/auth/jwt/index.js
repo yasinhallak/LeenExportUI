@@ -46,7 +46,7 @@ export default {
   },
 
   login (payload) {
-    return axios.post('/identity/login', payload)
+    return axios.post('https://testapi.leenexport.com/api/v1/identity/login', payload)
   },
 
   registerUser (name, email, pwd) {

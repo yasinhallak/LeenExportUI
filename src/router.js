@@ -964,6 +964,20 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/vendor-request',
+          name: 'page-vendor-request',
+          component: () => import('@/views/pages/vendor-request/vendorRequest.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'vendor-request', active: true }
+            ],
+            pageTitle: 'vendor-request',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/product',
           name: 'page-product',
           component: () => import('@/views/pages/product/product.vue'),

@@ -617,46 +617,54 @@ export default [
         url: '/pages/category',
         slug: 'page-category',
         name: 'Category',
-        icon: 'SettingsIcon',
-        i18n: 'Category'
+        icon: 'ShoppingBagIcon',
+        i18n: 'التصنيفات الرئيسية'
       },
       {
         url: '/pages/subCategory',
         slug: 'page-subCategory',
         name: 'subCategory',
-        icon: 'SettingsIcon',
-        i18n: 'subCategory'
+        icon: 'ShoppingBagIcon',
+        i18n: 'التصنيفات الفرعية'
       },
       {
         url: '/pages/productType',
         slug: 'page-productType',
         name: 'ProductType',
-        icon: 'SettingsIcon',
-        i18n: 'ProductType'
+        icon: 'ShoppingBagIcon',
+        i18n: 'أنواع المنتجات'
       },
       {
         url: '/pages/product',
         slug: 'page-product',
         name: 'product',
         emp:'product',
-        icon: 'SettingsIcon',
-        i18n: 'product'
+        icon: 'ShoppingBagIcon',
+        i18n: 'المنتجات'
       },
       {
         url: '/pages/vendor',
         slug: 'page-vendor',
         name: 'Vendor',
         emp:'Vendor',
-        icon: 'SettingsIcon',
-        i18n: 'Vendor'
+        icon: 'UserCheckIcon',
+        i18n: 'البائعين'
       },
       {
         url: '/pages/customer',
         slug: 'page-customer',
         name: 'customer',
         emp:'customer',
-        icon: 'SettingsIcon',
-        i18n: 'customer'
+        icon: 'UserCheckIcon',
+        i18n: 'الزبائن'
+      },
+      {
+        url: '/pages/vendor-request',
+        slug: 'page-vendor-request',
+        name: 'vendor-request',
+        emp:'vendor-request',
+        icon: 'ActivityIcon',
+        i18n: 'معالجة الطلبات'
       },
       // {
       //   url: '/pages/user-settings',
