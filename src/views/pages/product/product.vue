@@ -55,6 +55,8 @@
         <vs-th sort-key="price">سعر المبيع</vs-th>
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
         <vs-th sort-key="description">وصف المنتج</vs-th>
+        <vs-th sort-key="createdDate">تاريخ الإضافة</vs-th>
+        <vs-th sort-key="updatedDate">تاريخ التعديل</vs-th>
 
         <vs-th>الأوامر</vs-th>
       </template>
@@ -100,6 +102,12 @@
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.description }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.createdDate }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.updatedDate }}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
