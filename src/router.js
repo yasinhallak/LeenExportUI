@@ -973,7 +973,8 @@ const router = new Router({
               { title: 'Pages' },
               { title: 'vendor-request', active: true }
             ],
-            pageTitle: 'vendor-request',
+            pageTitle: 'vendor-request' +
+              '',
             rule: 'editor'
           }
         },

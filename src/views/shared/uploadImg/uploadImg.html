@@ -83,7 +83,7 @@
             <b-spinner label="Loading..."></b-spinner>
           </div>
           <img :src="file.thumb" v-if="file.thumb && !file.path" />
-          <img :src="$vRoute.imageUrl(file.path)" v-if="file.path" />
+          <img :src="$vRoute.imageUrl(file.path,'sd')" v-if="file.path" />
           <span v-else>No Image</span>
           <div class="footer pt-1" v-if="!isPanoramic">
             <a

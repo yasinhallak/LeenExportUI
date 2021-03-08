@@ -309,7 +309,7 @@ export default {
           if (response.data.token) {
             // Navigate User to homepage
             router.push(router.currentRoute.query.to || '/dashboard')
-
+            console.log("token",response.data.token)
             // Set accessToken
             localStorage.setItem('accessToken', response.data.token)
 

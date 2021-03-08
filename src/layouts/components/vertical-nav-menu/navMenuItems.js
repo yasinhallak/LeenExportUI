@@ -646,7 +646,6 @@ export default [
         url: '/pages/vendor',
         slug: 'page-vendor',
         name: 'Vendor',
-        emp:'Vendor',
         icon: 'UserCheckIcon',
         i18n: 'البائعين'
       },
@@ -654,7 +653,6 @@ export default [
         url: '/pages/customer',
         slug: 'page-customer',
         name: 'customer',
-        emp:'customer',
         icon: 'UserCheckIcon',
         i18n: 'الزبائن'
       },
@@ -662,7 +660,6 @@ export default [
         url: '/pages/vendor-request',
         slug: 'page-vendor-request',
         name: 'vendor-request',
-        emp:'vendor-request',
         icon: 'ActivityIcon',
         i18n: 'معالجة الطلبات'
       },

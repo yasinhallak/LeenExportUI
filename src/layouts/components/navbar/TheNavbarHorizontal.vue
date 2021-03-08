@@ -23,11 +23,11 @@
 
       <i18n />
 
-      <search-bar />
+<!--      <search-bar />-->
 
-      <cart-drop-down />
+<!--      <cart-drop-down />-->
 
-      <notification-drop-down />
+<!--      <notification-drop-down />-->
 
       <profile-drop-down />
 

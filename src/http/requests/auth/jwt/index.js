@@ -1,4 +1,4 @@
-import axios from '../../../axios/index.js'
+import axios from '@/axios'
 import store from '../../../../store/store.js'
 
 // Token Refresh
@@ -46,7 +46,7 @@ export default {
   },
 
   login (payload) {
-    return axios.post('https://testapi.leenexport.com/api/v1/identity/login', payload)
+    return axios.post('https://api.leenexport.com/api/v1/identity/login', payload)
   },
 
   registerUser (name, email, pwd) {
