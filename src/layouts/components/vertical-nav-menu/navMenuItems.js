@@ -656,6 +656,14 @@ export default [
         icon: 'UserCheckIcon',
         i18n: 'الزبائن'
       },
+
+      {
+        url: '/pages/users',
+        slug: 'page-users',
+        name: 'users',
+        icon: 'UserCheckIcon',
+        i18n: 'المستخدمين'
+      },
       {
         url: '/pages/vendor-request',
         slug: 'page-vendor-request',

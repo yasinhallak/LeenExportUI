@@ -22,23 +22,16 @@ export default {
   // },
   fetchUsers ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/user-management/users')
+      axios.get('/identity/listUser')
         .then((response) => {
+          console.log("users",response.data)
           commit('SET_USERS', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })
     })
   },
-  fetchUser (context, userId) {
-    return new Promise((resolve, reject) => {
-      axios.get(`/api/user-management/users/${userId}`)
-        .then((response) => {
-          resolve(response)
-        })
-        .catch((error) => { reject(error) })
-    })
-  },
+
   removeRecord ({ commit }, userId) {
     return new Promise((resolve, reject) => {
       axios.delete(`/api/user-management/users/${userId}`)
