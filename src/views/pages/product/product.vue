@@ -52,6 +52,7 @@
         <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
         <vs-th sort-key="productSize">المقاسات المتاحة</vs-th>
         <vs-th sort-key="count">عدد السيريه</vs-th>
+        <vs-th sort-key="inStock">عدد الكلي ضمن المستودع</vs-th>
         <vs-th sort-key="price">سعر المبيع</vs-th>
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
         <vs-th sort-key="description">وصف المنتج</vs-th>
@@ -93,6 +94,9 @@
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.count }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.inStock }}</p>
           </vs-td>
           <vs-td>
             <p class="product-price font-medium truncate">${{ tr.price }}</p>

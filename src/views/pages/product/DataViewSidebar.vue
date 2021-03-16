@@ -78,6 +78,13 @@
           name="productCost" />
         <span class="text-danger text-sm" v-show="errors.has('productCost')">{{ errors.first('productCost') }}</span>
 
+        <vs-input
+          type="number"
+          label="العدد الكلي ضمن المستودع"
+          v-model.number="inStock"
+          class="mt-5  catslab"
+          name="InStock" />
+
         <!-- Description -->
         <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
 
@@ -315,6 +322,7 @@ export default {
       seasonsTypes:null,
       title: null,
       material:null,
+      inStock:null,
       size:staticJson.size,
       S:0,
       M:0,
@@ -399,7 +407,7 @@ export default {
         this.$validator.reset()
       } else {
         this.initValueSize()
-        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize} = JSON.parse(JSON.stringify(this.data))
+        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize,inStock} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         setTimeout( ()=>{this.categoryId=categoryId},500)
         setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
@@ -407,6 +415,7 @@ export default {
         this.title = title
         this.material=material
         this.count=count
+        this.inStock=inStock
         this.price=price
         this.vendorId=vendorId
         this.productCost=productCost
@@ -536,6 +545,7 @@ export default {
       this.subCategoryId=null
       this.productTypeId=null
       this.vendorId=null
+      this.inStock=null
       this.photos=[]
       this.initValueSize()
     },
@@ -664,6 +674,7 @@ export default {
             material:this.material,
             vendorId:this.vendorId,
             count:this.sumCount,
+            inStock:this.inStock,
             price:this.price,
             productCost:this.productCost,
             description: this.description,

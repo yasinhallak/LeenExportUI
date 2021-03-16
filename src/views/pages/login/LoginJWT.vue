@@ -82,7 +82,6 @@ export default {
         //checkbox_remember_me: this.checkbox_remember_me,
           Email: this.email,
           password: this.password
-
       }
 
       this.$store.dispatch('auth/loginJWT', payload)
@@ -98,10 +97,7 @@ export default {
           })
         })
     },
-    registerUser () {
-      if (!this.checkLogin()) return
-      this.$router.push('/pages/register').catch(() => {})
-    }
+
   }
 }
 
