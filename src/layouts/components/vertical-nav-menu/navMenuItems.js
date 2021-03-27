@@ -475,8 +475,8 @@ export default [
   //         //   i18n: "Import/Export",
   //         //   submenu: [
   //
-  //         //   ]
-  //         // },
+  //           ]
+  //          },
   //         {
   //           url: '/import-export/import',
   //           name: 'Import',
@@ -501,7 +501,7 @@ export default [
   //       ]
   //     }
   //   ]
-  // },
+  // }
   // {
   //   header: 'Forms & Table',
   //   icon: 'Edit3Icon',
@@ -670,6 +670,20 @@ export default [
         name: 'vendor-request',
         icon: 'ActivityIcon',
         i18n: 'معالجة الطلبات'
+      },
+      {
+        url: '/pages/product-model',
+        slug: 'page-product-model',
+        name: 'product-model',
+        icon: 'ActivityIcon',
+        i18n: 'قسم المبيعات'
+      },
+      {
+        url: '/pages/shop-editor',
+        name: 'shop Editor',
+        icon: 'EditIcon',
+        slug: 'extra-component-shop-editor',
+        i18n: 'حسابات المحل'
       },
       // {
       //   url: '/pages/user-settings',

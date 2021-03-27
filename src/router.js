@@ -979,6 +979,36 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/product-model',
+          name: 'page-product-model',
+          component: () => import('@/views/pages/product-model/productModel.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'product-model', active: true }
+            ],
+            pageTitle: 'product-model' +
+              '',
+            rule: 'editor'
+          }
+        },
+        {
+          path: '/pages/shop-editor',
+          name: 'page-shop-editor',
+          component: () => import('@/views/pages/shop-editor/shopEditor.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'shop-editor', active: true }
+            ],
+            pageTitle: 'shop-editor' +
+              '',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/users',
           name: 'page-users',
           component: () => import('@/views/pages/users/listUser.vue'),
