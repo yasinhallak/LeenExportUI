@@ -3,7 +3,7 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="products">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="editors">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -12,14 +12,14 @@
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">إضافة منتج</span>
+            <span class="ml-2 text-base text-primary">إضافة </span>
           </div>
         </div>
 
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ products.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : products.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ editors.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : editors.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -42,9 +42,9 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="id">رقم المنتج   </vs-th>
-        <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
-        <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
+        <vs-th sort-key="id">رقم المحرر </vs-th>
+        <vs-th sort-key="createdDate">  تاريخ الإنشاء </vs-th>
+        <vs-th sort-key="updatedDate">  تاريخ التحديث </vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -53,6 +53,12 @@
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
             <p class="product-name font-medium truncate">{{tr.id}}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{tr.createdDate}}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate">{{tr.updatedDate}}</p>
           </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
@@ -94,37 +100,14 @@ export default {
       }
       return 0
     },
-    products(){
-      return this.$store.state.product.products
+    editors(){
+      return this.$store.state.product.editors
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.editors.length
     }
   },
   methods: {
-
-    getSizeLabel(items){
-      let label='';
-      items.forEach((item,index)=>{
-        if(index!==0){
-          for (let i = 1; i <= item.count; i++) {
-            label=label + ' , ' + item.name
-          }
-        }
-        else {
-          for (let i = 1; i <= item.count; i++) {
-            if(i==item.count){
-              label=label + item.name
-            }
-            else{
-              label=label + ' , ' + item.name
-            }
-          }
-
-        }
-      })
-      return label;
-    },
 
     addNewData () {
       this.sidebarData = {}
@@ -151,7 +134,7 @@ export default {
     },
     deleteRecord(){
       /* Below two lines are just for demo purpose */
-      this.$store.dispatch('product/removeItem', this.removeItem)
+      this.$store.dispatch('product/removeEditor', this.removeItem)
         .then(()=>{this.showDeleteSuccess()})
         .catch(err => { console.error(err)})
     },
@@ -162,20 +145,6 @@ export default {
         text: 'تم حذف العنصر بنجاح'
       })
     },
-
-    getOrderStatusColor (status) {
-      if (status === 'on_hold')   return 'warning'
-      if (status === 'delivered') return 'success'
-      if (status === 'canceled')  return 'danger'
-      return 'primary'
-    },
-    getPopularityColor (num) {
-      if (num > 90)  return 'success'
-      if (num > 70)  return 'primary'
-      if (num >= 50) return 'warning'
-      if (num < 50)  return 'danger'
-      return 'primary'
-    },
     toggleDataSidebar (val = false) {
       this.addNewDataSidebar = val
     }
@@ -185,7 +154,7 @@ export default {
       this.$store.registerModule('product', moduleDataList)
       moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('product/fetchDataListItems')
+    this.$store.dispatch('product/fetchShopEditor')
   },
   mounted () {
     this.isMounted = true

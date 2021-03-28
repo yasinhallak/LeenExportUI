@@ -16,9 +16,7 @@ export default {
   SET_PRODUCTS (state, products) {
     state.products = products
   },
-  // SET_LABELS(state, labels) {
-  //   state.eventLabels = labels
-  // },
+
   UPDATE_PRODUCT (state, product) {
 
     const productIndex = state.products.findIndex((p) => p.id === product.id)
@@ -47,5 +45,25 @@ export default {
   REMOVE_ITEM (state, itemId) {
     const ItemIndex = state.products.findIndex((p) => p.id === itemId)
     state.products.splice(ItemIndex, 1)
-  }
+  },
+
+  // shop editor
+
+  Add_Editor(state,item){
+    state.editors.unshift(item)
+  },
+
+  Update_Editor(state,item){
+    const productIndex = state.editors.findIndex((p) => p.id === item.id)
+    Object.assign(state.editors[productIndex], item)
+
+  },
+  Set_Editors(state,items){
+    state.editors = items
+  },
+  REMOVE_Editor (state, itemId) {
+    const ItemIndex = state.editors.findIndex((p) => p.id === itemId)
+    state.editors.splice(ItemIndex, 1)
+  },
+
 }

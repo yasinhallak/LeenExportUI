@@ -8,10 +8,13 @@
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>
-
     <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
         <div id="extra-component-quill-editor-demo">
-      <quill-editor-theme-snow></quill-editor-theme-snow>
+          <template class="rtl">
+            <vx-card title="حسابات المحل" >
+              <quill-editor v-model="content"></quill-editor>
+            </vx-card>
+          </template>
         </div>
     </component>
 
@@ -26,8 +29,12 @@
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
 import staticJson from "../../../../static/json/static.json";
+// require styles
 
-import QuillEditorThemeSnow from '../../components/extra-components/quill-editor/QuillEditorThemeSnow.vue'
+import 'quill/dist/quill.snow.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
 export default {
   props: {
     isSidebarActive: {
@@ -35,17 +42,18 @@ export default {
       required: true
     },
     data: {
-      type: String,
-
+      type: Object,
+      default: () => {}
     }
   },
   components: {
     VuePerfectScrollbar,
-    QuillEditorThemeSnow
+    quillEditor,
   },
   data () {
     return {
       dataId: null,
+      content:null,
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -59,100 +67,14 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        this.initValueSize()
-        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize,inStock} = JSON.parse(JSON.stringify(this.data))
+        const { id,content} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        setTimeout( ()=>{this.categoryId=categoryId},500)
-        setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
-        setTimeout( ()=>{this.productTypeId=productTypeId},1500)
-        this.title = title
-        this.material=material
-        this.count=count
-        this.inStock=inStock
-        this.price=price
-        this.vendorId=vendorId
-        this.productCost=productCost
-        this.description=description
-        this.photos=images
-        productSize.forEach(x=>{
-          if(x.name=="S")this.S=x.count
-          if(x.name=="M") this.M=x.count
-          if(x.name=="L")this.L=x.count
-          if(x.name=="X")this.X=x.count
-          if(x.name=="XL")this.XL=x.count
-          if(x.name=="2XL")this.XXL=x.count
-          if(x.name=="3XL")this.XXXL=x.count
-          if(x.name=="4XL")this.XXXXL=x.count
-          if(x.name=="5XL")this.XXXXXL=x.count
-          if(x.name=="6XL")this.XXXXXXL=x.count
-          if(x.name=="29")this.shose29=x.count
-          if(x.name=="30")this.shose30=x.count
-          if(x.name=="31")this.shose31=x.count
-          if(x.name=="32")this.shose32=x.count
-          if(x.name=="33")this.shose33=x.count
-          if(x.name=="34")this.shose34=x.count
-          if(x.name=="35")this.shose35=x.count
-          if(x.name=="36")this.shose36=x.count
-          if(x.name=="37")this.shose37=x.count
-          if(x.name=="38")this.shose38=x.count
-          if(x.name=="39")this.shose39=x.count
-          if(x.name=="40")this.shose40=x.count
-          if(x.name=="41")this.shose41=x.count
-          if(x.name=="42")this.shose42=x.count
-          if(x.name=="43")this.shose43=x.count
-          if(x.name=="44")this.shose44=x.count
-          if(x.name=="45")this.shose45=x.count
-          if(x.name=="46")this.shose46=x.count
-          if(x.name=="47")this.shose47=x.count
-          if(x.name=="48")this.shose48=x.count
-          if(x.name=="49")this.shose49=x.count
-          if(x.name=="50")this.shose50=x.count
-          if(x.name=="51")this.shose51=x.count
-          if(x.name=="52")this.shose52=x.count
-          if(x.name=="53")this.shose53=x.count
-          if(x.name=="54")this.shose54=x.count
-          if(x.name=="55")this.shose55=x.count
-          if(x.name=="56")this.shose56=x.count
-          if(x.name=="year1")this.year1=x.count
-          if(x.name=="year2")this.year2=x.count
-          if(x.name=="year3")this.year3=x.count
-          if(x.name=="year4")this.year4=x.count
-          if(x.name=="year5")this.year5=x.count
-          if(x.name=="year6")this.year6=x.count
-          if(x.name=="year7")this.year7=x.count
-          if(x.name=="year8")this.year8=x.count
-          if(x.name=="year9")this.year9=x.count
-          if(x.name=="year10")this.year10=x.count
-          if(x.name=="year11")this.year11=x.count
-          if(x.name=="year12")this.year12=x.count
-          if(x.name=="year13")this.year13=x.count
-          if(x.name=="year14")this.year14=x.count
-          if(x.name=="year15")this.year15=x.count
-          if(x.name=="year16")this.year16=x.count
-
-        })
-
+        this.content=content
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
   },
   computed: {
-    sumCount:{
-      get: function () {
-        return this.S + this.M + this.L + this.XL + this.XXL + this.XXXL + this.XXXXL + this.XXXXXL + this.XXXXXXL+
-          this.shose29 + this.shose30 +this.shose31 +this.shose32 +this.shose33 +this.shose34 +this.shose35 +
-          this.shose36 +this.shose37 +this.shose38 +this.shose39 +this.shose40 +this.shose41 +this.shose42 +
-          this.shose43 +this.shose44 +this.shose45 +this.shose46 +this.shose47 +this.shose48 +this.shose49 +
-          this.shose50 +this.shose51 +this.shose52 +this.shose53 +this.shose54 +this.shose55  +this.shose56 +
-          this.year1 +this.year2 +this.year3 +this.year4 +this.year5 +this.year6 +this.year7 +this.year8 + this.year9+
-          this.year10 +this.year11 +this.year12 +this.year13 +this.year14 +this.year15 +this.year16 ;
-      },
-      // setter
-      set: function (newValue) {
-
-      }
-
-    },
     isSidebarActiveLocal: {
       get () {
         return this.isSidebarActive
@@ -166,28 +88,21 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title  && this.price && this.productCost &&  this.productTypeId
+      return !this.errors.any() && this.content
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
     productTypes () {
       return this.$store.state.product.productTypes
     },
-    companies(){
-      return this.$store.state.product.companies
-    }
+
   },
   methods: {
-
-
 
     initValues () {
       if (this.data.id) return
       this.dataId = null
-      this.initValueSize()
-    },
-
-    initValueSize(){
+      this.content=null
 
     },
 
@@ -196,14 +111,13 @@ export default {
         if (result) {
           const obj = {
             id: this.dataId,
+            content:this.content
           }
-
           if (this.dataId !== null && this.dataId >= 0) {
-            this.$store.dispatch('product/updateItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('product/updateEditor', obj).catch(err => { console.error(err) })
           } else {
             delete obj.id
-            // obj.popularity = 0
-            this.$store.dispatch('product/addItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('product/addEditor', obj).catch(err => { console.error(err) })
           }
 
           this.$emit('closeSidebar')

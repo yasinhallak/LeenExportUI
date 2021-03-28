@@ -81,16 +81,7 @@ export default {
     })
   },
 
-  // fetchEventLabels({ commit }) {
-  //   return new Promise((resolve, reject) => {
-  //     axios.get("/api/apps/calendar/labels")
-  //       .then((response) => {
-  //         commit('SET_LABELS', response.data)
-  //         resolve(response)
-  //       })
-  //       .catch((error) => { reject(error) })
-  //   })
-  // },
+
   updateItem ({ commit }, item) {
     return new Promise((resolve, reject) => {
       axios.put(`/product/${item.id}`, {...item})
@@ -112,26 +103,57 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
-  // eventDragged({ commit }, payload) {
-  //   return new Promise((resolve, reject) => {
-  //     axios.post(`/api/apps/calendar/event/dragged/${payload.event.id}`, {payload: payload})
-  //       .then((response) => {
-
-  //         // Convert Date String to Date Object
-  //         let event = response.data
-  //         event.startDate = new Date(event.startDate)
-  //         event.endDate = new Date(event.endDate)
-
-  //         commit('UPDATE_EVENT', event)
-  //         resolve(response)
-  //       })
-  //       .catch((error) => { reject(error) })
-  //   })
-  // },
-
 
   updateModalState({commit},payload){
     commit('updateModalState',payload)
-  }
+  },
+
+
+  // shop editor
+
+  addEditor ({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      console.log("item",item)
+      axios.post('/product-model', {...item})
+        .then((response) => {
+          commit('Add_Editor',  response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  updateEditor ({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      axios.put(`/product-model/${item.id}`, {...item})
+        .then((response) => {
+          commit('Update_Editor', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  fetchShopEditor({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get('/product-model/list')
+        .then((response) => {
+          commit('Set_Editors', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  removeEditor ({ commit }, itemId) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`/product-model/${itemId}`)
+        .then((response) => {
+          commit('REMOVE_Editor', itemId)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
 
 }

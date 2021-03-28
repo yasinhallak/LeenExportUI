@@ -13,6 +13,9 @@ export default {
   companies:[],
   categoryTypes:[],
   subCategoryTypes:[],
-
   isLoading: false,
+
+  // shop editor
+
+  editors:[]
 }

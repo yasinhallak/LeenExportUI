@@ -22,13 +22,25 @@ import 'quill/dist/quill.snow.css'
 import { quillEditor } from 'vue-quill-editor'
 
 export default {
+  props: {
+    value: String,
+  },
+
   data () {
     return {
-      content: null
+      content:null
     }
   },
   components: {
     quillEditor,
-  }
+  },
+  methods:{
+
+  },
+  watch: {
+    value: function (newValue, oldValue) {
+      this.content = newValue;
+    },
+  },
 }
 </script>
