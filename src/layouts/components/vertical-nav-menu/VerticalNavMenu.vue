@@ -73,41 +73,59 @@
             <template v-else-if="!item.header">
 
               <!-- Nav-Item -->
+<!--              !item.submenu &&-->
               <v-nav-menu-item
-                v-if="!item.submenu && activeUserInfo.userName=='admin'"
+                v-if="activeUserInfo.userName=='admin'"
                 :key="`item-${index}`"
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
                 :href="item.slug === 'external' ? item.url : null"
-                :icon="item.icon" :target="item.target"
+                :icon="item.icon"
+                :target="item.target"
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
-                  <span v-show="!verticalNavMenuItemsMin" class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                  <span v-show="!verticalNavMenuItemsMin && activeUserInfo.userName=='admin'" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <v-nav-menu-item
-                v-else-if="!item.submenu && item.emp"
+                v-if="activeUserInfo.userName=='mohammedTamimi' && item.emp"
                 :key="`item-${index}`"
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
                 :href="item.slug === 'external' ? item.url : null"
-                :icon="item.icon" :target="item.target"
+                :icon="item.icon"
+                :target="item.target"
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
-                <span v-show="!verticalNavMenuItemsMin" class="truncate">{{  item.emp }}</span>
-                <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
+                <span v-show="!verticalNavMenuItemsMin && activeUserInfo.userName=='mohammedTamimi' && item.emp" class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce) && activeUserInfo.userName=='mohammedTamimi' && item.emp">{{ item.tag }}</vs-chip>
+              </v-nav-menu-item>
+
+<!--              !item.submenu &&-->
+              <v-nav-menu-item
+                v-if="item.agency && activeUserInfo.userName!='mohammedTamimi'"
+                :key="`item-${index}`"
+                :index="index"
+                :to="item.slug !== 'external' ? item.url : null"
+                :href="item.slug === 'external' ? item.url : null"
+                :icon="item.icon"
+                :target="item.target"
+                :isDisabled="item.isDisabled"
+                :slug="item.slug">
+                <span v-show="!verticalNavMenuItemsMin && item.agency" class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce) && item.agency">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
-              <template v-else>
-                <v-nav-menu-group
-                  :key="`group-${index}`"
-                  :openHover="openGroupHover"
-                  :group="item"
-                  :groupIndex="index"
-                  :open="isGroupActive(item)" />
-              </template>
+<!--              <template v-else>-->
+<!--                <v-nav-menu-group-->
+<!--                  :key="`group-${index}`"-->
+<!--                  :openHover="openGroupHover"-->
+<!--                  :group="item"-->
+<!--                  :groupIndex="index"-->
+<!--                  :open="isGroupActive(item)" />-->
+<!--              </template>-->
               <!-- /Nav-Group -->
             </template>
           </template>

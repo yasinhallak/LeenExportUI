@@ -606,13 +606,6 @@ export default [
     icon: 'FileIcon',
     i18n: 'Pages',
     items: [
-      // {
-      //   url: '/pages/profile',
-      //   slug: 'page-profile',
-      //   name: 'Profile',
-      //   icon: 'UserIcon',
-      //   i18n: 'Profile'
-      // },
       {
         url: '/pages/category',
         slug: 'page-category',
@@ -638,7 +631,7 @@ export default [
         url: '/pages/product',
         slug: 'page-product',
         name: 'product',
-        emp:'product',
+        agency:'product',
         icon: 'ShoppingBagIcon',
         i18n: 'المنتجات'
       },
@@ -675,12 +668,14 @@ export default [
         url: '/pages/product-model',
         slug: 'page-product-model',
         name: 'product-model',
+        emp:true,
         icon: 'ActivityIcon',
         i18n: 'قسم المبيعات'
       },
       {
         url: '/pages/shop-editor',
         name: 'shop Editor',
+        emp: true,
         icon: 'EditIcon',
         slug: 'extra-component-shop-editor',
         i18n: 'حسابات المحل'
