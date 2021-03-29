@@ -10,8 +10,8 @@
     <vs-divider class="mb-0"></vs-divider>
     <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
         <div id="extra-component-quill-editor-demo">
-          <template class="rtl">
-            <vx-card title="حسابات المحل" >
+          <template >
+            <vx-card title="حسابات المحل"  >
               <quill-editor v-model="content"></quill-editor>
             </vx-card>
           </template>
@@ -141,7 +141,7 @@ export default {
     max-width: 100%;
     width: 80%;
     z-index: 100000;
-    direction: rtl;
+    direction: ltr;
     .all-centerx{
       direction: ltr;
       width: 170px;
@@ -150,29 +150,10 @@ export default {
         width: 220px;
       }
 
-      .centerx {
-        margin: 7px;
-        padding: 3px;
-        background-color: whitesmoke;
-        border-radius: 5px;
-        .vs-input-number{
-          display: flex;
-          justify-content: space-around;
-          margin: 0;
-          padding: 0;
-          span{
-            min-width: 32px;
-          }
-        }
 
-      }
 
     }
-    .sum{
-      .vs-input-number button.vs-input-number--button-plus, .vs-input-number button.vs-input-number--button-less{
-        display: none !important;
-      }
-    }
+
   }
 
   .catslab{

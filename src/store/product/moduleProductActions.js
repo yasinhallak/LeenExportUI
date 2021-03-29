@@ -109,12 +109,55 @@ export default {
   },
 
 
+  // product model
+  addProductModel ({ commit }, item) {
+    console.log("item",item)
+    return new Promise((resolve, reject) => {
+      axios.post('/product-model', {...item})
+        .then((response) => {
+          console.log("response",response)
+          commit('Add_Product',  response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  updateProductModel ({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      axios.put(`/product-model/${item.id}`, {...item})
+        .then((response) => {
+          commit('Update_Product', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  fetchProductModel({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get('/product-model/list')
+        .then((response) => {
+          commit('Set_Product', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  removeProductModel ({ commit }, itemId) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`/product-model/${itemId}`)
+        .then((response) => {
+          commit('REMOVE_Product', itemId)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   // shop editor
 
   addEditor ({ commit }, item) {
     return new Promise((resolve, reject) => {
       console.log("item",item)
-      axios.post('/product-model', {...item})
+      axios.post('/ShopEditor', {...item})
         .then((response) => {
           commit('Add_Editor',  response.data)
           resolve(response)
@@ -125,7 +168,7 @@ export default {
 
   updateEditor ({ commit }, item) {
     return new Promise((resolve, reject) => {
-      axios.put(`/product-model/${item.id}`, {...item})
+      axios.put(`/ShopEditor/${item.id}`, {...item})
         .then((response) => {
           commit('Update_Editor', response.data)
           resolve(response)
@@ -136,7 +179,7 @@ export default {
 
   fetchShopEditor({commit}){
     return new Promise((resolve, reject) => {
-      axios.get('/product-model/list')
+      axios.get('/ShopEditor/list')
         .then((response) => {
           commit('Set_Editors', response.data)
           resolve(response)
@@ -147,7 +190,7 @@ export default {
 
   removeEditor ({ commit }, itemId) {
     return new Promise((resolve, reject) => {
-      axios.delete(`/product-model/${itemId}`)
+      axios.delete(`/ShopEditor/${itemId}`)
         .then((response) => {
           commit('REMOVE_Editor', itemId)
           resolve(response)

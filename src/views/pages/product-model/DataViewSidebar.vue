@@ -28,8 +28,6 @@
           v-model.number="inStock"
           class="mt-5  catslab"
           name="InStock" />
-
-
         <!-- ProductCost -->
         <vs-input
           icon-pack="feather"
@@ -208,6 +206,7 @@
           </div>
 
         </div>
+
         <div class="all-centerx">
           <div class="centerx">
             <vs-input-number  min="0" max="10" label="Year 9 :" v-model="year9"/>
@@ -234,14 +233,15 @@
             <vs-input-number  min="0" max="10" label="Year 16 :" v-model="year16"/>
           </div>
         </div>
+
         <div class="sum">
           <vs-input-number  label=" المجموع:" v-model="sumCount" class="mt-5"   />
         </div>
         <div class="Photos">
           <div class="progress-bar-box">
-            <template v-for="(item,index) in flat0DynamicPlans" >
-            <vs-select autocomplete label="اختر اللون"   v-model="item.color"class="mt-5 catslab" name="productTypeId" v-validate="'required'">
-                  <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
+            <template v-for="(item,index) in productColors" >
+            <vs-select  label="اختر اللون"   v-model="item.color"class="mt-5 catslab" name="productTypeId" v-validate="'required'">
+                  <vs-select-item :key="index" :value="item" :text="$t('colors.' + item)" v-for="(item,index) in Object.keys(colors)" />
                 </vs-select>
             <div class="all-centerx">
                 <div class="centerx ">
@@ -273,6 +273,7 @@
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
 import staticJson from "../../../../static/json/static.json";
+import ar from "../../../locales/ar.json";
 
 export default {
   props: {
@@ -290,13 +291,11 @@ export default {
   },
   data () {
     return {
-      flat0DynamicPlans: [],
+      productColors: [],
       dataId: null,
-      seasonsTypes:null,
-      title: null,
-      material:null,
       inStock:null,
       size:staticJson.size,
+      colors:ar.colors,
       S:0,
       M:0,
       L:0,
@@ -350,26 +349,13 @@ export default {
       year14:0,
       year15:0,
       year16:0,
-      description:null,
       price:null,
       productCost:null,
-      categoryId:null,
-      subCategoryId:null,
       productTypeId:null,
-      vendorId:null,
-      photosAccept: "image/png,image/gif,image/jpeg,image/webp",
-      photosExtensions: "gif,jpg,jpeg,png,webp",
-      photos:[],
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
       },
-      category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
-      ],
     }
   },
   watch: {
@@ -380,20 +366,13 @@ export default {
         this.$validator.reset()
       } else {
         this.initValueSize()
-        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize,inStock} = JSON.parse(JSON.stringify(this.data))
+        const { id,productTypeId ,count,price,productCost,productSize,inStock} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
-        setTimeout( ()=>{this.categoryId=categoryId},500)
-        setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
-        setTimeout( ()=>{this.productTypeId=productTypeId},1500)
-        this.title = title
-        this.material=material
+       this.productTypeId=productTypeId
         this.count=count
         this.inStock=inStock
         this.price=price
-        this.vendorId=vendorId
         this.productCost=productCost
-        this.description=description
-        this.photos=images
         productSize.forEach(x=>{
           if(x.name=="S")this.S=x.count
           if(x.name=="M") this.M=x.count
@@ -486,36 +465,31 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.title  && this.price && this.productCost &&  this.productTypeId
+      return !this.errors.any() && this.price && this.productCost &&  this.productTypeId
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
     productTypes () {
       return this.$store.state.product.productTypes
-    },
-    companies(){
-      return this.$store.state.product.companies
     }
+
   },
   methods: {
 
     addFlat0Group(){
-      this.flat0DynamicPlans.push({
+      this.productColors.push({
         color: '',
         count: ''
       })
     },
     removeFlat0Group (index) {
-      this.flat0DynamicPlans.splice(index,1)
+      this.productColors.splice(index,1)
     },
 
 
     initValues () {
       if (this.data.id) return
       this.dataId = null
-      this.title = null
-      this.material=null
-      this.description=null
       this.price=null
       this.productCost=null
       this.productTypeId=null
@@ -640,21 +614,14 @@ export default {
 
           const obj = {
             id: this.dataId,
-            categoryId:this.categoryId,
-            subCategoryId:this.subCategoryId,
             productTypeId:this.productTypeId,
-            title: this.title,
-            material:this.material,
-            vendorId:this.vendorId,
             count:this.sumCount,
             inStock:this.inStock,
             price:this.price,
             productCost:this.productCost,
-            description: this.description,
-            photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
-            ProductSizes:productSizes
+            ProductSizes:productSizes,
+            ProductColors:this.productColors
           }
-
           if (this.dataId !== null && this.dataId >= 0) {
             this.$store.dispatch('product/updateItem', obj).catch(err => { console.error(err) })
           } else {
@@ -662,7 +629,6 @@ export default {
             // obj.popularity = 0
             this.$store.dispatch('product/addItem', obj).catch(err => { console.error(err) })
           }
-
           this.$emit('closeSidebar')
           this.initValues()
         }
@@ -692,7 +658,6 @@ export default {
       @media (max-width: 567px) {
         width: 220px;
       }
-
       .centerx {
         margin: 7px;
         padding: 3px;

@@ -47,6 +47,26 @@ export default {
     state.products.splice(ItemIndex, 1)
   },
 
+
+  // product model
+
+  Add_Product(state,item){
+    state.productModels.unshift(item)
+  },
+
+  Update_Product(state,item){
+    const productIndex = state.productModels.findIndex((p) => p.id === item.id)
+    Object.assign(state.productModels[productIndex], item)
+  },
+
+  Set_Product(state,items){
+    state.productModels = items
+  },
+
+  REMOVE_Product (state, itemId) {
+    const ItemIndex = state.productModels.findIndex((p) => p.id === itemId)
+    state.productModels.splice(ItemIndex, 1)
+  },
   // shop editor
 
   Add_Editor(state,item){

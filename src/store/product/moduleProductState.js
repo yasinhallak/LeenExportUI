@@ -17,5 +17,6 @@ export default {
 
   // shop editor
 
-  editors:[]
+  editors:[],
+  productModels:[]
 }
