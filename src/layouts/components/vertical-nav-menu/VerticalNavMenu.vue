@@ -75,7 +75,7 @@
               <!-- Nav-Item -->
 <!--              !item.submenu &&-->
               <v-nav-menu-item
-                v-if="activeUserInfo.userName=='admin'"
+                v-if="activeUserInfo.userName=='admin' && !item.agency"
                 :key="`item-${index}`"
                 :index="index"
                 :to="item.slug !== 'external' ? item.url : null"
@@ -84,7 +84,7 @@
                 :target="item.target"
                 :isDisabled="item.isDisabled"
                 :slug="item.slug">
-                  <span v-show="!verticalNavMenuItemsMin && activeUserInfo.userName=='admin'" class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                  <span v-show="!verticalNavMenuItemsMin && activeUserInfo.userName=='admin'&& !item.agency" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                   <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 

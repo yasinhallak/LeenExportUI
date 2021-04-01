@@ -3,7 +3,7 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="products">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="productModels">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
@@ -19,7 +19,7 @@
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ products.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : products.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ productModels.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : productModels.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -42,55 +42,36 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="id">رقم المنتج   </vs-th>
-        <!--        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>-->
-        <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
-        <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
-        <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
-        <vs-th sort-key="title">عنوان المنتج</vs-th>
-        <vs-th sort-key="material">نوعية الخامة</vs-th>
-        <vs-th sort-key="vendorName">اسم الشركة المنتجة</vs-th>
+        <vs-th sort-key="id">رقم المبيع </vs-th>
+        <vs-th sort-key="productTypeId">نوع المنتج</vs-th>
+        <vs-th sort-key="modelNumber">عنوان المنتج</vs-th>
         <vs-th sort-key="productSize">المقاسات المتاحة</vs-th>
+        <vs-th sort-key="productColors">الألوان المتاحة</vs-th>
         <vs-th sort-key="count">عدد السيريه</vs-th>
         <vs-th sort-key="inStock">عدد الكلي ضمن المستودع</vs-th>
         <vs-th sort-key="price">سعر المبيع</vs-th>
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
-        <vs-th sort-key="description">وصف المنتج</vs-th>
         <vs-th sort-key="createdDate">تاريخ الإضافة</vs-th>
         <vs-th sort-key="updatedDate">تاريخ التعديل</vs-th>
-
         <vs-th>الأوامر</vs-th>
       </template>
-
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
             <p class="product-name font-medium truncate">{{tr.id}}</p>
           </vs-td>
-          <!--          <vs-td>-->
-          <!--            <p class="product-name font-medium truncate">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>-->
-          <!--          </vs-td>-->
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.productTypeId }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.subCategoryName }}</p>
+            <p class="product-name font-medium truncate">{{ tr.modelNumber }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.productTypeName }}</p>
+            <p class="product-name font-medium truncate"> {{ getSizeLabel(tr.productSizes) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.title }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.material }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.vendorName }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate"> {{ getSizeLabel(tr.productSize) }}</p>
+            <p class="product-name font-medium truncate"> {{ getColorLabel(tr.productColors) }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.count }}</p>
@@ -103,9 +84,6 @@
           </vs-td>
           <vs-td>
             <p class="product-price font-medium truncate">${{ tr.productCost }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.description }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.createdDate }}</p>
@@ -153,11 +131,11 @@ export default {
       }
       return 0
     },
-    products(){
-      return this.$store.state.product.products
+    productModels(){
+      return this.$store.state.product.productModels
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.products.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.productModels.length
     }
   },
   methods: {
@@ -167,7 +145,7 @@ export default {
       items.forEach((item,index)=>{
         if(index!==0){
           for (let i = 1; i <= item.count; i++) {
-            label=label + ' , ' + item.name
+            label=label + ' | ' + item.name
           }
         }
         else {
@@ -176,11 +154,19 @@ export default {
               label=label + item.name
             }
             else{
-              label=label + ' , ' + item.name
+              label=label + ' | ' + item.name
             }
           }
 
         }
+      })
+      return label;
+    },
+
+    getColorLabel(items){
+      let label='';
+      items.forEach((item,index)=>{
+         label=label + ' | ' + this.$t('colors.' + item.color)
       })
       return label;
     },
@@ -210,7 +196,7 @@ export default {
     },
     deleteRecord(){
       /* Below two lines are just for demo purpose */
-      this.$store.dispatch('product/removeItem', this.removeItem)
+      this.$store.dispatch('product/removeProductModel', this.removeItem)
         .then(()=>{this.showDeleteSuccess()})
         .catch(err => { console.error(err)})
     },
@@ -222,19 +208,7 @@ export default {
       })
     },
 
-    getOrderStatusColor (status) {
-      if (status === 'on_hold')   return 'warning'
-      if (status === 'delivered') return 'success'
-      if (status === 'canceled')  return 'danger'
-      return 'primary'
-    },
-    getPopularityColor (num) {
-      if (num > 90)  return 'success'
-      if (num > 70)  return 'primary'
-      if (num >= 50) return 'warning'
-      if (num < 50)  return 'danger'
-      return 'primary'
-    },
+
     toggleDataSidebar (val = false) {
       this.addNewDataSidebar = val
     }
@@ -244,7 +218,7 @@ export default {
       this.$store.registerModule('product', moduleDataList)
       moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('product/fetchDataListItems')
+    this.$store.dispatch('product/fetchProductModel')
   },
   mounted () {
     this.isMounted = true
