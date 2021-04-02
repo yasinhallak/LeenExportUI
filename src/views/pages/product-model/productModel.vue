@@ -143,22 +143,7 @@ export default {
     getSizeLabel(items){
       let label='';
       items.forEach((item,index)=>{
-        if(index!==0){
-          for (let i = 1; i <= item.count; i++) {
-            label=label + ' | ' + item.name
-          }
-        }
-        else {
-          for (let i = 1; i <= item.count; i++) {
-            if(i==item.count){
-              label=label + item.name
-            }
-            else{
-              label=label + ' | ' + item.name
-            }
-          }
-
-        }
+         label=label + ' | ' + item.name
       })
       return label;
     },
