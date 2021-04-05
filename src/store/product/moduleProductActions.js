@@ -152,8 +152,50 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
-  // shop editor
 
+  // salesDepartment
+  addSaleDepartment ({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      axios.post('/salesDepartment', {...item})
+        .then((response) => {
+          console.log("response",response)
+          commit('Add_SaleDepartment',  response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  updateSaleDepartment  ({ commit }, item) {
+    return new Promise((resolve, reject) => {
+      axios.put(`/salesDepartment/${item.id}`, {...item})
+        .then((response) => {
+          commit('Update_SaleDepartment', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  fetchSaleDepartment ({commit}){
+    return new Promise((resolve, reject) => {
+      axios.get('/salesDepartment/list')
+        .then((response) => {
+          commit('Set_SaleDepartment', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  removeSaleDepartment  ({ commit }, itemId) {
+    return new Promise((resolve, reject) => {
+      axios.delete(`/salesDepartment/${itemId}`)
+        .then((response) => {
+          commit('REMOVE_SaleDepartment', itemId)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+  // shop editor
   addEditor ({ commit }, item) {
     return new Promise((resolve, reject) => {
       console.log("item",item)

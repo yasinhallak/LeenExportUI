@@ -670,6 +670,14 @@ export default [
         name: 'product-model',
         emp:true,
         icon: 'ActivityIcon',
+        i18n: 'قسم المخزن'
+      },
+      {
+        url: '/pages/salesDepartment',
+        slug: 'page-salesDepartment',
+        name: 'salesDepartment',
+        emp:true,
+        icon: 'ActivityIcon',
         i18n: 'قسم المبيعات'
       },
       {

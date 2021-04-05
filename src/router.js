@@ -994,6 +994,21 @@ const router = new Router({
           }
         },
         {
+          path: '/pages/salesDepartment',
+          name: 'page-salesDepartment',
+          component: () => import('@/views/pages/salesDepartment/salesDepartment.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'salesDepartment', active: true }
+            ],
+            pageTitle: 'salesDepartment' +
+              '',
+            rule: 'editor'
+          }
+        },
+        {
           path: '/pages/shop-editor',
           name: 'page-shop-editor',
           component: () => import('@/views/pages/shop-editor/shopEditor.vue'),

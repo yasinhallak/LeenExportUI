@@ -3,22 +3,23 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
-    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="productModels">
+    <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="salesDepartment">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
-        <div class="flex flex-wrap-reverse items-center data-list-btn-container" v-if="activeUserInfo.userName=='admin'">
+        <div class="flex flex-wrap-reverse items-center data-list-btn-container">
+
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
-            <span class="ml-2 text-base text-primary">إضافة منتج</span>
+            <span class="ml-2 text-base text-primary">إضافة مبيع</span>
           </div>
         </div>
 
         <!-- ITEMS PER PAGE -->
         <vs-dropdown vs-trigger-click class="cursor-pointer mb-4 mr-4 items-per-page-handler">
           <div class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ productModels.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : productModels.length }} of {{ queriedItems }}</span>
+            <span class="mr-2">{{ currentPage * itemsPerPage - (itemsPerPage - 1) }} - {{ salesDepartment.length - currentPage * itemsPerPage > 0 ? currentPage * itemsPerPage : salesDepartment.length }} of {{ queriedItems }}</span>
             <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4" />
           </div>
           <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -39,46 +40,38 @@
           </vs-dropdown-menu>
         </vs-dropdown>
       </div>
-
       <template slot="thead">
-        <vs-th sort-key="id">رقم المبيع </vs-th>
-        <vs-th sort-key="productName">نوع المنتج</vs-th>
-        <vs-th sort-key="modelNumber">عنوان المنتج</vs-th>
-        <vs-th sort-key="productSize">المقاسات المتاحة</vs-th>
-        <vs-th sort-key="productColors">الألوان المتاحة</vs-th>
-        <vs-th sort-key="count">عدد السيريه</vs-th>
-        <vs-th sort-key="inStock">عدد الكلي ضمن المستودع</vs-th>
-        <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
-        <vs-th sort-key="createdDate">تاريخ الإضافة</vs-th>
-        <vs-th sort-key="updatedDate">تاريخ التعديل</vs-th>
-        <vs-th v-if="activeUserInfo.userName=='admin'">الأوامر</vs-th>
+        <vs-th sort-key="id">رقم المبيع</vs-th>
+        <vs-th sort-key="productTypeName">اسم المنتج</vs-th>
+        <vs-th sort-key="modelNumber">رقم الموديل</vs-th>
+        <vs-th sort-key="color">اللون</vs-th>
+        <vs-th sort-key="size">المقاس</vs-th>
+        <vs-th sort-key="sellingPrice">سعر المبيع</vs-th>
+        <vs-th sort-key="createdDate">تاريخ الإنشاء</vs-th>
+        <vs-th sort-key="updatedDate">تاريخ التحديث </vs-th>
+        <vs-th>الأوامر</vs-th>
       </template>
+
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
           <vs-td>
-            <p class="product-name font-medium truncate">{{tr.id}}</p>
+            <p class="product-name font-medium truncate">{{ tr.id }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.productName }}</p>
+            <p class="product-category">{{ tr.productTypeName  }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.modelNumber }}</p>
+            <p class="product-category">{{ tr.modelNumber  }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate"> {{ getSizeLabel(tr.productSizes) }}</p>
+            <p class="product-category">{{ $t('colors.' +tr.color)   }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate"> {{ getColorLabel(tr.productColors) }}</p>
+            <p class="product-name font-medium truncate">{{ tr.size }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.count }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.inStock }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-price font-medium truncate">${{ tr.productCost }}</p>
+            <p class="product-name font-medium truncate">{{ tr.sellingPrice }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.createdDate }}</p>
@@ -86,18 +79,17 @@
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.updatedDate }}</p>
           </vs-td>
-          <vs-td class="whitespace-no-wrap" v-if="activeUserInfo.userName=='admin'">
+          <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
           </vs-td>
+
         </vs-tr>
         </tbody>
       </template>
     </vs-table>
   </div>
-
 </template>
-
 
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
@@ -110,6 +102,7 @@ export default {
   data () {
     return {
       selected: [],
+      // products: [],
       itemsPerPage: 10,
       isMounted: false,
       removeItem:null,
@@ -119,39 +112,20 @@ export default {
     }
   },
   computed: {
-    activeUserInfo () {
-      return this.$store.state.AppActiveUser
-    },
     currentPage () {
       if (this.isMounted) {
         return this.$refs.table.currentx
       }
       return 0
     },
-    productModels(){
-      return this.$store.state.product.productModels
+    salesDepartment () {
+      return this.$store.state.product.salesDepartment
     },
     queriedItems () {
-      return this.$refs.table ? this.$refs.table.queriedResults.length : this.productModels.length
+      return this.$refs.table ? this.$refs.table.queriedResults.length : this.salesDepartment.length
     }
   },
   methods: {
-
-    getSizeLabel(items){
-      let label='';
-      items.forEach((item,index)=>{
-         label=label + ' | ' + item.name
-      })
-      return label;
-    },
-
-    getColorLabel(items){
-      let label='';
-      items.forEach((item,index)=>{
-         label=label + ' | ' + this.$t('colors.' + item.color)
-      })
-      return label;
-    },
 
     addNewData () {
       this.sidebarData = {}
@@ -160,11 +134,9 @@ export default {
 
     editData (data) {
       // this.sidebarData = JSON.parse(JSON.stringify(this.blankData))
-      // this.$store.dispatch('product/updateModalState',true);
       this.sidebarData = data
       this.toggleDataSidebar(true)
     },
-
     deleteData (id) {
       this.removeItem=id;
       this.$vs.dialog({
@@ -178,7 +150,7 @@ export default {
     },
     deleteRecord(){
       /* Below two lines are just for demo purpose */
-      this.$store.dispatch('product/removeProductModel', this.removeItem)
+      this.$store.dispatch('product/removeSaleDepartment', this.removeItem)
         .then(()=>{this.showDeleteSuccess()})
         .catch(err => { console.error(err)})
     },
@@ -190,7 +162,6 @@ export default {
       })
     },
 
-
     toggleDataSidebar (val = false) {
       this.addNewDataSidebar = val
     }
@@ -200,7 +171,7 @@ export default {
       this.$store.registerModule('product', moduleDataList)
       moduleDataList.isRegistered = true
     }
-    this.$store.dispatch('product/fetchProductModel')
+    this.$store.dispatch('product/fetchSaleDepartment')
   },
   mounted () {
     this.isMounted = true
@@ -327,5 +298,4 @@ export default {
   }
 }
 </style>
-
 

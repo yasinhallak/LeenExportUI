@@ -43,7 +43,6 @@
 
       <template slot="thead">
         <vs-th sort-key="id">رقم المنتج   </vs-th>
-<!--        <vs-th sort-key="seasonsTypes">نوع الفصل</vs-th>-->
         <vs-th sort-key="categoryName">  اسم التصنيف الرئيسي </vs-th>
         <vs-th sort-key="subCategoryName">  اسم التصنيف الفرعي </vs-th>
         <vs-th sort-key="productTypeName">نوع المنتج</vs-th>
@@ -58,7 +57,6 @@
         <vs-th sort-key="description">وصف المنتج</vs-th>
         <vs-th sort-key="createdDate">تاريخ الإضافة</vs-th>
         <vs-th sort-key="updatedDate">تاريخ التعديل</vs-th>
-
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -68,9 +66,6 @@
           <vs-td>
             <p class="product-name font-medium truncate">{{tr.id}}</p>
           </vs-td>
-<!--          <vs-td>-->
-<!--            <p class="product-name font-medium truncate">{{$t('seasonsTypes.' + tr.seasonsTypes)}}</p>-->
-<!--          </vs-td>-->
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.categoryName }}</p>
           </vs-td>
@@ -165,22 +160,7 @@ export default {
     getSizeLabel(items){
       let label='';
       items.forEach((item,index)=>{
-        if(index!==0){
-          for (let i = 1; i <= item.count; i++) {
-            label=label + ' , ' + item.name
-          }
-        }
-        else {
-          for (let i = 1; i <= item.count; i++) {
-            if(i==item.count){
-              label=label + item.name
-            }
-            else{
-                label=label + ' , ' + item.name
-             }
-          }
-
-        }
+        label=label + ' | ' + item.name
       })
       return label;
     },

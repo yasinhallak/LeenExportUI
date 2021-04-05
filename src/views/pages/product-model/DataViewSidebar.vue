@@ -1,6 +1,5 @@
 
 
-
 <template>
   <vs-sidebar click-not-close position-right parent="body" default-index="1" color="primary" class="add-new-data-sidebar items-no-padding own-side" spacer v-model="isSidebarActiveLocal">
     <div class="mt-6 flex items-center justify-between px-6">
@@ -9,20 +8,22 @@
     </div>
     <vs-divider class="mb-0"></vs-divider>
 
-    <component :is="scrollbarTag" class="scroll-area--data-list-add-new"  :key="$vs.rtl">
+    <component :is="scrollbarTag" class="scroll-area--data-list-add-new" :settings="settings" :key="$vs.rtl">
+
 
       <div class="p-6">
         <!-- productTypes -->
-        <vs-select autocomplete label="اختر المنتج"  v-model.number="productTypeId" class="mt-5 catslab" name="productTypeId" v-validate="'required'">
+        <vs-select autocomplete label="اختر المنتج"  :disabled="activeUserInfo.userName!='admin'" v-model.number="productTypeId"  class="mt-5 catslab direction" name="productTypeId" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.name" v-for="item in productTypes" />
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
 
         <!-- Title -->
-        <vs-input label="رقم الموديل" v-model="modelNumber" class="mt-5 catslab" name="modelNumber" icon-pack="feather"  v-validate="'required'" />
+        <vs-input label="رقم الموديل" v-model="modelNumber" :disabled="activeUserInfo.userName!='admin'" class="mt-5 catslab" name="modelNumber" icon-pack="feather"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('modelNumber')">{{ errors.first('modelNumber') }}</span>
 
         <vs-input
+          :disabled="activeUserInfo.userName!='admin'"
           type="number"
           label="العدد الكلي ضمن المستودع"
           v-model.number="inStock"
@@ -30,6 +31,7 @@
           name="InStock" />
         <!-- ProductCost -->
         <vs-input
+          :disabled="activeUserInfo.userName!='admin'"
           icon-pack="feather"
           icon="icon-dollar-sign"
           label="سعر الرأسمال"
@@ -39,62 +41,60 @@
           name="productCost" />
         <span class="text-danger text-sm" v-show="errors.has('productCost')">{{ errors.first('productCost') }}</span>
 
-        <!-- PRICE -->
-        <vs-input
-          icon-pack="feather"
-          icon="icon-dollar-sign"
-          label="سعر المبيع"
-          v-model.number="price"
-          class="mt-5   catslab"
-          v-validate="{ required: true, regex: /\d+(\.\d+)?$/ }"
-          name="price" />
-        <span class="text-danger text-sm" v-show="errors.has('price')">{{ errors.first('price') }}</span>
 
-<!--        &lt;!&ndash; Description &ndash;&gt;-->
-<!--        <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />-->
-
-        <div></div>
+        <div class="mt-6 flex items-center justify-between px-6">
+          <h4> القياسات </h4>
+        </div>
+        <vs-divider class="mb-2"></vs-divider>
         <template v-for="(size,index) in productSizes">
-            <vs-select  label="اختر المقاس"   v-model="size.name"class="mt-5 catslab" name="productTypeId" v-validate="'required'">
-              <vs-select-item :key="index" :value="item" :text="$t('sizes.' + item)" v-for="(item,index) in Object.keys(sizes)" />
+            <vs-select  autocomplete label="اختر المقاس"   :disabled="activeUserInfo.userName!='admin'"  v-model="size.name"class="mt-5 catslab direction" name="productTypeId" v-validate="'required'">
+              <vs-select-item :key="index" :value="item" :text="$t('sizes.' + item)" v-for="(item,index) in Object.keys(sizes)"  />
             </vs-select>
           <div class="all-centerx">
             <div class="centerx ">
-              <vs-input-number  min="0" max="10" label="عدد القطع :" v-model="size.count"/>
+              <vs-input-number   min="0"  label="عدد القطع :" v-model="size.count"/>
             </div>
           </div>
           <div class=" items-center mt-5 catslab" >
-            <vs-button  color="danger" type="border"  @click.prevent="removeSizeGroup(index)">حذف</vs-button>
+            <vs-button  color="danger" type="border" :disabled="activeUserInfo.userName!='admin'" @click.prevent="removeSizeGroup(index)">حذف</vs-button>
           </div>
         </template>
         <div class="items-center mt-5 catslab">
-               <span>
-                   <vs-button color="success" type="border"  @click.prevent="addSizeGroup()" >إضافة مقاس</vs-button>
-               </span>
+             <span>
+                 <vs-button color="success" type="border" :disabled="activeUserInfo.userName!='admin'"  @click.prevent="addSizeGroup()" >إضافة مقاس</vs-button>
+             </span>
         </div>
         <div class="sum">
-          <vs-input-number  label=" المجموع:" v-model="sumCount" class="mt-5"   />
+          <vs-input-number  label=" المجموع:" v-model="sizeCount" class="mt-5"   />
         </div>
+
+        <div class="mt-6 flex items-center justify-between px-6">
+          <h4> الألوان </h4>
+        </div>
+        <vs-divider class="mb-2"></vs-divider>
         <div class="Photos" >
           <div class="progress-bar-box" >
             <template v-for="(item,index) in productColors">
-              <vs-select  label="اختر اللون"   v-model.number="item.color"class="mt-5 catslab" name="productTypeId" v-validate="'required'">
-                <vs-select-item :key="index" :value="item" :text="$t('colors.' + item)" v-for="(item,index) in Object.keys(colors)" />
+              <vs-select  autocomplete label="اختر اللون" :disabled="activeUserInfo.userName!='admin'"   v-model.number="item.color"class="mt-5 catslab direction" name="productTypeId" v-validate="'required'">
+                <vs-select-item :key="index" :value="item" :text="$t('colors.' + item)" v-for="(item,index) in Object.keys(colors)"  />
               </vs-select>
               <div class="all-centerx">
                 <div class="centerx ">
-                  <vs-input-number  min="0" max="10" label="عدد القطع :" v-model="item.count"/>
+                  <vs-input-number  min="0"  label="عدد القطع :" v-model="item.count"/>
                 </div>
               </div>
               <div class=" items-center mt-5 catslab" >
-                <vs-button  color="danger" type="border"  @click.prevent="removeColorGroup(index)">حذف</vs-button>
+                <vs-button  color="danger"  :disabled="activeUserInfo.userName!='admin'" type="border"  @click.prevent="removeColorGroup(index)">حذف</vs-button>
               </div>
             </template>
           </div>
         </div>
+        <div class="sum">
+          <vs-input-number  label=" المجموع:" v-model="colorCount" class="mt-5"   />
+        </div>
         <div class="items-center mt-5 catslab">
                <span>
-                   <vs-button color="success" type="border"  @click.prevent="addColorGroup()" >إضافة لون</vs-button>
+                   <vs-button color="success" :disabled="activeUserInfo.userName!='admin'"  type="border"  @click.prevent="addColorGroup()" >إضافة لون</vs-button>
                </span>
         </div>
       </div>
@@ -136,7 +136,6 @@ export default {
       modelNumber:null,
       sizes:ar.sizes,
       colors:ar.colors,
-      price:null,
       productCost:null,
       productTypeId:null,
       settings: { // perfectscrollbar settings
@@ -152,28 +151,43 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const { id,modelNumber,productTypeId ,count,price,productCost,productSizes,productColors,inStock} = JSON.parse(JSON.stringify(this.data))
+        const { id,modelNumber,productTypeId ,count,productCost,productSizes,productColors,inStock} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.modelNumber=modelNumber
         this.productTypeId=productTypeId
         this.count=count
         this.inStock=inStock
-        this.price=price
         this.productCost=productCost
         this.productColors=productColors
        this.productSizes= productSizes
-
       }
-      // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
   },
   computed: {
-    sumCount:{
+    activeUserInfo () {
+      return this.$store.state.AppActiveUser
+    },
+    sizeCount:{
       get: function () {
         let sum=0
          this.productSizes.forEach(item=>{
            sum+=item.count;
          });
+        return sum;
+      },
+      // setter
+      set: function (newValue) {
+
+      }
+
+    },
+
+    colorCount:{
+      get: function () {
+        let sum=0
+        this.productColors.forEach(item=>{
+          sum+=item.count;
+        });
         return sum;
       },
       // setter
@@ -195,7 +209,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.price && this.productCost && this.productTypeId && this.modelNumber
+      return !this.errors.any()  && this.productCost && this.productTypeId && this.modelNumber && this.sizeCount==this.colorCount
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
@@ -205,21 +219,20 @@ export default {
 
   },
   methods: {
-
     addColorGroup(){
       this.productColors.push({
         color: '',
-        count: 0
+        count: 1
       })
     },
+
     removeColorGroup (index) {
       this.productColors.splice(index,1)
     },
-
     addSizeGroup(){
       this.productSizes.push({
         name: '',
-        count: 0
+        count: 1
       })
     },
     removeSizeGroup (index) {
@@ -229,13 +242,14 @@ export default {
     initValues () {
       if (this.data.id) return
       this.dataId = null
-      this.price=null
       this.productCost=null
       this.productColors=[]
       this.productSizes=[]
       this.modelNumber=null
       this.productTypeId=null
       this.inStock=null
+      this.sizeCount=0
+      this.colorCount=0
 
     },
     submitData () {
@@ -245,9 +259,8 @@ export default {
             id: this.dataId,
             productTypeId:this.productTypeId,
             modelNumber:this.modelNumber,
-            count:this.sumCount,
+            count:this.sizeCount,
             inStock:this.inStock,
-            price:this.price,
             productCost:this.productCost,
             ProductSizes:this.productSizes,
             ProductColors:this.productColors
@@ -273,6 +286,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.direction{
+  direction: ltr;
+}
 .own-side{
   max-width: 100%;
   width: 80%;

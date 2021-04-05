@@ -67,6 +67,26 @@ export default {
     const ItemIndex = state.productModels.findIndex((p) => p.id === itemId)
     state.productModels.splice(ItemIndex, 1)
   },
+
+  // sale department
+  Add_SaleDepartment(state,item){
+    state.salesDepartment.unshift(item)
+  },
+
+  Update_SaleDepartment(state,item){
+    const productIndex = state.salesDepartment.findIndex((p) => p.id === item.id)
+    Object.assign(state.salesDepartment[productIndex], item)
+  },
+
+  Set_SaleDepartment(state,items){
+    state.salesDepartment = items
+  },
+
+  REMOVE_SaleDepartment (state, itemId) {
+    const ItemIndex = state.salesDepartment.findIndex((p) => p.id === itemId)
+    state.salesDepartment.splice(ItemIndex, 1)
+  },
+
   // shop editor
 
   Add_Editor(state,item){
