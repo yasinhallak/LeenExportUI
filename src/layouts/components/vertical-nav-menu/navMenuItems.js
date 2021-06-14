@@ -632,6 +632,7 @@ export default [
         slug: 'page-product',
         name: 'product',
         agency:'product',
+        employee:true,
         icon: 'ShoppingBagIcon',
         i18n: 'المنتجات'
       },
@@ -639,6 +640,7 @@ export default [
         url: '/pages/vendor',
         slug: 'page-vendor',
         name: 'Vendor',
+        employee:true,
         icon: 'UserCheckIcon',
         i18n: 'البائعين'
       },
@@ -646,6 +648,7 @@ export default [
         url: '/pages/customer',
         slug: 'page-customer',
         name: 'customer',
+        employee:true,
         icon: 'UserCheckIcon',
         i18n: 'الزبائن'
       },

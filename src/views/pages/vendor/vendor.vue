@@ -46,6 +46,7 @@
         <vs-th sort-key="id">رقم الشركة</vs-th>
         <vs-th sort-key="name">اسم مالك الشركة</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
+        <vs-th sort-key="code">كود الشركة</vs-th>
         <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
         <vs-th sort-key="employeePhone">رقم جوال الموظف</vs-th>
         <vs-th sort-key="address">عنوان الشركة</vs-th>
@@ -66,7 +67,9 @@
           <vs-td>
             <p class="product-category">{{ tr.companyName | title }}</p>
           </vs-td>
-
+          <vs-td>
+            <p class="product-category">{{ tr.code | title }}</p>
+          </vs-td>
           <vs-td>
             <a class="product-name font-medium truncate" target="_blank" :href="PhoneWhatsapp(tr.phone)">{{ tr.phone }}</a>
           </vs-td>

@@ -46,7 +46,6 @@
         <vs-th sort-key="modelNumber">عنوان المنتج</vs-th>
         <vs-th sort-key="productSize">المقاسات المتاحة</vs-th>
         <vs-th sort-key="productColors">الألوان المتاحة</vs-th>
-        <vs-th sort-key="count">عدد السيريه</vs-th>
         <vs-th sort-key="inStock">عدد الكلي ضمن المستودع</vs-th>
         <vs-th sort-key="productCost">سعر الرأسمال</vs-th>
         <vs-th sort-key="createdDate">تاريخ الإضافة</vs-th>
@@ -70,9 +69,6 @@
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate"> {{ getColorLabel(tr.productColors) }}</p>
-          </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.count }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.inStock }}</p>

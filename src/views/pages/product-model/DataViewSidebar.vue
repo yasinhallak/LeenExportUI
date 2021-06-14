@@ -52,7 +52,7 @@
             </vs-select>
           <div class="all-centerx">
             <div class="centerx ">
-              <vs-input-number   min="0"  label="عدد القطع :" v-model="size.count"/>
+              <vs-input-number   min="0"  label="عدد القطع :" v-model.number="size.count"/>
             </div>
           </div>
           <div class=" items-center mt-5 catslab" >
@@ -80,7 +80,7 @@
               </vs-select>
               <div class="all-centerx">
                 <div class="centerx ">
-                  <vs-input-number  min="0"  label="عدد القطع :" v-model="item.count"/>
+                  <vs-input-number  min="0"  label="عدد القطع :" v-model.number="item.count"/>
                 </div>
               </div>
               <div class=" items-center mt-5 catslab" >
@@ -151,11 +151,10 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const { id,modelNumber,productTypeId ,count,productCost,productSizes,productColors,inStock} = JSON.parse(JSON.stringify(this.data))
+        const { id,modelNumber,productTypeId ,productCost,productSizes,productColors,inStock} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.modelNumber=modelNumber
         this.productTypeId=productTypeId
-        this.count=count
         this.inStock=inStock
         this.productCost=productCost
         this.productColors=productColors
@@ -259,7 +258,6 @@ export default {
             id: this.dataId,
             productTypeId:this.productTypeId,
             modelNumber:this.modelNumber,
-            count:this.sizeCount,
             inStock:this.inStock,
             productCost:this.productCost,
             ProductSizes:this.productSizes,

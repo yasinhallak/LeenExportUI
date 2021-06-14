@@ -102,7 +102,7 @@
                 <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce) && activeUserInfo.userName=='mohammedTamimi' && item.emp">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
-<!--              !item.submenu &&-->
+            <!--  !item.submenu &&-->
               <v-nav-menu-item
                 v-if="item.agency && activeUserInfo.userName!='mohammedTamimi'"
                 :key="`item-${index}`"
@@ -115,6 +115,21 @@
                 :slug="item.slug">
                 <span v-show="!verticalNavMenuItemsMin && item.agency" class="truncate">{{ $t(item.i18n) || item.name }}</span>
                 <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce) && item.agency">{{ item.tag }}</vs-chip>
+              </v-nav-menu-item>
+              
+
+         <v-nav-menu-item
+                v-else-if="activeUserInfo.userName=='subadmin' && item.employee"
+                :key="`item-${index}`"
+                :index="index"
+                :to="item.slug !== 'external' ? item.url : null"
+                :href="item.slug === 'external' ? item.url : null"
+                :icon="item.icon"
+                :target="item.target"
+                :isDisabled="item.isDisabled"
+                :slug="item.slug">
+                  <span v-show="!verticalNavMenuItemsMin && activeUserInfo.userName=='subadmin'&& item.employee" class="truncate">{{ $t(item.i18n) || item.name }}</span>
+                  <vs-chip class="ml-auto" :color="item.tagColor" v-if="item.tag && (isMouseEnter || !reduce)">{{ item.tag }}</vs-chip>
               </v-nav-menu-item>
 
               <!-- Nav-Group -->
