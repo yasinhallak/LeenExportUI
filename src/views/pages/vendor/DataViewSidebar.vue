@@ -38,14 +38,37 @@
         <vs-input label="رقم جوال الموظف" v-model="employeePhone" class="mt-5 w-full" icon-pack="feather" icon="icon-smartphone" icon-no-border name="employeePhone"  v-validate="'numeric|min:11|max:11'"   />
         <span class="text-danger text-sm" v-show="errors.has('employeePhone')">{{ errors.first('employeePhone') }}</span>
 
+        <!-- productTypes -->
+        <label >اختر التصنيف الرئيسي</label>
+        <v-select multiple autocomplete  v-model.number="primaryCategory" class="mt-5 w-full" :options="primaryCategories" name="primaryCategory" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('primaryCategory')">{{ errors.first('primaryCategory') }}</span>
+
+        <!-- productTypes -->
+        <label >اختر المنتج</label>
+        <v-select multiple autocomplete  v-model.number="makerType" class="mt-5 w-full" :options="productTypes" name="makerType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('makerType')">{{ errors.first('makerType') }}</span>
+
+        <!-- brand type -->
+        <label >اختر نوع الماركة</label>
+        <v-select multiple autocomplete  v-model.number="brandType" class="mt-5 w-full" :options="brandTypes" name="brandType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('brandType')">{{ errors.first('brandType') }}</span>
+
+        <label >اختر التصنيف الثانوي</label>
+        <v-select multiple autocomplete  v-model.number="categoryType" class="mt-5 w-full" :options="categoryTypes" name="categoryType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('categoryType')">{{ errors.first('categoryType') }}</span>
+
+        <!--  quality Type-->
+        <vs-select  autocomplete label="نوع الجودة" v-model.number="qualityType"  class="mt-5 w-full " name="qualityType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="$t('qualityTypes.' + item)" v-for="(item,index) in Object.keys(qualityTypes)" />
+        </vs-select>
 
         <!-- Address -->
         <vs-textarea label="عنوان مقر الشركة" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('address')">{{ errors.first('address') }}</span>
 
-        <!-- Address -->
-        <vs-textarea label="وصف عمل الشركة" v-model="description" class="mt-5 w-full"  width="300px" name="description"  v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
+
+
+
       </div>
     </component>
 
@@ -58,6 +81,8 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import vSelect from 'vue-select'
+import ar from "@/locales/ar.json";
 
 export default {
   props: {
@@ -71,7 +96,8 @@ export default {
     }
   },
   components: {
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
+    vSelect
   },
   data () {
     return {
@@ -83,7 +109,23 @@ export default {
       employeePhone:null,
       address:null,
       description:null,
+      makerType:[],
+      brandType:[],
+      primaryCategory:[],
+      categoryType:[],
+      qualityType:null,
       dataError:null,
+      brandTypes:[
+        {id:1, label: 'ماركة'},
+        {id: 2, label: 'بدون ماركة'},
+      ] ,
+      categoryTypes:[
+        {id:1, label: 'رياضي'},
+        {id: 2, label: 'رسمي'},
+        {id: 3, label: 'كاجوال'},
+        {id: 4, label: 'ملبوسات منزلية'},
+      ],
+      qualityTypes:ar.qualityTypes,
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
         wheelSpeed: .60
@@ -98,7 +140,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,code,phone ,employeePhone,address,description} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,code,phone ,employeePhone,address,description,brandType,primaryCategory,makerType,categoryType,qualityType} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -107,6 +149,11 @@ export default {
         this.employeePhone=employeePhone
         this.address=address
         this.description=description
+        this.brandType=brandType
+        this.primaryCategory=primaryCategory
+        this.makerType=makerType
+        this.categoryType=categoryType
+        this.qualityType=qualityType
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -128,7 +175,14 @@ export default {
     isFormValid () {
       return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.description
     },
-    scrollbarTag () { return this.$store.getters.scrollbarTag }
+    scrollbarTag () { return this.$store.getters.scrollbarTag },
+
+    primaryCategories () {
+      return this.$store.state.product.categoryTypes.map((category) =>({id:category.id ,label:category.categoryName}))
+    },
+    productTypes () {
+      return this.$store.state.vendor.productTypes.map((product) =>({id:product.id ,label:product.name}))
+    },
   },
   methods: {
     initValues () {
@@ -141,6 +195,11 @@ export default {
       this.employeePhone=null
       this.address=null
       this.description=null
+      this.brandType=[]
+      this.makerType=[]
+      this.primaryCategory=[]
+      this.categoryType=[]
+      this.qualityType=null
 
     },
     submitData () {
@@ -154,7 +213,12 @@ export default {
             phone:this.phone,
             employeePhone:this.employeePhone,
             address:this.address,
-            description:this.description
+            description:this.description,
+            brandType:this.brandType,
+            makerType:this.makerType,
+            primaryCategory:this.primaryCategory,
+            categoryType:this.categoryType,
+            qualityType:this.qualityType
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
@@ -192,6 +256,10 @@ export default {
       })
     },
 
+  },
+  mounted () {
+     this.$store.dispatch('vendor/fetchProductTypeItems', { subCategoryId: null})
+    this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: null})
   }
 }
 </script>

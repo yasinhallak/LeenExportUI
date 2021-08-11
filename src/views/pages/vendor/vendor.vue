@@ -50,7 +50,6 @@
         <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
         <vs-th sort-key="employeePhone">رقم جوال الموظف</vs-th>
         <vs-th sort-key="address">عنوان الشركة</vs-th>
-        <vs-th sort-key="description">وصف عمل الشركة</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -80,9 +79,6 @@
             <p class="product-name font-medium truncate">{{ tr.address }}</p>
           </vs-td>
 
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.description }}</p>
-          </vs-td>
           <vs-td class="whitespace-no-wrap">
             <feather-icon icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
             <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-2" @click.stop="deleteData(tr.id)" />
@@ -97,6 +93,7 @@
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
 import moduleDataList from '@/store/vendor/moduleVendor.js'
+import moduleDataListProduct from '@/store/product/moduleProduct.js'
 
 export default {
   components: {
@@ -192,6 +189,10 @@ export default {
     if (!moduleDataList.isRegistered) {
       this.$store.registerModule('vendor', moduleDataList)
       moduleDataList.isRegistered = true
+    }
+    if (!moduleDataListProduct.isRegistered) {
+      this.$store.registerModule('product', moduleDataListProduct)
+      moduleDataListProduct.isRegistered = true
     }
     this.$store.dispatch('vendor/fetchDataListItems')
   },

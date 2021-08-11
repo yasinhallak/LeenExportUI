@@ -51,6 +51,7 @@
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
+        <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
         <!-- PRICE -->
         <template v-if="activeUserInfo.userName=='admin'">
           <vs-input
@@ -82,7 +83,10 @@
           v-model.number="inStock"
           class="mt-5  catslab"
           name="InStock" />
-
+        <!-- salesTypes -->
+        <vs-select  autocomplete label="نوع البيع" v-model.number="salesType"  class="mt-5 catslab direction" name="vendorId" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="$t('salesTypes.' + item)" v-for="(item,index) in Object.keys(salesTypes)" />
+        </vs-select>
         <!-- Description -->
         <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
 
@@ -166,7 +170,7 @@ export default {
       material:null,
       inStock:null,
       size:staticJson.size,
-
+      salesType:0,
       description:null,
       price:null,
       productCost:null,
@@ -181,6 +185,7 @@ export default {
         maxScrollbarLength: 60,
         wheelSpeed: .60
       },
+      salesTypes: ar.salesTypes,
       category_choices: [
         {text:'ربيع', value:'1'},
         {text:'صيف', value:'2'},
@@ -196,7 +201,7 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize,inStock} = JSON.parse(JSON.stringify(this.data))
+        const { id,categoryId,subCategoryId,productTypeId,title,material,vendorId ,count,price,productCost,description,images,productSize,inStock,salesType} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         setTimeout( ()=>{this.categoryId=categoryId},500)
         setTimeout( ()=>{this.subCategoryId=subCategoryId},1000)
@@ -208,6 +213,7 @@ export default {
         this.price=price
         this.vendorId=vendorId
         this.productCost=productCost
+        this.salesType=salesType
         this.description=description
         this.photos=images
         this.productSizes=productSize
@@ -279,6 +285,7 @@ export default {
     initValues () {
      if (this.data.id) return
       this.dataId = null
+      this.salesType=0,
       this.title = null
       this.material=null
       this.description=null
@@ -300,6 +307,7 @@ export default {
           const obj = {
             id: this.dataId,
             categoryId:this.categoryId,
+            salesType:this.salesType,
             subCategoryId:this.subCategoryId,
             productTypeId:this.productTypeId,
             title: this.title,

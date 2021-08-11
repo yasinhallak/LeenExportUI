@@ -48,11 +48,10 @@
         <vs-th sort-key="shippingCode">الكود</vs-th>
         <vs-th sort-key="phone">رقم الجوال</vs-th>
         <vs-th sort-key="email">البريد الإلكتروني</vs-th>
-
         <vs-th sort-key="specialization">الأختصاص</vs-th>
         <vs-th sort-key="saleType">نوع البيع</vs-th>
         <vs-th sort-key="status">الحالة</vs-th>
-        <vs-th sort-key="description">التقرير</vs-th>
+<!--        <vs-th sort-key="description">التقرير</vs-th>-->
         <vs-th sort-key="address">العنوان</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
@@ -88,9 +87,9 @@
             <vs-chip :color="getOrderStatusColor(tr.status)" class="product-order-status">{{$t('statusOptions.' + tr.status) }}</vs-chip>
 <!--            <p class="product-name font-medium truncate">{{$t('statusOptions.' + tr.status) }}</p>-->
           </vs-td>
-          <vs-td>
-            <p class="product-name font-medium truncate">{{ tr.description }}</p>
-          </vs-td>
+<!--          <vs-td>-->
+<!--            <p class="product-name font-medium truncate">{{ tr.description }}</p>-->
+<!--          </vs-td>-->
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.address }}</p>
           </vs-td>
@@ -110,6 +109,7 @@
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
 import moduleDataList from '@/store/customer/moduleCustomer.js'
+import moduleDataListVendor from '@/store/vendor/moduleVendor.js'
 
 export default {
   components: {
@@ -218,13 +218,7 @@ export default {
       })
     },
 
-    getPopularityColor (num) {
-      if (num > 90)  return 'success'
-      if (num > 70)  return 'primary'
-      if (num >= 50) return 'warning'
-      if (num < 50)  return 'danger'
-      return 'primary'
-    },
+
     toggleDataSidebar (val = false) {
       this.addNewDataSidebar = val
     }
@@ -233,6 +227,10 @@ export default {
     if (!moduleDataList.isRegistered) {
       this.$store.registerModule('customer', moduleDataList)
       moduleDataList.isRegistered = true
+    }
+    if (!moduleDataListVendor.isRegistered) {
+      this.$store.registerModule('vendor', moduleDataListVendor)
+      moduleDataListVendor.isRegistered = true
     }
     this.$store.dispatch('customer/fetchDataListItems')
   },

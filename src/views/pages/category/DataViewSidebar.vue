@@ -29,8 +29,8 @@
 <!--        </vs-select>-->
 <!--        <span class="text-danger text-sm" v-show="errors.has('item-category')">{{ errors.first('item-category') }}</span>-->
 
-        <vs-textarea v-model="description" class="mt-5 w-full" name="description" label="أدخل وصف " width="300px" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>
+<!--        <vs-textarea v-model="description" class="mt-5 w-full" name="description" label="أدخل وصف " width="300px" v-validate="'required'" />-->
+<!--        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>-->
       </div>
     </component>
 
@@ -65,13 +65,6 @@ export default {
       name: null,
       dataCategory: null,
       description:null,
-      category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
-      ],
-
 
       settings: { // perfectscrollbar settings
         maxScrollbarLength: 60,
@@ -86,11 +79,9 @@ export default {
         this.initValues()
         this.$validator.reset()
       } else {
-        const {  id, categoryName,description } = JSON.parse(JSON.stringify(this.data))
+        const {  id, categoryName } = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = categoryName
-        this.description=description
-
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -110,7 +101,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name  && this.description
+      return !this.errors.any() && this.name
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag }
   },

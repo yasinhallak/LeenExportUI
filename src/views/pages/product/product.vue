@@ -160,7 +160,7 @@ export default {
     getSizeLabel(items){
       let label='';
       items.forEach((item,index)=>{
-        label=label + ' | ' + item.name
+        label=label + ' | ' +this.$t('sizes.'+item.name)
       })
       return label;
     },

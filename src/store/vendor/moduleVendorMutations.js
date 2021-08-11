@@ -19,6 +19,10 @@ export default {
   // SET_LABELS(state, labels) {
   //   state.eventLabels = labels
   // },
+
+  Set_ProductTypes (state, products) {
+    state.productTypes = products
+  },
   UPDATE_PRODUCT (state, product) {
 
     const productIndex = state.vendors.findIndex((p) => p.id === product.id)

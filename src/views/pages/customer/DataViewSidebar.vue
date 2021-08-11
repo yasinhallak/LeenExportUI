@@ -50,6 +50,10 @@
         <v-select multiple  v-model="selectedType" class="mt-5 w-full" :options="saleOptions" name="saleType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
         <span class="text-danger text-sm" v-show="errors.has('saleType')">{{ errors.first('saleType') }}</span>
 
+        <label >اختر المنتج</label>
+        <v-select multiple autocomplete  v-model.number="makerType" class="mt-5 w-full" :options="productTypes" name="makerType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('makerType')">{{ errors.first('makerType') }}</span>
+
         <!-- status  -->
         <vs-select label="الحالة" v-model.number="selectedStatus"  class="mt-5 w-full" name="status" v-validate="'required'">
           <vs-select-item :key="item.id" :value="item.id" :text="item.label" v-for="item in statusOptions" />
@@ -60,7 +64,7 @@
 <!--        <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>-->
 
         <!-- description -->
-        <vs-textarea label="التقرير" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
+<!--        <vs-textarea label="التقرير" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />-->
 <!--        <span class="text-danger text-sm" v-show="errors.has('description')">{{ errors.first('description') }}</span>-->
         <!-- Address -->
         <vs-textarea label="عنوان مقر الشركة" v-model="address" class="mt-5 w-full"  width="300px" name="address"  v-validate="'required'" />
@@ -107,6 +111,7 @@ export default {
       address:null,
       selectedSpecial: [],
       selectedType:[],
+      makerType:[],
       selectedStatus:null,
       specialOptions: [
         {id: 1, label: 'رجالي'},
@@ -137,7 +142,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,email,shippingName,shippingCode,specialization,saleType,status,description,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,email,shippingName,shippingCode,specialization,saleType,makerType,status,description,address} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -147,6 +152,7 @@ export default {
         this.email=email
         this.selectedSpecial=specialization
         this.selectedType=saleType
+        this.makerType=makerType
         this.selectedStatus=status
         this.description=description
         this.address=address
@@ -171,7 +177,12 @@ export default {
     isFormValid () {
       return !this.errors.any() && this.name && this.phone && this.address
     },
-    scrollbarTag () { return this.$store.getters.scrollbarTag }
+    scrollbarTag () { return this.$store.getters.scrollbarTag },
+
+    productTypes () {
+      return this.$store.state.vendor.productTypes.map((product) =>({id:product.id ,label:product.name}))
+    },
+
   },
   methods: {
     initValues () {
@@ -185,6 +196,7 @@ export default {
       this.shippingCode=null
       this.selectedSpecial=null
       this.selectedType=null
+      this.makerType=[]
       this.selectedStatus=null
       this.description=null
       this.address=null
@@ -203,6 +215,7 @@ export default {
             description:this.description,
             specialization:this.selectedSpecial ,
             saleType:this.selectedType ,
+            makerType:this.makerType,
             status:this.selectedStatus,
             address:this.address
           }
@@ -221,6 +234,9 @@ export default {
       })
     },
 
+  },
+  mounted() {
+    this.$store.dispatch('vendor/fetchProductTypeItems', { subCategoryId: null})
   }
 }
 </script>
