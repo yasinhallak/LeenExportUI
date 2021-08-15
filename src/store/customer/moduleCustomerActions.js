@@ -34,6 +34,29 @@ export default {
   },
 
 
+  fetchCategoryItems({commit},item){
+    return new Promise((resolve, reject)=>{
+      axios.post('/category/list',{...item})
+        .then((response) => {
+          commit('Set_CategoryTypes', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+  fetchProductTypeItems({commit},item){
+    return new Promise((resolve, reject) => {
+      axios.post('/productType/list',{...item})
+        .then((response) => {
+          commit('Set_ProductTypes', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
+
   // fetchEventLabels({ commit }) {
   //   return new Promise((resolve, reject) => {
   //     axios.get("/api/apps/calendar/labels")

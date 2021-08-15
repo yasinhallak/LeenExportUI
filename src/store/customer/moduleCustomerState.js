@@ -8,5 +8,7 @@
 ==========================================================================================*/
 
 export default {
-  customers: []
+  customers: [],
+  productTypes: [],
+  categoryTypes:[]
 }

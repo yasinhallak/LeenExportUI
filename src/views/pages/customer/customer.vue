@@ -3,12 +3,23 @@
 
     <data-view-sidebar :isSidebarActive="addNewDataSidebar" @closeSidebar="toggleDataSidebar" :data="sidebarData" />
 
+    <vs-prompt title="Export To Excel" class="export-options" @cancle="clearFields" @accept="exportToExcel" accept-text="Export" @close="clearFields" :active.sync="activePrompt">
+      <vs-input v-model="fileName" placeholder="Enter File Name.." class="w-full" />
+      <v-select v-model="selectedFormat" :options="formats" class="my-4" />
+      <div class="flex">
+        <span class="mr-4">Cell Auto Width:</span>
+        <vs-switch v-model="cellAutoWidth">Cell Auto Width</vs-switch>
+      </div>
+    </vs-prompt>
     <vs-table ref="table" multiple v-model="selected" pagination :max-items="itemsPerPage" search :data="customers">
 
       <div slot="header" class="flex flex-wrap-reverse items-center flex-grow justify-between">
 
         <div class="flex flex-wrap-reverse items-center data-list-btn-container">
 
+          <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="activePrompt=true">
+            <span class="ml-2 text-base text-primary">تصدير</span>
+          </div>
           <!-- ADD NEW -->
           <div class="btn-add-new p-3 mb-4 mr-4 rounded-lg cursor-pointer flex items-center justify-center text-lg font-medium text-base text-primary border border-solid border-primary" @click="addNewData">
             <feather-icon icon="PlusIcon" svgClasses="h-4 w-4" />
@@ -42,16 +53,17 @@
       </div>
 
       <template slot="thead">
+        <vs-th sort-key="id">رقم الزبون</vs-th>
         <vs-th sort-key="name">اسم الزبون</vs-th>
         <vs-th sort-key="companyName">اسم الشركة</vs-th>
         <vs-th sort-key="shippingName">شركة الشحن </vs-th>
         <vs-th sort-key="shippingCode">الكود</vs-th>
         <vs-th sort-key="phone">رقم الجوال</vs-th>
         <vs-th sort-key="email">البريد الإلكتروني</vs-th>
-        <vs-th sort-key="specialization">الأختصاص</vs-th>
+        <vs-th sort-key="categoryId">الأختصاص</vs-th>
+        <vs-th sort-key="productTypeId">أصناف البيع</vs-th>
         <vs-th sort-key="saleType">نوع البيع</vs-th>
         <vs-th sort-key="status">الحالة</vs-th>
-<!--        <vs-th sort-key="description">التقرير</vs-th>-->
         <vs-th sort-key="address">العنوان</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
@@ -59,6 +71,9 @@
       <template slot-scope="{data}">
         <tbody>
         <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
+          <vs-td>
+            <p class="product-name font-medium truncate">{{ tr.id }}</p>
+          </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.name }}</p>
           </vs-td>
@@ -78,18 +93,18 @@
             <p class="product-name font-medium truncate">{{ tr.email }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate" >{{ getSpecialLabel(tr.specialization) }}</p>
+            <p class="product-name font-medium truncate" >{{ getCategoryTypesLabel(tr.categoryId) }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate" >{{ getProductTypesLabel(tr.productTypeId) }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ getSaleLabel(tr.saleType ) }}</p>
           </vs-td>
           <vs-td>
             <vs-chip :color="getOrderStatusColor(tr.status)" class="product-order-status">{{$t('statusOptions.' + tr.status) }}</vs-chip>
-<!--            <p class="product-name font-medium truncate">{{$t('statusOptions.' + tr.status) }}</p>-->
           </vs-td>
-<!--          <vs-td>-->
-<!--            <p class="product-name font-medium truncate">{{ tr.description }}</p>-->
-<!--          </vs-td>-->
+
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.address }}</p>
           </vs-td>
@@ -109,27 +124,32 @@
 <script>
 import DataViewSidebar from './DataViewSidebar.vue'
 import moduleDataList from '@/store/customer/moduleCustomer.js'
-import moduleDataListVendor from '@/store/vendor/moduleVendor.js'
+import vSelect from 'vue-select'
 
 export default {
   components: {
-    DataViewSidebar
+    DataViewSidebar,
+    vSelect
   },
   data () {
     return {
+      fileName: '',
+      formats:['xlsx', 'csv', 'txt'],
+      cellAutoWidth: true,
+      selectedFormat: 'xlsx',
+      headerTitle: [ 'رقم الزبون', 'اسم الزبون', 'اسم الشركة ', 'البريد الإلكتروني','رقم الجوال','شركة الشحن', 'كود الشحن' ,'عنوان الشركة' ,'حالة الزبون','الاختصاص','أصناف البيع' ],
+      headerVal: [ 'id', 'name', 'companyName', 'email','phone','shippingName','shippingCode','address','status','categoryId','productTypeId'],
       selected: [],
-      // products: [],
       itemsPerPage: 10,
       isMounted: false,
       removeItem:null,
       // Data Sidebar
       addNewDataSidebar: false,
-      sidebarData: {}
+      sidebarData: {},
+      activePrompt: false
     }
   },
   computed: {
-
-
     currentPage () {
       if (this.isMounted) {
         return this.$refs.table.currentx
@@ -144,22 +164,52 @@ export default {
     }
   },
   methods: {
+    exportToExcel () {
+      import('../export/Export2Excel').then(excel => {
+        const list = this.customers
+        const data = this.formatJson(this.headerVal, list)
+        excel.export_json_to_excel({
+          header: this.headerTitle,
+          data,
+          filename: this.fileName,
+          autoWidth: this.cellAutoWidth,
+          bookType: this.selectedFormat
+        })
+        this.clearFields()
+      })
+    },
+    formatJson (filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if(j==='status')
+        {
+          return this.$t('statusOptions.' + v[j])
+        }
+        if(j==='categoryId'){
+          return v[j].map((item)=>(this.$store.state.customer.categoryTypes.find(({id})=>id==item).categoryName)).join(' , ')
+        }
+        if(j==='productTypeId'){
+          return v[j].map((item)=>(this.$store.state.customer.productTypes.find(({id})=>id==item).name)).join(' , ')
+        }
+        return v[j]
+      }))
+    },
+    clearFields () {
+      this.filename = ''
+      this.cellAutoWidth = true
+      this.selectedFormat = 'xlsx'
+    },
+
     PhoneWhatsapp(phone){
       //return  `https://api.whatsapp.com/send?phone=${phone}`
       return  `https://wa.me/${phone}`
     },
 
-    getSpecialLabel(items){
-      let label='';
-       items.forEach((item,index)=>{
-         if(index!==0){
-           label=label + ' , ' + item.label
-         }
-         else {
-           label=label + item.label
-         }
-       })
-      return label;
+    getCategoryTypesLabel(items){
+     return  items.map((item)=>(this.$store.state.customer.categoryTypes.find(({id})=>id==item).categoryName)).join(' , ')
+    },
+
+    getProductTypesLabel(items){
+      return  items.map((item)=>(this.$store.state.customer.productTypes.find(({id})=>id==item).name)).join(' , ')
     },
 
     getSaleLabel(items){
@@ -228,14 +278,12 @@ export default {
       this.$store.registerModule('customer', moduleDataList)
       moduleDataList.isRegistered = true
     }
-    if (!moduleDataListVendor.isRegistered) {
-      this.$store.registerModule('vendor', moduleDataListVendor)
-      moduleDataListVendor.isRegistered = true
-    }
     this.$store.dispatch('customer/fetchDataListItems')
   },
   mounted () {
     this.isMounted = true
+    this.$store.dispatch('customer/fetchCategoryItems', { seasonsTypes: null})
+    this.$store.dispatch('customer/fetchProductTypeItems', { subCategoryId: null})
   }
 }
 </script>

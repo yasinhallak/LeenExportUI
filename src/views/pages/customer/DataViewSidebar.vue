@@ -42,8 +42,8 @@
 
         <!-- specialization -->
         <label >الاختصاص</label>
-        <v-select multiple  v-model="selectedSpecial" class="mt-5 w-full" :options="specialOptions" name="specialization" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-<!--        <span class="text-danger text-sm" v-show="errors.has('specialization')">{{ errors.first('specialization') }}</span>-->
+        <v-select multiple  v-model="categoryId" class="mt-5 w-full" :options="categoryTypes" name="categoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+        <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
 
         <!-- saleType -->
         <label >نوع البيع</label>
@@ -102,15 +102,10 @@ export default {
       email:null,
       description:null,
       address:null,
-      selectedSpecial: [],
+      categoryId: [],
       selectedType:[],
       productTypeId:[],
       selectedStatus:null,
-      specialOptions: [
-        {id: 1, label: 'رجالي'},
-        {id: 2, label: 'نسائي'},
-        {id: 3, label: 'ولادي'},
-      ],
       saleOptions: [
         {id: 3, label: 'جملة'},
         {id: 4, label: 'مفرق'},
@@ -135,7 +130,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,email,shippingName,shippingCode,specialization,saleType,productTypeId,status,description,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,email,shippingName,shippingCode,categoryId,saleType,productTypeId,status,description,address} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -143,7 +138,7 @@ export default {
         this.shippingCode=shippingCode
         this.phone=phone
         this.email=email
-        this.selectedSpecial=specialization
+        this.categoryId=categoryId.map((item)=>({id:item,label:this.categoryTypes.find(({id})=>id===item).label})),
         this.selectedType=saleType
         this.productTypeId= productTypeId.map((item)=>({id:item,label:this.productTypes.find(({id})=>id===item).label}))
         this.selectedStatus=status
@@ -168,13 +163,16 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.phone && this.address
+      return !this.errors.any() && this.name && this.phone && this.address && this.categoryId && this.productTypeId && this.selectedStatus
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
     productTypes () {
-      return this.$store.state.vendor.productTypes.map((product) =>({id:product.id ,label:product.name}))
+      return this.$store.state.customer.productTypes.map((item) =>({id:item.id ,label:item.name}))
     },
+    categoryTypes(){
+      return this.$store.state.customer.categoryTypes.map((item) =>({id:item.id ,label:item.categoryName}))
+    }
 
   },
   methods: {
@@ -187,7 +185,7 @@ export default {
       this.email=null
       this.shippingName=null
       this.shippingCode=null
-      this.selectedSpecial=null
+      this.categoryId=[]
       this.selectedType=null
       this.productTypeId=[]
       this.selectedStatus=null
@@ -206,7 +204,7 @@ export default {
             phone:this.phone,
             email:this.email,
             description:this.description,
-            specialization:this.selectedSpecial ,
+            categoryId:this.categoryId.map(item=>(item.id)) ,
             saleType:this.selectedType ,
             productTypeId:this.productTypeId.map(item=>(item.id)),
             status:this.selectedStatus,
@@ -229,7 +227,7 @@ export default {
 
   },
   mounted() {
-    this.$store.dispatch('vendor/fetchProductTypeItems', { subCategoryId: null})
+
   }
 }
 </script>

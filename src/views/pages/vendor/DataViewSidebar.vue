@@ -140,7 +140,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,code,phone ,employeePhone,address,description,brandType,primaryCategory,makerType,categoryType,qualityType} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,code,phone ,employeePhone,address,brandType,primaryCategory,makerType,categoryType,qualityType} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -148,7 +148,6 @@ export default {
         this.phone=phone
         this.employeePhone=employeePhone
         this.address=address
-        this.description=description
         this.brandType=brandType
         this.primaryCategory=primaryCategory
         this.makerType=makerType
@@ -173,7 +172,7 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.description
+      return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.brandType && this.makerType && this.categoryType && this.qualityType
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
