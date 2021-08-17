@@ -51,7 +51,6 @@
         </vs-select>
         <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
 
-        <span class="text-danger text-sm" v-show="errors.has('vendorId')">{{ errors.first('vendorId') }}</span>
         <!-- PRICE -->
         <template v-if="activeUserInfo.userName=='admin'">
           <vs-input
@@ -77,12 +76,12 @@
           name="productCost" />
         <span class="text-danger text-sm" v-show="errors.has('productCost')">{{ errors.first('productCost') }}</span>
 
-        <vs-input
-          type="number"
-          label="العدد الكلي ضمن المستودع"
-          v-model.number="inStock"
-          class="mt-5  catslab"
-          name="InStock" />
+<!--        <vs-input-->
+<!--          type="number"-->
+<!--          label="العدد الكلي ضمن المستودع"-->
+<!--          v-model.number="inStock"-->
+<!--          class="mt-5  catslab"-->
+<!--          name="InStock" />-->
         <!-- salesTypes -->
         <vs-select  autocomplete label="نوع البيع" v-model.number="salesType"  class="mt-5 catslab direction" name="vendorId" v-validate="'required'">
           <vs-select-item :key="index" :value="item" :text="$t('salesTypes.' + item)" v-for="(item,index) in Object.keys(salesTypes)" />
@@ -275,7 +274,7 @@ export default {
     addSizeGroup(){
       this.productSizes.push({
         name: '',
-        count: 0
+        count: 1
       })
     },
     removeSizeGroup (index) {
