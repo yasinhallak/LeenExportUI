@@ -20,8 +20,8 @@ export default {
   //   state.eventLabels = labels
   // },
 
-  Set_ProductTypes (state, products) {
-    state.productTypes = products
+  Set_SubCategoryType(state,items){
+    state.subCategoryTypes=items
   },
   UPDATE_PRODUCT (state, product) {
 

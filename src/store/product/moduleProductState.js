@@ -11,6 +11,7 @@ export default {
   products: [],
   productTypes:[],
   companies:[],
+  customers:[],
   categoryTypes:[],
   subCategoryTypes:[],
   isLoading: false,

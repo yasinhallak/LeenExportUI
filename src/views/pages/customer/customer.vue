@@ -61,7 +61,7 @@
         <vs-th sort-key="phone">رقم الجوال</vs-th>
         <vs-th sort-key="email">البريد الإلكتروني</vs-th>
         <vs-th sort-key="categoryId">الأختصاص</vs-th>
-        <vs-th sort-key="productTypeId">أصناف البيع</vs-th>
+        <vs-th sort-key="subCategoryId">أصناف البيع</vs-th>
         <vs-th sort-key="saleType">نوع البيع</vs-th>
         <vs-th sort-key="status">الحالة</vs-th>
         <vs-th sort-key="address">العنوان</vs-th>
@@ -96,7 +96,7 @@
             <p class="product-name font-medium truncate" >{{ getCategoryTypesLabel(tr.categoryId) }}</p>
           </vs-td>
           <vs-td>
-            <p class="product-name font-medium truncate" >{{ getProductTypesLabel(tr.productTypeId) }}</p>
+            <p class="product-name font-medium truncate" >{{ getSubCategoryTypesLabel(tr.subCategoryId) }}</p>
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ getSaleLabel(tr.saleType ) }}</p>
@@ -137,8 +137,8 @@ export default {
       formats:['xlsx', 'csv', 'txt'],
       cellAutoWidth: true,
       selectedFormat: 'xlsx',
-      headerTitle: [ 'رقم الزبون', 'اسم الزبون', 'اسم الشركة ', 'البريد الإلكتروني','رقم الجوال','شركة الشحن', 'كود الشحن' ,'عنوان الشركة' ,'حالة الزبون','الاختصاص','أصناف البيع' ],
-      headerVal: [ 'id', 'name', 'companyName', 'email','phone','shippingName','shippingCode','address','status','categoryId','productTypeId'],
+      headerTitle: [  'Name',  'Email','Phone'],
+      headerVal: [  'name',  'email','phone'],
       selected: [],
       itemsPerPage: 10,
       isMounted: false,
@@ -187,8 +187,8 @@ export default {
         if(j==='categoryId'){
           return v[j].map((item)=>(this.$store.state.customer.categoryTypes.find(({id})=>id==item).categoryName)).join(' , ')
         }
-        if(j==='productTypeId'){
-          return v[j].map((item)=>(this.$store.state.customer.productTypes.find(({id})=>id==item).name)).join(' , ')
+        if(j==='subCategoryId'){
+          return v[j].map((item)=>(this.$store.state.customer.subCategoryTypes.find(({id})=>id==item).name)).join(' , ')
         }
         return v[j]
       }))
@@ -208,12 +208,13 @@ export default {
      return  items.map((item)=>(this.$store.state.customer.categoryTypes.find(({id})=>id==item).categoryName)).join(' , ')
     },
 
-    getProductTypesLabel(items){
-      return  items.map((item)=>(this.$store.state.customer.productTypes.find(({id})=>id==item).name)).join(' , ')
+    getSubCategoryTypesLabel(items){
+      return  items.map((item)=>(this.$store.state.customer.subCategoryTypes.find(({id})=>id==item).name)).join(' , ')
     },
 
     getSaleLabel(items){
       let label='';
+      if(items==null) return label;
       items.forEach((item,index)=>{
         if(index!==0){
           label=label + ' , ' + item.label
@@ -283,7 +284,7 @@ export default {
   mounted () {
     this.isMounted = true
     this.$store.dispatch('customer/fetchCategoryItems', { seasonsTypes: null})
-    this.$store.dispatch('customer/fetchProductTypeItems', { subCategoryId: null})
+    this.$store.dispatch('customer/fetchSubCategoryItems', { categoryId: null})
   }
 }
 </script>

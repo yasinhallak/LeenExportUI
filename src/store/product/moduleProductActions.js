@@ -81,6 +81,17 @@ export default {
     })
   },
 
+  fetchCustomerItems ({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.get('/customer/list')
+        .then((response) => {
+          commit('Set_Customers', response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
+
 
   updateItem ({ commit }, item) {
     return new Promise((resolve, reject) => {

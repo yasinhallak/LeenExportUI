@@ -9,6 +9,6 @@
 
 export default {
   customers: [],
-  productTypes: [],
+  subCategoryTypes: [],
   categoryTypes:[]
 }

@@ -1006,7 +1006,24 @@ const router = new Router({
             pageTitle: 'salesDepartment' +
               '',
             rule: 'editor'
-          }
+          },
+
+        },
+        {
+          path: '/pages/whats-app',
+          name: 'page-whats-app',
+          component: () => import('@/views/pages/whats-app/whatsApp.vue'),
+          meta: {
+            breadcrumb: [
+              { title: 'Home', url: '/' },
+              { title: 'Pages' },
+              { title: 'whatsApp', active: true }
+            ],
+            pageTitle: 'whatsApp' +
+              '',
+            rule: 'editor'
+          },
+
         },
         {
           path: '/pages/shop-editor',

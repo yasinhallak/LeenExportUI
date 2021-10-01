@@ -41,6 +41,9 @@ export default {
   Set_Companies(state,items){
     state.companies = items
   },
+  Set_Customers(state,items){
+    state.customers = items
+  },
 
   REMOVE_ITEM (state, itemId) {
     const ItemIndex = state.products.findIndex((p) => p.id === itemId)

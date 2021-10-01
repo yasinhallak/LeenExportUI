@@ -20,8 +20,8 @@
 
       <div class="p-6">
         <!-- NAME -->
-        <vs-input label="اسم الزبون" v-model="name" class="mt-5 w-full" name="name" icon-pack="feather" icon="icon-user" icon-no-border v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>
+        <vs-input label="اسم الزبون" v-model="name" class="mt-5 w-full" name="name" icon-pack="feather" icon="icon-user" icon-no-border  />
+<!--        <span class="text-danger text-sm" v-show="errors.has('name')">{{ errors.first('name') }}</span>-->
 
         <!-- CompanyName -->
         <vs-input label="اسم الشركة" v-model="companyName" class="mt-5 w-full" icon-pack="feather" icon="icon-briefcase" icon-no-border name="companyName"  />
@@ -43,20 +43,20 @@
         <!-- specialization -->
         <label >الاختصاص</label>
         <v-select multiple  v-model="categoryId" class="mt-5 w-full" :options="categoryTypes" name="categoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
-        <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>
+<!--        <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>-->
 
         <!-- saleType -->
         <label >نوع البيع</label>
-        <v-select multiple  v-model="selectedType" class="mt-5 w-full" :options="saleOptions" name="saleType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('saleType')">{{ errors.first('saleType') }}</span>
+        <v-select multiple  v-model="selectedType" class="mt-5 w-full" :options="saleOptions" name="saleType" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+<!--        <span class="text-danger text-sm" v-show="errors.has('saleType')">{{ errors.first('saleType') }}</span>-->
         <label >اختر المنتج</label>
-        <v-select multiple autocomplete  v-model.number="productTypeId" class="mt-5 w-full" :options="productTypes" name="productTypeId" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('productTypeId')">{{ errors.first('productTypeId') }}</span>
+        <v-select multiple autocomplete  v-model.number="subCategoryId" class="mt-5 w-full" :options="subCategoryTypes" name="subCategoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'"  />
+<!--        <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>-->
 
         <!-- status  -->
-        <vs-select autocomplete label="الحالة" v-model.number="selectedStatus"  class="mt-5 w-full" name="status" v-validate="'required'">
+        <vs-select autocomplete label="الحالة" v-model.number="selectedStatus"  class="mt-5 w-full" name="status" >
           <vs-select-item :key="item.id" :value="item.id" :text="item.label" v-for="item in statusOptions" />
-          <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>
+<!--          <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>-->
         </vs-select>
 
         <!-- Address -->
@@ -104,7 +104,7 @@ export default {
       address:null,
       categoryId: [],
       selectedType:[],
-      productTypeId:[],
+      subCategoryId:[],
       selectedStatus:null,
       saleOptions: [
         {id: 3, label: 'جملة'},
@@ -130,7 +130,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,email,shippingName,shippingCode,categoryId,saleType,productTypeId,status,description,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,email,shippingName,shippingCode,categoryId,saleType,subCategoryId,status,description,address} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -140,7 +140,7 @@ export default {
         this.email=email
         this.categoryId=categoryId.map((item)=>({id:item,label:this.categoryTypes.find(({id})=>id===item).label})),
         this.selectedType=saleType
-        this.productTypeId= productTypeId.map((item)=>({id:item,label:this.productTypes.find(({id})=>id===item).label}))
+        this.subCategoryId= subCategoryId.map((item)=>({id:item,label:this.subCategoryTypes.find(({id})=>id===item).label}))
         this.selectedStatus=status
         this.description=description
         this.address=address
@@ -163,12 +163,12 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.phone && this.address && this.categoryId && this.productTypeId && this.selectedStatus
+      return !this.errors.any()  && this.phone && this.address // && this.name&& this.categoryId && this.subCategoryId && this.selectedStatus
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
-    productTypes () {
-      return this.$store.state.customer.productTypes.map((item) =>({id:item.id ,label:item.name}))
+    subCategoryTypes () {
+      return this.$store.state.customer.subCategoryTypes.map((item) =>({id:item.id ,label:item.name}))
     },
     categoryTypes(){
       return this.$store.state.customer.categoryTypes.map((item) =>({id:item.id ,label:item.categoryName}))
@@ -187,7 +187,7 @@ export default {
       this.shippingCode=null
       this.categoryId=[]
       this.selectedType=null
-      this.productTypeId=[]
+      this.subCategoryId=[]
       this.selectedStatus=null
       this.description=null
       this.address=null
@@ -206,8 +206,8 @@ export default {
             description:this.description,
             categoryId:this.categoryId.map(item=>(item.id)) ,
             saleType:this.selectedType ,
-            productTypeId:this.productTypeId.map(item=>(item.id)),
-            status:this.selectedStatus,
+            subCategoryId:this.subCategoryId.map(item=>(item.id)),
+            status:1,
             address:this.address
           }
 

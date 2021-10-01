@@ -9,5 +9,5 @@
 
 export default {
   vendors: [],
-  productTypes: [],
+  subCategoryTypes: [],
 }

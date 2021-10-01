@@ -691,6 +691,14 @@ export default [
         slug: 'extra-component-shop-editor',
         i18n: 'حسابات المحل'
       },
+      {
+        url: '/pages/whats-app',
+        name: 'shop Editor',
+        emp: true,
+        icon: 'EditIcon',
+        slug: 'extra-component-shop-editor',
+        i18n: 'خدمة الواتس أب'
+      },
       // {
       //   url: '/pages/user-settings',
       //   slug: 'page-user-settings',

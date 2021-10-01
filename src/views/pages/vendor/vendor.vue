@@ -50,6 +50,7 @@
         <vs-th sort-key="phone">رقم جوال الشركة</vs-th>
         <vs-th sort-key="employeePhone">رقم جوال الموظف</vs-th>
         <vs-th sort-key="address">عنوان الشركة</vs-th>
+        <vs-th sort-key="subCategoryId">أصناف البيع</vs-th>
         <vs-th>الأوامر</vs-th>
       </template>
 
@@ -77,6 +78,9 @@
           </vs-td>
           <vs-td>
             <p class="product-name font-medium truncate">{{ tr.address }}</p>
+          </vs-td>
+          <vs-td>
+            <p class="product-name font-medium truncate" >{{ getSubCategoryTypesLabel(tr.subCategoryId) }}</p>
           </vs-td>
 
           <vs-td class="whitespace-no-wrap">
@@ -183,7 +187,12 @@ export default {
     },
     toggleDataSidebar (val = false) {
       this.addNewDataSidebar = val
-    }
+    },
+
+    getSubCategoryTypesLabel(items){
+      return  items.map((item)=>(this.$store.state.vendor.subCategoryTypes.find(({id})=>id==item).name)).join(' , ')
+    },
+
   },
   created () {
     if (!moduleDataList.isRegistered) {
@@ -198,6 +207,8 @@ export default {
   },
   mounted () {
     this.isMounted = true
+    this.$store.dispatch('vendor/fetchSubCategoryItems', { categoryId: null})
+    this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: null})
   }
 }
 </script>
@@ -205,7 +216,6 @@ export default {
 <style lang="scss">
 #data-list-list-view {
   .vs-con-table {
-
     /*
       Below media-queries is fix for responsiveness of action buttons
       Note: If you change action buttons or layout of this page, Please remove below style

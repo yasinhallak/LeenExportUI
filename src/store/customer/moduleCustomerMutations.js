@@ -19,8 +19,8 @@ export default {
   Set_CategoryTypes(state, products) {
     state.categoryTypes = products
   },
-  Set_ProductTypes(state, products) {
-    state.productTypes = products
+  Set_SubCategoryType(state,items){
+    state.subCategoryTypes=items
   },
   UPDATE_PRODUCT (state, product) {
     const productIndex = state.customers.findIndex((p) => p.id === product.id)

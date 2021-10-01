@@ -33,11 +33,11 @@ export default {
     })
   },
 
-  fetchProductTypeItems({commit},item){
+  fetchSubCategoryItems({commit},item){
     return new Promise((resolve, reject) => {
-      axios.post('/productType/list',{...item})
+      axios.post('/subCategory/list',{...item})
         .then((response) => {
-          commit('Set_ProductTypes', response.data)
+          commit('Set_SubCategoryType', response.data)
           resolve(response)
         })
         .catch((error) => { reject(error) })

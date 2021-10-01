@@ -45,8 +45,8 @@
 
         <!-- productTypes -->
         <label >اختر المنتج</label>
-        <v-select multiple autocomplete  v-model.number="makerType" class="mt-5 w-full" :options="productTypes" name="makerType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
-        <span class="text-danger text-sm" v-show="errors.has('makerType')">{{ errors.first('makerType') }}</span>
+        <v-select multiple autocomplete  v-model.number="subCategoryId" class="mt-5 w-full" :options="subCategoryTypes" name="subCategoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>
 
         <!-- brand type -->
         <label >اختر نوع الماركة</label>
@@ -109,7 +109,7 @@ export default {
       employeePhone:null,
       address:null,
       description:null,
-      makerType:[],
+      subCategoryId:[],
       brandType:[],
       primaryCategory:[],
       categoryType:[],
@@ -140,7 +140,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,code,phone ,employeePhone,address,brandType,primaryCategory,makerType,categoryType,qualityType} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,code,phone ,employeePhone,address,brandType,primaryCategory,subCategoryId,categoryType,qualityType} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -150,7 +150,7 @@ export default {
         this.address=address
         this.brandType=brandType
         this.primaryCategory=primaryCategory
-        this.makerType=makerType
+        this.subCategoryId= subCategoryId.map((item)=>({id:item,label:this.subCategoryTypes.find(({id})=>id===item).label}))
         this.categoryType=categoryType
         this.qualityType=qualityType
         this.initValues()
@@ -172,16 +172,17 @@ export default {
       }
     },
     isFormValid () {
-      return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.brandType && this.makerType && this.categoryType && this.qualityType
+      return !this.errors.any() && this.name && this.companyName && this.phone && this.address && this.brandType && this.subCategoryId && this.categoryType && this.qualityType
     },
     scrollbarTag () { return this.$store.getters.scrollbarTag },
 
     primaryCategories () {
       return this.$store.state.product.categoryTypes.map((category) =>({id:category.id ,label:category.categoryName}))
     },
-    productTypes () {
-      return this.$store.state.vendor.productTypes.map((product) =>({id:product.id ,label:product.name}))
+    subCategoryTypes () {
+      return this.$store.state.vendor.subCategoryTypes.map((item) =>({id:item.id ,label:item.name}))
     },
+
   },
   methods: {
     initValues () {
@@ -195,7 +196,7 @@ export default {
       this.address=null
       this.description=null
       this.brandType=[]
-      this.makerType=[]
+      this.subCategoryId=[]
       this.primaryCategory=[]
       this.categoryType=[]
       this.qualityType=null
@@ -214,7 +215,7 @@ export default {
             address:this.address,
             description:this.description,
             brandType:this.brandType,
-            makerType:this.makerType,
+            subCategoryId:this.subCategoryId.map(item=>(item.id)),
             primaryCategory:this.primaryCategory,
             categoryType:this.categoryType,
             qualityType:this.qualityType
@@ -257,8 +258,7 @@ export default {
 
   },
   mounted () {
-     this.$store.dispatch('vendor/fetchProductTypeItems', { subCategoryId: null})
-    this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: null})
+
   }
 }
 </script>

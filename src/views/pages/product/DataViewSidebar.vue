@@ -87,7 +87,7 @@
           <vs-select-item :key="index" :value="item" :text="$t('salesTypes.' + item)" v-for="(item,index) in Object.keys(salesTypes)" />
         </vs-select>
         <!-- Description -->
-        <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />
+<!--        <vs-textarea label="وصف عن المنتج" v-model="description" class="mt-5 w-full"  width="300px" name="description"   />-->
 
         <div class="mt-6 flex items-center justify-between px-6">
           <h4> القياسات </h4>
@@ -126,8 +126,37 @@
           </div>
         </div>
 
+
+
       </div>
+      <vs-divider class="mb-2 "></vs-divider>
+
+      <div class="mt-6 flex items-center justify-between px-12">
+        <h4> إذا كنت تريد إرسال هذا المنتج الى الزبائن عبر خدمة الواتس أب ينبغي عليك اختيار بعض الفلاتر في الأسفل </h4>
+
+      </div>
+      <div class="p-6">
+        <!-- customers -->
+        <div style="display: inline-block;width: 33.33% ;color:  #1f74ff;">
+          <label  >اختر البلد</label>
+          <v-select multiple  v-model.number="cityNames" class="mt-7" :options="cities" name="cityIds"  />
+        </div>
+        <vs-select autocomplete v-model.number="categoryKeyword"  label="اختر اختصاص البيع" class="mt-5 catslab direction" name="categoryKeyword" >
+          <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
+        </vs-select>
+
+        <!-- customers -->
+        <div style="display: inline-block;width: 33.33% ;color:  #1f74ff;">
+          <label  >اختر اسم الزبون</label>
+          <v-select multiple  v-model.number="customerIds" class="mt-7" :options="customers" name="customerIds"  />
+        </div>
+
+      </div>
+      <!-- customers which send it this product -->
+
     </component>
+
+
 
     <div class="flex flex-wrap items-center p-6  justify-between" slot="footer">
       <vs-button class="mr-6" @click="submitData" :disabled="!isFormValid">حفظ</vs-button>
@@ -138,6 +167,7 @@
 
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import vSelect from 'vue-select'
 
 // uploadImg map component
 import uploadImg from "../../shared/uploadImg";
@@ -157,42 +187,47 @@ export default {
   },
   components: {
     VuePerfectScrollbar,
-    uploadImg
+    uploadImg,
+    vSelect
   },
-  data () {
-    return {
-      productSizes:[],
-      sizes:ar.sizes,
-      dataId: null,
-      seasonsTypes:null,
-      title: null,
-      material:null,
-      inStock:null,
-      size:staticJson.size,
-      salesType:0,
-      description:null,
-      price:null,
-      productCost:null,
-      categoryId:null,
-      subCategoryId:null,
-      productTypeId:null,
-      vendorId:null,
-      photosAccept: "image/png,image/gif,image/jpeg,image/webp",
-      photosExtensions: "gif,jpg,jpeg,png,webp",
-      photos:[],
-      settings: { // perfectscrollbar settings
-        maxScrollbarLength: 60,
-        wheelSpeed: .60
-      },
-      salesTypes: ar.salesTypes,
-      category_choices: [
-        {text:'ربيع', value:'1'},
-        {text:'صيف', value:'2'},
-        {text:'خريف', value:'3'},
-        {text:'شتاء', value:'4'}
-      ],
-    }
-  },
+    data () {
+      return {
+        productSizes:[],
+        sizes:ar.sizes,
+        dataId: null,
+        seasonsTypes:null,
+        title: null,
+        material:null,
+        inStock:null,
+        size:staticJson.size,
+        salesType:0,
+        description:null,
+        price:null,
+        productCost:null,
+        categoryId:null,
+        subCategoryId:null,
+        productTypeId:null,
+        vendorId:null,
+        keyword:null,
+        categoryKeyword:null,
+        customerIds:null,
+        cityNames:[],
+        photosAccept: "image/png,image/gif,image/jpeg,image/webp",
+        photosExtensions: "gif,jpg,jpeg,png,webp",
+        photos:[],
+        settings: { // perfectscrollbar settings
+          maxScrollbarLength: 60,
+          wheelSpeed: .60
+        },
+        salesTypes: ar.salesTypes,
+        category_choices: [
+          {text:'ربيع', value:'1'},
+          {text:'صيف', value:'2'},
+          {text:'خريف', value:'3'},
+          {text:'شتاء', value:'4'}
+        ],
+      }
+    },
   watch: {
     isSidebarActive (val) {
       if (!val) return
@@ -216,6 +251,10 @@ export default {
         this.description=description
         this.photos=images
         this.productSizes=productSize
+        this.keyword=null
+        this.categoryKeyword=null
+        this.customerIds=null
+        this.cityNames=[]
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
     }
@@ -267,6 +306,13 @@ export default {
     },
     companies(){
       return this.$store.state.product.companies
+    },
+    customers(){
+      return this.$store.state.product.customers.map((item) =>({id:item.id ,label:item.name}))
+    },
+    cities(){
+      const result= [...new Set(this.$store.state.product.customers.map(item =>item.address)) ]
+      return  result.map((item) =>({label:item}))
     }
   },
   methods: {
@@ -298,6 +344,10 @@ export default {
       this.photos=[]
       this.productSizes=[]
       this.sumCount=-0
+      this.keyword=null
+      this.categoryKeyword=null
+      this.customerIds=null
+      this.cityNames=[]
     },
 
     submitData () {
@@ -318,7 +368,11 @@ export default {
             productCost:this.productCost,
             description: this.description,
             photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
-            ProductSizes:this.productSizes
+            ProductSizes:this.productSizes,
+            keyword:this.keyword,
+            categoryKeyword:this.categoryKeyword,
+            customerIds:this.customerIds !=null ?this.customerIds.map(item=>(item.id)):null ,
+            cityNames:this.cityNames!=null?this.cityNames.map(item=>item.label):null
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
@@ -371,6 +425,7 @@ export default {
   },
   mounted () {
      this.$store.dispatch('product/fetchCompanyItems')
+     this.$store.dispatch('product/fetchCustomerItems')
      this.$store.dispatch('product/fetchCategoryItems', {seasonsTypes: null})
   }
 }
