@@ -4,8 +4,8 @@
   <div id="page-user-edit ">
     <vx-card >
       <div slot="no-body" class="tabs-container px-6 pt-6">
-        <vs-tabs v-model="activeTab" class="tab-action-btn-fill-conatiner">
-          <vs-tab label="خدمة واتس أب" icon-pack="feather" icon="icon-user">
+        <vs-tabs  class="tab-action-btn-fill-conatiner direction">
+          <vs-tab label="خدمة واتس أب" icon-pack="feather" >
             <div class="tab-text">
              <div class="p-6">
                <div class="Photos">
@@ -22,20 +22,26 @@
                 <!-- customers -->
                 <div style="color: #1f74ff;" class="w-full  h-12  ">
                   <label  >اختر البلد</label>
-                  <v-select multiple  v-model.number="cityNames"  :options="cities" name="cityIds"  />
+                  <v-select multiple  v-model.number="cityNames"  :options="cities" name="cityIds" />
                 </div>
-                  <vs-select autocomplete v-model.number="categoryKeyword" class="w-full h-12"  label="اختر اختصاص البيع" name="categoryKeyword" >
+
+                  <vs-select autocomplete v-model.number="categoryKeyword" class="w-full h-12"  label="اختر اختصاص البيع" name="categoryKeyword"  >
                     <vs-select-item :key="item.id" :value="item.id" :text="item.categoryName" v-for="item in categoryTypes" />
                   </vs-select>
+
                 <!-- customers -->
                 <div style="color: #1f74ff;" class="w-full h-12 ">
                   <label  >اختر اسم الزبون</label>
                   <v-select multiple  v-model.number="customerIds"  :options="customers" name="customerIds"  />
                 </div>
- <div style="height: 400px">
+                <!-- Description -->
 
- </div>
               </div>
+              <vs-textarea label="نص الرسالة" v-model="description" class=" w-full"  name="description"   />
+              <div class="flex flex-wrap items-center " slot="footer">
+                <vs-button  @click="submitData" :disabled="!isFormValid" >إرسال</vs-button>
+              </div>
+
             </div>
           </vs-tab>
         </vs-tabs>
@@ -61,10 +67,9 @@ export default {
   },
   data () {
     return {
-      activeTab: 0,
-      keyword:null,
+      description:null,
       categoryKeyword:null,
-      customerIds:null,
+      customerIds:[],
       cityNames:[],
       photosAccept: "image/png,image/gif,image/jpeg,image/webp",
       photosExtensions: "gif,jpg,jpeg,png,webp",
@@ -72,6 +77,10 @@ export default {
     }
   },
   computed: {
+
+    isFormValid () {
+      return !this.errors.any()  && this.photos.length !=0
+    },
 
     categoryTypes () {
       return this.$store.state.product.categoryTypes
@@ -88,35 +97,49 @@ export default {
   methods: {
 
     initValues () {
-      if (this.data.id) return
-      this.dataId = null
-      this.keyword=null
+      this.description=null
       this.categoryKeyword=null
-      this.customerIds=null
+      this.customerIds=[]
       this.cityNames=[]
+      this.photos=[]
     },
 
     submitData () {
       this.$validator.validateAll().then(result => {
         if (result) {
           const obj = {
-            id: this.dataId,
             photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
-            keyword:this.keyword,
             categoryKeyword:this.categoryKeyword,
             customerIds:this.customerIds !=null ?this.customerIds.map(item=>(item.id)):null ,
-            cityNames:this.cityNames!=null?this.cityNames.map(item=>item.label):null
+            cityNames:this.cityNames!=null?this.cityNames.map(item=>item.label):null,
+            description:this.description
           }
           if (this.dataId !== null && this.dataId >= 0) {
             this.$store.dispatch('product/updateItem', obj).catch(err => { console.error(err) })
           } else {
             delete obj.id
             // obj.popularity = 0
-            this.$store.dispatch('product/addItem', obj).catch(err => { console.error(err) })
+            this.$store.dispatch('product/sendWhatsApp', obj).then((response) => {
+              console.log("response",response)
+              if(response.data){
+                this.showSuccessMessage()
+              }
+              // commit('ADD_ITEM',  response.data)
+            })
+              .catch((error) => { console.error(error) })
           }
-          this.initValues()
+
         }
       })
+    },
+    showSuccessMessage () {
+      this.$vs.notify({
+        position: 'top-right',
+        color: 'success',
+        title: 'رسالة واتس أب',
+        text: 'تم إرسال الرسالة بنجاح'
+      })
+      this.initValues()
     },
 
   },

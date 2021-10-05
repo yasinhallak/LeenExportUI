@@ -208,7 +208,6 @@ export default {
         subCategoryId:null,
         productTypeId:null,
         vendorId:null,
-        keyword:null,
         categoryKeyword:null,
         customerIds:null,
         cityNames:[],
@@ -344,7 +343,6 @@ export default {
       this.photos=[]
       this.productSizes=[]
       this.sumCount=-0
-      this.keyword=null
       this.categoryKeyword=null
       this.customerIds=null
       this.cityNames=[]
@@ -369,7 +367,6 @@ export default {
             description: this.description,
             photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
             ProductSizes:this.productSizes,
-            keyword:this.keyword,
             categoryKeyword:this.categoryKeyword,
             customerIds:this.customerIds !=null ?this.customerIds.map(item=>(item.id)):null ,
             cityNames:this.cityNames!=null?this.cityNames.map(item=>item.label):null

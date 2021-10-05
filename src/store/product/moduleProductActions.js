@@ -22,6 +22,18 @@ export default {
         .catch((error) => { reject(error) })
     })
   },
+  sendWhatsApp ({ commit }, item) {
+    console.log("item",item)
+    return new Promise((resolve, reject) => {
+      axios.post('/customer/whatsapp', {...item})
+        .then((response) => {
+         // console.log("response",response)
+         // commit('ADD_ITEM',  response.data)
+          resolve(response)
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   fetchDataListItems ({ commit }) {
     return new Promise((resolve, reject) => {
       axios.get('/product/list')
