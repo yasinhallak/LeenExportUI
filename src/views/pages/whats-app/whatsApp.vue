@@ -91,6 +91,7 @@ export default {
     },
     cities(){
       const result= [...new Set(this.$store.state.product.customers.map(item =>item.address)) ]
+      result.unshift("الكل")
       return  result.map((item) =>({label:item}))
     }
   },
@@ -111,13 +112,15 @@ export default {
             photos:this.photos.map((photo,index) =>({guid:String(photo.response  ? photo.response : photo.id),order:index+1}) ),
             categoryKeyword:this.categoryKeyword,
             customerIds:this.customerIds !=null ?this.customerIds.map(item=>(item.id)):null ,
-            cityNames:this.cityNames!=null?this.cityNames.map(item=>item.label):null,
+            cityNames:this.cityNames.map(item=>item.label),
             description:this.description
           }
           if (this.dataId !== null && this.dataId >= 0) {
+
             this.$store.dispatch('product/updateItem', obj).catch(err => { console.error(err) })
           } else {
             delete obj.id
+            obj.cityNames=obj.cityNames.includes("الكل")?null:obj.cityNames
             // obj.popularity = 0
             this.$store.dispatch('product/sendWhatsApp', obj).then((response) => {
               console.log("response",response)

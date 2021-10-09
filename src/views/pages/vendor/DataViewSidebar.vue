@@ -58,7 +58,7 @@
         <span class="text-danger text-sm" v-show="errors.has('categoryType')">{{ errors.first('categoryType') }}</span>
 
         <!--  quality Type-->
-        <vs-select  autocomplete label="نوع الجودة" v-model.number="qualityType"  class="mt-5 w-full " name="qualityType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'">
+        <vs-select   autocomplete label="نوع الجودة" v-model.number="qualityType"  class="mt-5 w-full " name="qualityType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'">
           <vs-select-item :key="index" :value="item" :text="$t('qualityTypes.' + item)" v-for="(item,index) in Object.keys(qualityTypes)" />
         </vs-select>
 

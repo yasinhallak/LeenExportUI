@@ -46,17 +46,25 @@
 <!--        <span class="text-danger text-sm" v-show="errors.has('categoryId')">{{ errors.first('categoryId') }}</span>-->
 
         <!-- saleType -->
-        <label >نوع البيع</label>
-        <v-select multiple  v-model="selectedType" class="mt-5 w-full" :options="saleOptions" name="saleType" :dir="$vs.rtl ? 'rtl' : 'ltr'" />
+<!--        <label >نوع البيع</label>-->
+<!--        <v-select multiple  v-model="selectedType" class="mt-5 w-full" :options="saleOptions" name="saleType" :dir="$vs.rtl ? 'rtl' : 'ltr'" />-->
 <!--        <span class="text-danger text-sm" v-show="errors.has('saleType')">{{ errors.first('saleType') }}</span>-->
-        <label >اختر المنتج</label>
-        <v-select multiple autocomplete  v-model.number="subCategoryId" class="mt-5 w-full" :options="subCategoryTypes" name="subCategoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'"  />
+<!--        <label >اختر المنتج</label>-->
+<!--        <v-select multiple autocomplete  v-model.number="subCategoryId" class="mt-5 w-full" :options="subCategoryTypes" name="subCategoryId" :dir="$vs.rtl ? 'rtl' : 'ltr'"  />-->
 <!--        <span class="text-danger text-sm" v-show="errors.has('subCategoryId')">{{ errors.first('subCategoryId') }}</span>-->
+        <label>اختر نوع البيع</label>
+        <v-select multiple autocomplete  v-model.number="CustomerSellTypeIds" class="mt-5 w-full" :options="sellTypes" name="CustomerSellTypeIds" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'" />
+        <span class="text-danger text-sm" v-show="errors.has('CustomerSellTypeIds')">{{ errors.first('CustomerSellTypeIds') }}</span>
 
         <!-- status  -->
-        <vs-select autocomplete label="الحالة" v-model.number="selectedStatus"  class="mt-5 w-full" name="status" >
-          <vs-select-item :key="item.id" :value="item.id" :text="item.label" v-for="item in statusOptions" />
-<!--          <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>-->
+<!--        <vs-select autocomplete label="الحالة" v-model.number="selectedStatus"  class="mt-5 w-full" name="status" >-->
+<!--          <vs-select-item :key="item.id" :value="item.id" :text="item.label" v-for="item in statusOptions" />-->
+<!--&lt;!&ndash;          <span class="text-danger text-sm" v-show="errors.has('status')">{{ errors.first('status') }}</span>&ndash;&gt;-->
+<!--        </vs-select>-->
+
+        <!--  quality Type-->
+        <vs-select  autocomplete label="نوع الجودة" v-model.number="qualityType"  class="mt-5 w-full " name="qualityType" :dir="$vs.rtl ? 'rtl' : 'ltr'" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="$t('qualityTypes.' + item)" v-for="(item,index) in Object.keys(qualityTypes)" />
         </vs-select>
 
         <!-- Address -->
@@ -75,6 +83,7 @@
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import vSelect from 'vue-select'
+import ar from "@/locales/ar.json";
 
 export default {
   props: {
@@ -105,10 +114,19 @@ export default {
       categoryId: [],
       selectedType:[],
       subCategoryId:[],
+      CustomerSellTypeIds:[],
       selectedStatus:null,
+      qualityType:null,
+      qualityTypes:ar.qualityTypes,
       saleOptions: [
         {id: 3, label: 'جملة'},
         {id: 4, label: 'مفرق'},
+      ],
+      sellTypes:[
+        {id:1, label: 'رياضي'},
+        {id: 2, label: 'رسمي'},
+        {id: 3, label: 'كاجوال'},
+        {id: 4, label: 'ملبوسات منزلية'},
       ],
       statusOptions:[
         {id:1,label:'زبون أساسي'} ,
@@ -130,7 +148,7 @@ export default {
         this.$validator.reset()
       } else {
         console.log("isSidebarActive",this.data)
-        const { id,name, companyName,phone ,email,shippingName,shippingCode,categoryId,saleType,subCategoryId,status,description,address} = JSON.parse(JSON.stringify(this.data))
+        const { id,name, companyName,phone ,email,shippingName,shippingCode,categoryId,saleType,subCategoryId,status,description,address,qualityType,customerSellTypeIds} = JSON.parse(JSON.stringify(this.data))
         this.dataId = id
         this.name = name
         this.companyName = companyName
@@ -144,6 +162,8 @@ export default {
         this.selectedStatus=status
         this.description=description
         this.address=address
+        this.qualityType=qualityType
+        this.CustomerSellTypeIds=customerSellTypeIds.map((item)=>({id:item,label:this.sellTypes.find(({id})=>id===item).label}))
         this.initValues()
       }
       // Object.entries(this.data).length === 0 ? this.initValues() : { this.dataId, this.dataName, this.dataCategory, this.dataOrder_status, this.dataPrice } = JSON.parse(JSON.stringify(this.data))
@@ -188,9 +208,11 @@ export default {
       this.categoryId=[]
       this.selectedType=null
       this.subCategoryId=[]
+      this.CustomerSellTypeIds=[]
       this.selectedStatus=null
       this.description=null
       this.address=null
+      this.qualityType=null
     },
     submitData () {
       this.$validator.validateAll().then(result => {
@@ -204,11 +226,13 @@ export default {
             phone:this.phone,
             email:this.email,
             description:this.description,
-            categoryId:this.categoryId.map(item=>(item.id)) ,
+            categoryIds:this.categoryId.map(item=>(item.id)) ,
             saleType:this.selectedType ,
-            subCategoryId:this.subCategoryId.map(item=>(item.id)),
+            subCategoryIds:this.subCategoryId.map(item=>(item.id)),
             status:1,
-            address:this.address
+            address:this.address,
+            qualityType:this.qualityType,
+            customerSellTypeIds:this.CustomerSellTypeIds.map(item=>(item.id)),
           }
 
           if (this.dataId !== null && this.dataId >= 0) {

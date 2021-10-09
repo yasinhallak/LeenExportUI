@@ -311,6 +311,7 @@ export default {
     },
     cities(){
       const result= [...new Set(this.$store.state.product.customers.map(item =>item.address)) ]
+      result.unshift("الكل")
       return  result.map((item) =>({label:item}))
     }
   },
@@ -373,9 +374,11 @@ export default {
           }
 
           if (this.dataId !== null && this.dataId >= 0) {
+            obj.cityNames=obj.cityNames.includes("الكل")?null:obj.cityNames
             this.$store.dispatch('product/updateItem', obj).catch(err => { console.error(err) })
           } else {
             delete obj.id
+            obj.cityNames=obj.cityNames.includes("الكل")?null:obj.cityNames
             // obj.popularity = 0
             this.$store.dispatch('product/addItem', obj).catch(err => { console.error(err) })
           }
